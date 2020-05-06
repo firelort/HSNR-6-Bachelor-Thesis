@@ -1,0 +1,137 @@
+\documentclass[a4paper, 12pt, parskip=half]{scrbook}
+
+% Einfaches Copy and Paste ermöglichen
+\usepackage{cmap}
+
+% deutsche Silbentrennung
+\usepackage[ngerman]{babel}
+
+% deutsche Umlaute
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Keine extra Leerzeichen nach einem Punkt
+\frenchspacing
+
+% Schriftart
+\usepackage{times}
+
+% Stichwortverzeichnis
+\usepackage{imakeidx}
+\makeindex
+
+% Paket für Änderungen an Kopf- und Fußzeile
+\usepackage{scrlayer-scrpage}
+% Bisherige Einstellungen für Kopf- und Fußzeilen löschen:
+\clearpairofpagestyles
+% Einstellungen für die Fußzeile, die Kopfzeile wird nicht verwendet
+	% Einstellungen nur für die rechten Seiten
+	% Layout: |  Seite
+\rofoot{\textbf{$\mid$~~\pagemark}}
+	% Einstellungen nur für die linken Seiten
+	% Layout: Seite  |
+\lefoot{\textbf{\pagemark~~$\mid$}}
+
+% Paket für code Beispiele
+% \usepackage{listings}
+
+% Paket für Verlinkungen
+\usepackage{url, hyperref}
+
+\renewcommand{\UrlBreaks}{\do\/\do\-\do\_}	% allows URL breaking on /, - and _
+\usepackage{breakurl}
+
+% Eigene Commands
+\newcommand{\thesisTitle}{ASDF}
+\newcommand{\thesisSubject}{ASDF2}
+\newcommand{\thesisAuthor}{Robert Hartings}
+\newcommand{\Matrikelnummer}{1164453}
+
+
+% Literaturverzeichnis einrichten
+\usepackage[style=alphabetic, citestyle=alphabetic]{biblatex}
+\addbibresource{thesis.bib}
+
+\hypersetup{
+	unicode = true, % allows to use characters of non-Latin based languages in Acrobat’s bookmarks 
+	pdftitle = {\thesisTitle}, % define the title that gets displayed in the "Document Info" window of Acrobat 
+	pdfauthor = {\thesisAuthor},
+	pdfsubject = {\thesisSubject},
+	pdfkeywords = {ITS2, hack-me-if-you-can},
+	colorlinks = true,
+	citecolor = black,
+	filecolor = black,
+	linkcolor = black,
+	urlcolor = black,
+	linktoc = all,
+}
+
+\title{\thesisTitle}
+\author{\thesisAuthor}
+\date{\today{}}
+
+\begin{document}
+	% Vorspann einleiten:
+	\frontmatter
+	
+	\input{10-Praeambel/Titlepage}
+	\cleardoublepage
+	\pagestyle{scrheadings}
+	\input{10-Praeambel/Jurat}
+	\tableofcontents	
+
+	
+	% Hauptteil einleiten:
+	\mainmatter
+	
+	% Einstellungen für die Fußzeile aktualisieren
+		% Einstellungen nur für die rechten Seiten
+		% Layout: Abschnitt  |  Seite
+	\rofoot{\textbf{\headmark~~$\mid$~~\pagemark}}
+		% Einstellungen nur für die linken Seiten
+		% Layout: Seite  |  Kapitel
+	\lefoot{\textbf{\pagemark~~$\mid$~~Kapitel~\headmark}}
+	
+	\chapter{Einleitung}
+	%\input{20-Einleitung/xyz}
+	
+	\chapter{Analyse}
+	%\input{30-Analyse/xyz}
+	
+	\chapter{Entwurf}
+	%\input{40-Entwurf/xyz}
+	
+	\chapter{Realisierung}
+	%\input{50-Realisierung/xyz}
+	
+	\chapter{Ergebnis}
+	%\input{60-Ergebnis/xyz}
+	
+	\chapter{Zusammenfassung \& Aussicht}
+	%\input{70-Ende/xyz}
+	
+	% Nachspann einleiten:
+	\backmatter 
+	% Einstellungen für die Fußzeile aktualisieren
+	% 	Einstellungen nur für die rechten Seiten
+	% 	Layout: Abschnitt  |  Seite
+	\rofoot{\textbf{$\mid$~~\pagemark}}
+	%	Einstellungen nur für die linken Seiten
+	%	Layout: Seite  |  Kapitel
+	\lefoot{\textbf{\pagemark~~$\mid$}}
+	\chapter{Anhang}
+	%\input{90-Anhang/xyz}
+	
+	% Tabellenverzeichnis
+	\listoffigures
+	
+	% Abbildungsverzeichnis
+	\listoftables
+	
+	% Quellenverzeichnis
+	\printbibliography
+	 
+	% Stichwortverzeichnis
+	\printindex
+	
+\end{document}
