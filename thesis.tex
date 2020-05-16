@@ -10,6 +10,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
+\usepackage{csquotes}
+
 % Keine extra Leerzeichen nach einem Punkt
 \frenchspacing
 
@@ -35,15 +37,20 @@
 % Paket für code Beispiele
 % \usepackage{listings}
 
-% Paket für Verlinkungen
-\usepackage{url, hyperref}
+% Paket für Komma getrennte Fußnoten
+\usepackage[multiple]{footmisc}
 
-\renewcommand{\UrlBreaks}{\do\/\do\-\do\_}	% allows URL breaking on /, - and _
-\usepackage{breakurl}
+% Paket für Verlinkungen
+\PassOptionsToPackage{hyphens}{url}\usepackage[breaklinks]{hyperref}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+
+\renewcommand{\UrlBreaks}{\do\/\do\-\do\_\do\&\do\?}	% allows URL breaking on /, -, _ and &
 
 % Eigene Commands
-\newcommand{\thesisTitle}{ASDF}
-\newcommand{\thesisSubject}{ASDF2}
+\newcommand{\thesisTitle}{Vorläufiges Thema}
+\newcommand{\thesisSubject}{Vorläufiges Subject}
 \newcommand{\thesisAuthor}{Robert Hartings}
 \newcommand{\Matrikelnummer}{1164453}
 
@@ -93,6 +100,7 @@
 	\lefoot{\textbf{\pagemark~~$\mid$~~Kapitel~\headmark}}
 	
 	\chapter{Einleitung}
+	\input{20-Einleitung/Motivation}
 	%\input{20-Einleitung/xyz}
 	
 	\chapter{Analyse}
