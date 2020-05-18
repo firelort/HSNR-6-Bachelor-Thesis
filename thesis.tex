@@ -29,10 +29,10 @@
 % Einstellungen für die Fußzeile, die Kopfzeile wird nicht verwendet
 	% Einstellungen nur für die rechten Seiten
 	% Layout: |  Seite
-\rofoot{\textbf{$\mid$~~\pagemark}}
+\rofoot[\textbf{$\mid$~~\pagemark}]{\textbf{$\mid$~~\pagemark}}
 	% Einstellungen nur für die linken Seiten
 	% Layout: Seite  |
-\lefoot{\textbf{\pagemark~~$\mid$}}
+\lefoot[\textbf{\pagemark~~$\mid$}]{\textbf{\pagemark~~$\mid$}}
 
 % Paket für code Beispiele
 % \usepackage{listings}
@@ -42,9 +42,6 @@
 
 % Paket für Verlinkungen
 \PassOptionsToPackage{hyphens}{url}\usepackage[breaklinks]{hyperref}
-\makeatletter
-\g@addto@macro{\UrlBreaks}{\UrlOrds}
-\makeatother
 
 \renewcommand{\UrlBreaks}{\do\/\do\-\do\_\do\&\do\?}	% allows URL breaking on /, -, _ and &
 
@@ -56,7 +53,7 @@
 
 
 % Literaturverzeichnis einrichten
-\usepackage[style=alphabetic, citestyle=alphabetic]{biblatex}
+\usepackage[style=ieee, citestyle=ieee]{biblatex}
 \addbibresource{thesis.bib}
 
 \hypersetup{
@@ -94,14 +91,15 @@
 	% Einstellungen für die Fußzeile aktualisieren
 		% Einstellungen nur für die rechten Seiten
 		% Layout: Abschnitt  |  Seite
-	\rofoot{\textbf{\headmark~~$\mid$~~\pagemark}}
+	\rofoot[\textbf{\headmark~~$\mid$~~\pagemark}]{\textbf{\headmark~~$\mid$~~\pagemark}}
 		% Einstellungen nur für die linken Seiten
 		% Layout: Seite  |  Kapitel
-	\lefoot{\textbf{\pagemark~~$\mid$~~Kapitel~\headmark}}
+	\lefoot[\textbf{\pagemark~~$\mid$~~Kapitel~\headmark}]{\textbf{\pagemark~~$\mid$~~Kapitel~\headmark}}
 	
 	\chapter{Einleitung}
+	\input{20-Einleitung/Einleitung}
 	\input{20-Einleitung/Motivation}
-	%\input{20-Einleitung/xyz}
+	\input{20-Einleitung/Aufgabenstellung}
 	
 	\chapter{Analyse}
 	%\input{30-Analyse/xyz}
@@ -123,10 +121,10 @@
 	% Einstellungen für die Fußzeile aktualisieren
 	% 	Einstellungen nur für die rechten Seiten
 	% 	Layout: Abschnitt  |  Seite
-	\rofoot{\textbf{$\mid$~~\pagemark}}
+	\rofoot[\textbf{$\mid$~~\pagemark}]{\textbf{$\mid$~~\pagemark}}
 	%	Einstellungen nur für die linken Seiten
 	%	Layout: Seite  |  Kapitel
-	\lefoot{\textbf{\pagemark~~$\mid$}}
+	\lefoot[\textbf{\pagemark~~$\mid$}]{\textbf{\pagemark~~$\mid$}}
 	\chapter{Anhang}
 	%\input{90-Anhang/xyz}
 	
