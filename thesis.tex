@@ -35,7 +35,7 @@
 \lefoot[\textbf{\pagemark~~$\mid$}]{\textbf{\pagemark~~$\mid$}}
 
 % Paket für code Beispiele
-% \usepackage{listings}
+\usepackage{listings}
 
 % Paket für Komma getrennte Fußnoten
 \usepackage[multiple]{footmisc}
@@ -97,18 +97,30 @@
 	\lefoot[\textbf{\pagemark~~$\mid$~~Kapitel~\headmark}]{\textbf{\pagemark~~$\mid$~~Kapitel~\headmark}}
 	
 	\chapter{Einleitung}
+	\label{chap:Einleitung}
 	\input{20-Einleitung/Einleitung}
 	\input{20-Einleitung/Motivation}
 	\input{20-Einleitung/Aufgabenstellung}
 	
 	\chapter{Analyse}
-	%\input{30-Analyse/xyz}
+	\label{chap:Analyse}
+	\input{30-Analyse/Analyse}
+	\input{30-Analyse/Labor}
+	\input{30-Analyse/Systemkomponenten}
+	\input{30-Analyse/Schnittpunkte}
+	\input{30-Analyse/Anforderungen}
 	
 	\chapter{Entwurf}
+	\label{chap:Entwurf}
 	%\input{40-Entwurf/xyz}
 	
+	\chapter{Technologien}
+	\label{chap:Technologien}
+	%\input{50-Entwurf/xyz}
+	
 	\chapter{Realisierung}
-	%\input{50-Realisierung/xyz}
+	\label{chap:Realisierung}
+	%\input{60-Realisierung/xyz}
 	
 	\chapter{Ergebnis}
 	%\input{60-Ergebnis/xyz}
@@ -133,6 +145,9 @@
 	
 	% Abbildungsverzeichnis
 	\listoftables
+	
+	% Codeverzeichnis
+	\lstlistoflistings
 	
 	% Quellenverzeichnis
 	\printbibliography
