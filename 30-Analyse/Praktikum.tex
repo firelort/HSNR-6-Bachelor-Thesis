@@ -1,0 +1,38 @@
+\section{Praktikum \textquote{Catch me, if you can}}
+\label{sec:Praktikum}
+
+Das zweite der drei Praktika \textquote{Catch me, if you can} wird im Rahmen eines Contest zwischen den teilnehmenden Studierenden Teams ausgetragen. Der Contest ist an ein CTF-Contest (Capture the Flag) angelehnt, nur dass die Teams Flags unter anderem auch durch das \textquote{hacken} von anderen Teams erhalten können.
+
+Der Contest ist in drei Phasen eingeteilt.
+\begin{enumerate}
+	\item Vorbereitung
+	\item Contest
+	\item Abschluss
+\end{enumerate}
+
+\paragraph{Vorbereitung}\label{para:Vorbereitung}
+Die Studierenden erhalten circa Minuten Zeit, um ihr System in Betrieb zu nehmen und sich mit diesem vertraut zu machen. Auch ist es möglich das System – ohne dass dieses angegriffen werden kann – abzusichern.
+
+\paragraph{Contest}\label{para:Contest}
+Die Contestphase selber dauert circa 140 Minuten. In dieser Zeit dürfen die Studierenden sich untereinander Angreifen. Diese Zeit kann auch für die weitere Absicherung des eigenen Systems, die Lösung von zur Verfügung stehender Challenges sowie der Nutzung des Flagshops genutzt werden.
+
+\paragraph{Abschluss}\label{para:Abschluss}
+Nach Ende der Contestphase müssen die Studierenden ihre Angriffe einstellen und eine Flagabgabe ist nicht mehr möglich. Die Studierenden erstellen ein Screenshot der Punkteübersicht, um diesen in ihrem Bericht aufzunehmen. Eine Nachbesprechung ist optional und ist mit maximal 30 Minuten angesetzt.
+
+Während des Contest gelten die folgenden Regeln:
+\begin{itemize}
+\item Der Gameserver darf nicht angegriffen werden!
+\item Es dürfen nur die in Betrieb zu haltenden VirtualBox-Images angegriffen werden.
+\item Denial of Service Angriffe sind nicht erlaubt.
+\item Sollte eine Gruppe Root-Rechte auf einem angegriffen Rechner erlangen ist es verboten, Software auf
+dem Rechner zu löschen oder durch Konfiguration unbrauchbar zu machen. Sie dürfen allein die Flags
+auslesen.
+\item Flags dürfen nicht modifiziert oder gelöscht werden!
+\item Sämtliche Dienste müssen für den Gameserver (IP: 192.168.87.1) erreichbar bleiben!
+\item Das Hauptverzeichnis des HTTP-Servers /var/www/ muss für alle Rechner erreichbar bleiben, andere
+Verzeichnisse müssen für den internen Zugriff und extern über Username/Passwort zugänglich sein.
+\item SSH- und der Datenbank-Server müssen für alle erreichbar sein
+\item ftp-Server muss für alle erreichbar sein, Anonymous-Login ist nicht erforderlich.
+\item ICMP-Pakete (ping) dürfen nicht blockiert werden!
+\item  Das Passwort des Logins »gamemaster« darf nicht zurückgesetzt werden!
+\end{itemize} \cite[S.9]{quadePraktikumITSecurity2017}\cite[S.10-11]{sosnaKonzeptionUndRealisierung2010}
