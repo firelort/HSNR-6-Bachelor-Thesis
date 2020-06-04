@@ -4,35 +4,35 @@
 Im folgenden werden die verschiedenen Komponenten des Auswertungs- und Überwachungssystems in der derzeitigen Implementierung untersucht. Dabei werden Rückschlüsse auf Anforderungen gezogen sowie Schwachstellen und Verbesserungsmöglichkeiten herausgearbeitet.
 
 \subsubsection{Scanner}\label{subsubsec:Scanner}
-Der Scanner prüft in regelmäßigen Abständen, welcher beim Start des Spieles in der Web Oberfläche eingestellt werden kann, die auf den Guest Systemen der Studierenden installierten Dienste und speichert das Ergebnis ab. Die folgenden Dienste werden pro Team geprüft.
+Der Scanner prüft in regelmäßigen Abständen die auf den Guest Systemen der Studierenden installierten Dienste und speichert das Ergebnis ab. Die Abstände können beim Starten des Spieles eingestellt werden. Die folgenden Dienste werden pro Team geprüft.
 
 \paragraph{ScanUp}\label{para:ScanUp}
 Die Aufgabe dieses Scanns besteht darin zu prüfen, ob das Guest System noch für den Server erreichbar ist. Sollte das Guest System nicht erreichbar sein wird hierfür ein Strafpunkt vergeben. Aus technischer Sicht wird das Linux Kommando \textit{ping} verwendet. An Hand des Rückgabewertes kann nachvollzogen werden, ob der Server das Guest System erreichen konnte.
 
 \paragraph{ScanBubble}\label{para:ScanBubble}
 Auf dem Guest System läuft ein selbst programmierter Bubble Server, welcher Flags via Telnet bereitstellt. Nach dem eine Flag abgeholt worden ist, erfolgt ein Timeout, sodass für eine bestimmte Zeit keine weitere Flag abgeholt werden kann. Der Bubble Server nimmt Anfragen auf dem Port \textit{12321} für unverschlüsselte Flags und Port \textit{12322} für verschlüsselte Flags entgegen.
-Der Scanner überprüft, ob eine Telnet Verbindung zu Port \textit{12321} möglich ist, in dem der Scanner eine Telnet Verbindung öffnet und prüft, ob die Verbindung erfolgreich war.
+Der Scanner überprüft, ob eine Telnet Verbindung zu dem Port \textit{12321} möglich ist, in dem der Scanner eine Telnet Verbindung öffnet und prüft, ob die Verbindung erfolgreich war.
 
 \paragraph{ScanWebUp}\label{para:ScanWebUp}
-Jedes Guest System stellt mit Hilfe eines Apache Web Servers und php-Dateien Webseiten und Daten bereit, welche mit Hilfe von Web Clients abgerufen werden können. Dazu muss auf Port \textit{80} der HTTP- und auf Port \textit{443} der HTTPS Dienst laufen. Dieses verifiziert der Scanner in dem dieser eine Socket Verbindung zu den Ports \textit{80} und \textit{443} öffnet und das Ergebnis prüft.
+Jedes Guest System stellt mit Hilfe eines Apache Web Servers und php-Dateien Webseiten und Daten bereit, welche mit Hilfe von Web Clients abgerufen werden können. Dazu muss auf Port \textit{80} der HTTP- und auf Port \textit{443} der HTTPS Dienst laufen. Dieses verifiziert der Scanner in dem eine Socket Verbindung zu den Ports \textit{80} und \textit{443} geöffnet und das Ergebnis prüft wird.
 
 \paragraph{ScanSQLInjectUp}\label{para:ScanSQLInjectUp}
-Dieser Scanner prüft, ob das Team die SQL Injection bereits bei sich durchgeführt hat. Dazu wird geprüft ob die Datei, welche nach der erfolgreichen SQL Injection angelegt wird, bereits angelegt worden ist. Damit die Studierenden die Datei nicht per Hand anlegen können, wird geprüft ob die Datei mit einem mitgegebenen Nutzernamen und Passwort erfolgreich eine SQL Abfrage stellen kann. Das Ergebnis wird dann mit dem erwarteten Ergebnis verglichen.
+Dieser Scanner prüft, ob die SQL Injection des Teams erreichbar und benutzbar ist. Der Scanner sendet hierzu einen valide Kombination aus Nutzername und Passwort an den Webserver. Das Ergebnis wird dann mit dem erwarteten Ergebnis verglichen.
 
 \paragraph{ScanSQLInjectSave}\label{para:ScanSQLInjectSave}
-Wie bei ScanSQLInjectUp (\ref{para:ScanSQLInjectUp}) wird geprüft ob die angelegte Datei das erwartet Ergebnis zurück liefert. Besonderheit hierbei ist, dass statt einer validen Kombination aus Nutzernamen und Passwort eine SQL Injection im Nuterznamen übergeben wird. So kann geprüft werden, ob das Team die SQL Injection abgesichert hat.
+Wie bei ScanSQLInjectUp (\ref{para:ScanSQLInjectUp}) wird geprüft ob das erwartet Ergebnis zurückgeliefert wird. Besonderheit hierbei ist, dass statt einer validen Kombination aus Nutzernamen und Passwort eine SQL Injection im Nuterznamen übergeben wird. So kann geprüft werden, ob das Team die SQL Injection abgesichert hat.
 
 \paragraph{ScanXSSSave}\label{para:ScanXSSSave}
 Dieser Scanner prüft, ob der auf dem Guest System mögliche XSS Angriff behoben worden oder weiterhin möglich ist. Dazu wird die Webseite mit Payload, welches einen XSS Angriff darstellt, aufgerufen. In der Rückgabe wird geprüft, ob der Payload ungefilter auf der Webseite zu finden ist. Sollte diese der Fall sein, ist der XSS Angriff möglich und nicht oder unzureichend von den Studierenden abgesichert worden.
 
 \paragraph{ScanSQLSave}\label{para:ScanSQLSave}
-Bei diesem Scan wird geprüft, ob die Verbindung mit dem auf allen System voreingestellten Passwort \textit{toor} auf dem Root Account der SQL Datenbank \textit{root} möglich ist. Oder ob die Studierenden dieses unsichere Passwort geändert haben.
+Bei diesem Scan wird kontrolliert, ob die Verbindung mit dem auf allen System voreingestellten Passwort \textit{toor} auf dem Root Account \textit{root} der SQL Datenbank möglich ist. Oder ob die Studierenden dieses unsichere Passwort geändert haben. Auch wird geprüft, ob das htaccess Passwort von phpMyAdmin Pafd geändert worden ist.
 
 \paragraph{ScanFTPSave}\label{para:ScanFTPSave}
 Auf dem Client System läuft ein FTP Server, welcher ohne Login (Nutzername \& Passwort) Daten bereitstellt. Der Scanner prüft, ob ein sogenannter Anonymous Login möglich ist, in dem eine sFTP Verbindung ohne Login aufgebaut wird. Sollte die Verbindung erfolgreich sein, ist der Anonymous Login immer noch möglich.
 
 \paragraph{ScanTelnetSave}\label{para:ScanTelnetSave}
-Ein Telnet Server wartet auf Verbindungen auf Port \textit{23}. Da dieser Dienst nicht benötigt wird, sollen die Studierende diesen Dienst abschalten oder deinstallieren. Der Scanner prüft, ob eine Verbindung via Telnet auf Port \textit{23} möglich ist, in dem dieser eine Verbindung via Telnet zu Port \textit{23} aufbaut und prüft ob die Verbindung erfolgreich war.
+Ein Telnet Server wartet auf Verbindungen auf Port \textit{23}. Da dieser Dienst nicht benötigt wird, sollen die Studierende diesen abschalten oder deinstallieren. Der Scanner prüft, ob eine Verbindung via Telnet auf Port \textit{23} möglich ist, in dem dieser eine Verbindung via Telnet zu Port \textit{23} aufbaut und prüft ob dieses erfolgreich war.
 
 \subsubsection{Generierung von Flags}\label{subsubsec:Generierung_von_Flags}
 
@@ -50,13 +50,13 @@ function generate($ip,$anzahl,$filename,$SALT){
 }
 \end{lstlisting}
 
-Dieser Algorithmus erstellt pro Team, hier durch die IP-Adresse repräsentiert, eine bestimmte Anzahl an Flags. Dazu wird ein sogenannter seed mit Hilfe der Hashfunktion MD5 gehascht. Der Seed setzt sich aus \textit{Salt + IP-Adresse + \textquote{Aufgabe} + Zähler} zusammen.
+Dieser Algorithmus erstellt pro Team, hier durch die IP-Adresse repräsentiert, eine bestimmte Anzahl an Flags. Dazu wird ein sogenannter seed mit Hilfe der Hashfunktion MD5 gehasht. Der Seed setzt sich aus \textit{Salt + IP-Adresse + \textquote{Aufgabe} + Zähler} zusammen.
 
 Der Salt wird benötigt, um den Flags eine gewisse Lebenszeit zu geben. In der derzeitigen Implementierung enthält der Salt das aktuelle Jahr sowie das jeweilige Semester. So werden nur die Flags des aktuellen Semesters akzeptiert und eine Verwendung von Flags aus alten Semestern ist nicht möglich.
 
 Mithilfe der IP-Adresse werden die Flags dem jeweiligen Team zugeordnet.
 
-Der String \textquote{Aufgabe} wird als Geheimnis verwendet, um das Fälschen von Flags zu verhindern.
+Der String (Zeichenfolge) \textquote{Aufgabe} wird als Geheimnis verwendet, um das Fälschen von Flags zu verhindern.
 
 Damit pro Team mehrere eindeutige Flags geniert werden können, wird ein sogenannter Zähler genutzt. Dieser Zähler ist auf 0 initialisiert und wird pro generierter Flag um eins erhöht, bis die benötigte Anzahl an Flags generiert worden ist.\cite[S.48]{sosnaKonzeptionUndRealisierung2010}
 
@@ -69,13 +69,11 @@ Neben diesen Darstellungen befindet sich auf dem Server ein sogenannter Flagshop
 Die Betreuer haben die Möglichkeit über die Web-GUI ein neues Spiel anzulegen, das Spiel zu starten oder zu stoppen. Auch kann von dem Spiel ein Backup erstellt werden. Neben diesen Funktionen zur Spielsteuerung können an die Teams Strafen für unfaires oder regelverletzendes Verhalte verteilt werden. Diese Strafen nehmen direkten Einfluss auf die Punkte des jeweiligen Teams. Auch besteht die Möglichkeit weiter Benutzer für das Administrationsinterface zu registrieren.
 
 \paragraph{Flagshop} \label{para:Flagshop}
-Im Flagshop wird es den Studierenden ermöglicht weiter Flags zu kaufen. Um einen Einkauf im Flagshop durch zuführen, müssen die Teams sich vorher registrieren. Diese Registrierung erfragt eine Hand von scheinbar erforderlichen Daten. Das Format und die Erforderlichkeit der Daten kann durch eine Manipulierung im HTML Seite geändert werden. Für jeder diese Manipulation erhält der Nutzer Flags.
+Im Flagshop wird es den Studierenden ermöglicht weiter Flags zu kaufen. Um einen Einkauf im Flagshop durch zuführen, müssen die Teams sich vorher registrieren. Diese Registrierung erfragt eine Hand von scheinbar erforderlichen Daten. Das Format und die Erforderlichkeit der Daten kann durch eine Manipulierung der HTML Seite geändert werden. Für jeder diese Manipulation erhält der Nutzer Flags. Auch wird die Güte des angegebenen Passwortes anhand von Länge, Sonderzeichen, Groß- und Kleinbuchstaben, Ziffern bewertet und mit Flags belohnt.
 
-Auch wird die Güte des angegeben Passworts anhand von Länge, Sonderzeichen, Groß- und Kleinbuchstaben, Ziffern bewertet und mit Flags belohnt.
+Nach der Registrierung können die Studierende sich für Punkte Flags kaufen. Dazu stehen zwei Pakete mit 8 bzw. 6 Flags für den Preis von 4 Punkten pro Paket zur Verfügung. Der Preis kann auf zwei Arten reduziert werden. Entweder werden die Pakt IDs per Hand auf nicht vorhanden IDs geändert. So berechnet der Flagshop nur noch einen Preis von insgesamt 4 Punkten für beide Pakete. Um die Flags kostenlos zu erhalten, kann das \textit{hidden input} Feld in dem der Preis zwischen gespeichert wird auf null gesetzt werden. So sind die Flags kostenlos. \cite[S. 63]{abtsUeberarbeitungUndErweiterung2016}
 
-Nach der Registrierung können die Studierende sich für Punkte Flags kaufen. Dazu stehen zwei Pakete mit 8 bzw. 6 Flags für den Preis von 4 Punkten pro Paket zur Verfügung. Der Preis kann auf zwei Arten reduziert werden. Entweder werden die Pakt IDs per Hand auf nicht vorhanden IDs geändert. So berechnet der Flagshop nur noch einen Preis von insgesamt 4 Punkten für beide Pakete. Um die Flags kostenlos zu erhalten, kann das \textit{hidden input} Feld in dem der Preis zwischen gespeichert wird auf Null gesetzt werden. So sind die Flags kostenlos. \cite[S. 63]{abtsUeberarbeitungUndErweiterung2016}
-
-Auf diese Weise ist es auch möglich einen negativen Preis festzulegen und so dem eigenen Team Punkte zuzuschreiben, da eine Überprüfung in \textit{/flagshop/shop.php} nicht richtig implementiert ist. So wird nicht geprüft, ob der von dem Nutzer eingegeben Preis kleiner als Null ist, sondern ob der Preis gleich Null ist. Sollte diese der Fall sein, wird der Preis auf null gesetzt. Bei richtiger Implementierung würde ein negativer Preis auf null gesetzt.
+Auf diese Weise ist es auch möglich einen negativen Preis festzulegen und so dem eigenen Team Punkte zuzuschreiben, da eine Überprüfung in \textit{/flagshop/shop.php} nicht richtig implementiert ist. So wird nicht geprüft, ob der von dem Nutzer eingegeben Preis kleiner als null ist, sondern ob der Preis gleich null ist. Sollte diese der Fall sein, wird der Preis auf null gesetzt. Bei richtiger Implementierung würde ein negativer Preis auf null korrigiert.
 
 \begin{lstlisting}[language=PHP,caption={Aktuelle Prüfung des Preises},captionpos=b]
 $preis=strip_tags($_POST['preis']);
@@ -85,13 +83,13 @@ if($preis==0){
 \end{lstlisting}
 
 \paragraph{Challenges} \label{para:Challenges}
-Derzeitig sind fünf Challenges implementiert, welche vom System in zufälliger Reihenfolge an interessierte Teams verteilt werden. Eine abgeschlossene oder abgebrochene Challenge, durch neu laden der Webseite oder betätigen der Zurück Taste, kann nicht wiederholt werden. Eine Challenge kostet 10 Punkte. Nach erfolgreichem Abschließen einer Challenge gibt es 10 Punkte plus einen gewissen Anzahl an Punkten für das absolvieren der Aufgabe. Die folgenden Challenges sind implementiert\cite[S.19-20]{abtsUeberarbeitungUndErweiterung2016}.
+Derzeitig sind fünf Challenges implementiert, welche vom System in zufälliger Reihenfolge an interessierte Teams verteilt werden. Eine abgeschlossene oder abgebrochene Challenge, durch neu laden der Webseite oder betätigen der Zurück-Taste, kann nicht wiederholt werden. Eine Challenge kostet 10 Punkte. Nach erfolgreichem Abschließen einer Challenge gibt es 10 plus eine gewisse Anzahl an Punkten für das Absolvieren der Aufgabe. Die folgenden Challenges sind implementiert\cite[S.19-20]{abtsUeberarbeitungUndErweiterung2016}.
 
 \subparagraph{Aufgabe 1: robots.txt}\label{subpara:Aufgabe_1_robots.txt}
 Hier sollen die Studierenden anhand der robots.txt den unbekannten Ordner, welcher von Suchmaschinen nicht indexiert wird, finden und dort die geheimen Informationen auslesen.
 
 \subparagraph{Aufgabe 2: JavaScript-Login-Bypass}\label{subpara:Aufgabe_2_JavaScript-Login-Bypass}
-Bei dieser Challenge ist die JavaScript Funktion im Quelltext versteckt. Das Verstecken ist mit einer Meldung, wie \textquote[B. Abts]{Seitenquelltext deaktiviert} und vielen Leerzeilen realisiert. In der aktuellsten Version von FireFox ist dieses nicht mehr möglich, da FireFox die Leerzeilen entfernt und die JavaScript Funktion oben im Quelltext zu sehen.
+Bei dieser Challenge ist die JavaScript Funktion im Quelltext versteckt. Das Verstecken ist mit einer Meldung, wie \textquote[\cite{abtsUeberarbeitungUndErweiterung2016}]{Seitenquelltext deaktiviert} und vielen Leerzeilen realisiert. In der aktuellsten Version von FireFox ist dieses nicht mehr möglich, da FireFox die Leerzeilen entfernt und die JavaScript Funktion oben im Quelltext zu sehen.
 
 \subparagraph{Aufgabe 3: Form-Modification}\label{subpara:Aufgabe_3_Form-Modification}
 In dieser Challenge sollen die Studierende verstehen, dass auch die Werte von Drop-Down-Menüs, Checkboxen und Radio-Buttons durch Manipulation auf nicht vorgegebene Werte geändert werden können. Deshalb ist bei diesen auch eine Serverseitige Überprüfung notwendig.
@@ -102,7 +100,7 @@ Die Aufgabe besteht darin einen bestimmten Login Namen aus einem Drop-Down-Menü
 Das Passwort, welches die Studierenden eingeben müssen, wird Client Seitig mithilfe einer JavaScript Funktion geprüft. Damit das Passwort nicht im Klartext im Quelltext steht, wird das Passwort verschleiert. So werden drei Strings Zeichen für Zeichen verglichen. Sollten die Zeichen in mindestens zwei der drei Strings gleich sein, dann gehört das Zeichen zum Passwort. Im Anschluss wird das generierte Passwort mit dem durch die Studierenden gegebenen Passwort verglichen. Sollten die Passwörter gleich sein, ist die Challenge erfolgreich abgeschlossen.
 
 \subparagraph{Aufgabe 5: URL-Hex-Injection}\label{subpara:Aufgabe_5_URL-Hex-Injection}
-Die Studierenden sollen an geheime Informationen in HEX-Wert benannten Ordner gelangen. Diese Aufgabe soll zeigen, dass Ordner die nach einen HEX-Wert benannten Ordner nicht vor Zugriffen geschützt ist, da das HEX-Zeichen \textit{\%} selber durch einen HEX-Wert dargestellt werden kann.
+Die Studierenden sollen an geheime Informationen in HEX-Wert benannten Ordner gelangen. Diese Aufgabe soll zeigen, dass Ordner die nach einen HEX-Wert benannten sind, so nicht vor Zugriffen geschützt werden können, da das HEX-Zeichen \textit{\%} selber durch einen HEX-Wert dargestellt werden kann.
 
 \subsubsection{Abgabe von Flags}\label{subsubsec:Abgabe_von_Flags}
 Um Flags abgeben zu können, müssen die Studierenden sich mit ihren Hackits in der Web-GUI anmelden. Dort ist es möglich in einem Input Feld eine Flag synchron abzugeben. Das bedeutet, dass nach jeder Abgabe die Webseite neu geladen wird. Des Weiteren ist es nicht möglich mehrere Flags gleichzeitig abzugeben.
@@ -115,8 +113,8 @@ Auf den Clients läuft ein Webserver mit einigen Schwachstellen.
 
 So ist in das Kundenbewertungsformular eine XSS Schwachstelle implementiert. Durch die Schwachstelle wird die Nutzereingabe ungefiltert in das HTML Formular übernommen. Durch diese Schwachstelle kann bösartiger Code geladen werden. Dieser Code kann dann beispielsweise Cookies, Session Tokens oder andere vertrauliche Informationen auslesen und den Angreifern übermitteln. 
 
-Eine weitere Schwachstelle stellt der sogenannte \textquote{Login zum Membersbereich} dar. Beim einem Login Versuch wird der Benutzername und das Passwort ungefiltert in eine SQL eingefügt. So ist ein SQL Angriff auf die dahinter liegende Datenbank möglich. Durch solche einen Angriff können die gesamte Daten ausgelesen werden. Diese Schwachstelle lässt sich erst beheben, wenn die Gruppe die SQL-Injection bei sich selber durchgeführt hat.
+Eine weitere Schwachstelle stellt der sogenannte \textquote{Login zum Membersbereich} dar. Bei einem Login Versuch wird der Benutzername und das Passwort ungefiltert in eine SQL Statement eingefügt. So ist ein SQL Angriff auf die dahinter liegende Datenbank möglich. Durch solch einen Angriff können Daten ausgelesen werden. Diese Schwachstelle lässt sich erst beheben, wenn die Gruppe die SQL-Injection bei sich selber durchgeführt hat.
 
-Neben diesen Schwachstellen gibt es eine Registierung für den Flagshop. Dieses erfordert einige Eingaben, wie Name, Alter, Postleitzahl und vieles mehr. Die Eingaben sind im HTML-Formular als Pflicht markiert und haben eine Vorgabe der Form. Ein Absenden ist ohne Angabe dieser Daten nicht möglich. Die Studierenden erhalten jedoch für jede nicht getätigte und für jede nicht der Form entsprechenden Angabe Flags nach der Registrierung. Dies ist Möglich, da das HTML-Formular durch die Studierenden geändert werden kann und der Server nur die Angaben bezüglich Passwort und Nutzername prüft. Diese beiden Angaben werden genutzt um sich am Flagshop des Servers anzumelden und Flaggen zu erwerben. \textit{(Siehe: \ref{para:Flagshop} Flagshop)}
+Neben diesen Schwachstellen gibt es eine Registrierung für den Flagshop. Dieses erfordert einige Eingaben, wie Name, Alter, Postleitzahl und vieles mehr. Die Eingaben sind im HTML-Formular als Pflicht markiert und haben eine Vorgabe der Form. Ein Absenden ist ohne Angabe dieser Daten nicht möglich. Die Studierenden erhalten jedoch für jede nicht getätigte und für jede nicht der Form entsprechenden Angabe Flags nach der Registrierung. Dies ist möglich, da das HTML-Formular durch die Studierenden geändert werden kann und der Server nur die Angaben bezüglich Passwort und Nutzername prüft. Diese beiden Angaben werden genutzt, um sich am Flagshop des Servers anzumelden und Flags zu erwerben. \textit{(Siehe: \ref{para:Flagshop} Flagshop)}
 
-Auch stellt der Webserver eine Bildgalerie zur Verfügung in dieser befinden sich zwei Bilder, welche ebenfalls Flags enthalten.
+Außerdem stellt der Webserver eine Bildgalerie zur Verfügung in dieser befinden sich zwei Bilder, welche ebenfalls Flags enthalten.
