@@ -1,4 +1,4 @@
-<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>1540</x><y>250</y><w>230</w><h>220</h></coordinates><panel_attributes>/ScanOperation/
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>1710</x><y>170</y><w>230</w><h>220</h></coordinates><panel_attributes>/ScanOperation/
 {abstract}
 --
 -name: String
@@ -13,55 +13,57 @@
 +get_public_name:  public_name
 /+start()/
 +get_result(): Boolean
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>670</x><y>680</y><w>290</w><h>90</h></coordinates><panel_attributes>/ScanBubbleOperation/
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>820</y><w>290</w><h>90</h></coordinates><panel_attributes>/ScanBubbleOperation/
 {abstract}
 --
 -port: Integer
 --
 -is_bubble_port_open(port: Integer): Boolean
-+start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>460</y><w>870</w><h>240</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>850;10;850;140;10;140;10;220</additional_attributes></element><element><id>UMLClass</id><coordinates><x>510</x><y>840</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanBubbleOperation
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1810</x><y>380</y><w>200</w><h>510</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70;180;70;180;490;110;490</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>960</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanBubbleOperation
 --
 
---</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>650</x><y>760</y><w>180</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>160;10;160;60;10;60;10;80</additional_attributes></element><element><id>UMLClass</id><coordinates><x>840</x><y>840</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanBubbleNgOperation
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1450</x><y>900</y><w>350</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>330;10;330;40;10;40;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>960</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanBubbleNgOperation
 --
 
---</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>760</y><w>210</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;60;190;60;190;80</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>770</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanFTPSaveOperation
---
-
---
-+start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>690</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanHostUpOperation
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1770</x><y>900</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>560</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanFTPSaveOperation
 --
 
 --
-+start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>690</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanHtaccessSaveOperation
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>480</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanHostUpOperation
 --
 
 --
-+start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>850</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanSqlPasswordChangeOperation
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>480</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanHtaccessSaveOperation
 --
 
 --
-+start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>930</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanTelnetSaveOperation
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>640</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanSqlPasswordChangeOperation
+--
+
+--
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>720</y><w>290</w><h>80</h></coordinates><panel_attributes>ScanTelnetSaveOperation
+--
+
 --
 -is_telnet_up(): Boolean
---
-+start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>1010</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanXssSaveOperation
---
-
---
-+start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>850</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanHttpUpOperation
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>820</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanXssSaveOperation
 --
 
 --
-+start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>930</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanHttpsUpOperation
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>660</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanHttpUpOperation
 --
 
 --
-+start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>770</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanHttpsUpOperation
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>740</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanHttpsUpOperation
+--
+
+--
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>560</y><w>290</w><h>80</h></coordinates><panel_attributes>ScanHttpsUpOperation
+--
+
 --
 -is_sql_injection_up(): Boolean
---
-+start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>460</y><w>440</w><h>280</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>420;10;420;140;10;140;10;260;80;260</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>460</y><w>440</w><h>360</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>420;10;420;140;10;140;10;340;80;340</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>460</y><w>440</w><h>440</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>420;10;420;140;10;140;10;420;80;420</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>460</y><w>440</w><h>520</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>420;10;420;140;10;140;10;500;80;500</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>460</y><w>440</w><h>600</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>420;10;420;140;10;140;10;580;80;580</additional_attributes></element><element><id>Relation</id><coordinates><x>1640</x><y>460</y><w>370</w><h>280</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;140;350;140;350;260;280;260</additional_attributes></element><element><id>Relation</id><coordinates><x>1640</x><y>460</y><w>370</w><h>360</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;140;350;140;350;340;280;340</additional_attributes></element><element><id>Relation</id><coordinates><x>1640</x><y>460</y><w>370</w><h>440</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;140;350;140;350;420;280;420</additional_attributes></element><element><id>Relation</id><coordinates><x>1640</x><y>460</y><w>370</w><h>520</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;140;350;140;350;500;280;500</additional_attributes></element><element><id>UMLClass</id><coordinates><x>880</x><y>210</y><w>310</w><h>300</h></coordinates><panel_attributes>Scanner
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>380</y><w>610</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>590;10;590;70;10;70;10;130;80;130</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>380</y><w>610</w><h>230</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>590;10;590;70;10;70;10;210;80;210</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>380</y><w>610</w><h>310</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>590;10;590;70;10;70;10;290;80;290</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>380</y><w>610</w><h>390</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>590;10;590;70;10;70;10;370;80;370</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>380</y><w>610</w><h>490</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>590;10;590;70;10;70;10;470;80;470</additional_attributes></element><element><id>Relation</id><coordinates><x>1810</x><y>380</y><w>200</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70;180;70;180;130;110;130</additional_attributes></element><element><id>Relation</id><coordinates><x>1810</x><y>380</y><w>200</w><h>230</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70;180;70;180;210;110;210</additional_attributes></element><element><id>Relation</id><coordinates><x>1810</x><y>380</y><w>200</w><h>330</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70;180;70;180;310;110;310</additional_attributes></element><element><id>Relation</id><coordinates><x>1810</x><y>380</y><w>200</w><h>410</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70;180;70;180;390;110;390</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1250</x><y>130</y><w>310</w><h>300</h></coordinates><panel_attributes>Scanner
 --
 -scanner_operation: List
 -counter: Integer
@@ -82,7 +84,7 @@
 -init_database()
 +get_scan_operation(): List
 +start()
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1180</x><y>320</y><w>380</w><h>50</h></coordinates><panel_attributes>lt=-
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1550</x><y>240</y><w>180</w><h>50</h></coordinates><panel_attributes>lt=-
 m1=1
 m2=0..n
-hat &gt;</panel_attributes><additional_attributes>10;20;360;20</additional_attributes></element></diagram>
+hat &gt;</panel_attributes><additional_attributes>10;20;160;20</additional_attributes></element></diagram>

@@ -1,0 +1,27 @@
+\section{Entwurfsziele} \label{sec:Entwurfsziele}
+
+Bei dem Entwurf des neuen Systems sind neben den in der Analyse beschrieben Anforderungen auch folgende Ziele beachtet worden.
+
+\paragraph{Beibehaltung der Features}
+Die bereits implementierten Features Flagshop und Challenges sollen auch im neuen System verfügbar sein. Die Studierenden sollen aktiv angeregt werden diese auch zu nutzen.
+
+\paragraph{Lose Kopplung}
+Zwischen dem Scanner und Watchdog soll eine lose Kopplung herrschen, damit die Entwicklung der beiden Komponenten unabhängig voneinander fortgesetzt werden kann.
+
+\paragraph{Datenhaltung in Datenbank}
+Die Nutzung einer Datenbank sollte auf Grund zweier Überlegungen angestrebt werden. Erstens sind alle Daten an einem Ort gebündelt. Zweitens kann die Berechnung von Punkten an die Datenbank abgeben werden. Datenbanken sind unter anderem für solche Aufgaben optimiert.
+
+\paragraph{Modernisierung der GUI}
+Das Graphical User Interface soll modernisiert werden, sodass es heutigen Standards entspricht. Auch soll hierdurch die Verständlichkeit verbessert werden und die Challenges sowie der Flagshop besser platziert werden.
+
+\paragraph{Einheitliche Programmiersprache}
+Eine einheitliche Programmiersprache sollte, sofern dieses Möglich ist, genutzt werden, um beispielsweise Konventionen über die gesamten Komponenten zu nutzen. Auch vermeidet eine einheitliche Programmiersprache Fehler, welche durch verschiedene Konventionen und Syntaxen der verschieden Programmiersprachen auftreten können.
+
+\paragraph{Module/Frameworks nutzen}
+Bei der Implementierung der Software sollte soweit dieses Möglich und Sinnvoll ist auf bereits vorhandene Module und Frameworks zurückgegriffen werden. Dieses hat zwei positive Effekte. Zum einem wird das \textquote{Rad nicht neu erfunden}. Zum anderen ist die Wahrscheinlichkeit, dass bei der eigenen Programmierung Fehler auftreten höher, als bei aktiven Open-Source Modulen/Frameworks, da hier mehr Menschen mit verschiedenen Expertisen involviert sind. Bei der Nutzung von Modulen und Frameworks sollte auf deren Verbreitung und Wartung geachtet werden, damit nicht inaktive Module/Frameworks mit eventuellen Schwächen genutzt werden.
+
+\paragraph{Docker}
+Die Anwendung soll mit möglichst kleinem Wartungsaufwand überall benutzbar sein. Um dieses zu gewährleisten, sollte eine Containerisierung genutzt werden. Bei der Nutzung von Docker ist darauf zu achten, ob und mit welchen Einschränkungen Docker bspw. auf Windows nutzbar ist.
+
+\paragraph{Ressourcen schonend}
+Um die Ressourcen des Servers zu schonen, sollten die nicht benötigten Komponenten abgeschaltet werden. Hierbei ist der Scanner zu erwähnen, welcher nur während des Praktikums laufen muss. 
