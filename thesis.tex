@@ -108,7 +108,7 @@
 	\input{30-Analyse/Analyse}
 	\input{30-Analyse/Lehrveranstaltung}
 	\input{30-Analyse/Labor}
-	\input{30-Analyse/Praktikum}
+	\input{30-Analyse/Versuch}
 	\input{30-Analyse/Systemkomponenten}
 	\input{30-Analyse/Schnittpunkte}
 	\input{30-Analyse/Anforderungen}
@@ -117,10 +117,13 @@
 	\label{chap:Entwurf}
 	\input{40-Entwurf/Entwurf}
 	\input{40-Entwurf/Ziel}
+	\input{40-Entwurf/Docker}
 	\input{40-Entwurf/Uebersicht}
+	\input{40-Entwurf/Scanner}
 	\input{40-Entwurf/Server}
-	\input{40-Entwurf/Client}
 	\input{40-Entwurf/Datenbank}
+	\input{40-Entwurf/Webclient}
+	\input{40-Entwurf/Client}
 	
 	\chapter{Technologien}
 	\label{chap:Technologien}
@@ -132,10 +135,10 @@
 	\label{chap:Realisierung}
 	%\input{60-Realisierung/xyz}
 	
-	\chapter{Ergebnis}
-	%\input{60-Ergebnis/xyz}
-	
 	\chapter{Zusammenfassung \& Aussicht}
+	% Dummy client hinzufügen -> bool in der gruppen liste, wenn bool gesetzt ist wird der client nicht gescannt & sperat im UI angezeigt
+	% Flask Restful ->  Request Parser durch bspw. Marshmallow LINK tausen, da er ab Version 2.0.0 deprecated ist, derzeitige version 0.3.8
+	% Lokale Webseite auf Clients dem neunen Design anpassen.
 	%\input{70-Ende/xyz}
 	
 	% Nachspann einleiten:
@@ -148,7 +151,7 @@
 	%	Layout: Seite  |  Kapitel
 	\lefoot[\textbf{\pagemark~~$\mid$}]{\textbf{\pagemark~~$\mid$}}
 	\chapter{Anhang}
-	%\input{90-Anhang/xyz}
+	\input{90-Anhang/Anhang}
 	
 	% Tabellenverzeichnis
 	\listoffigures
