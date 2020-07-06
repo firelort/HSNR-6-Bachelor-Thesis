@@ -36,17 +36,21 @@ Ein Telnet Server wartet auf Verbindungen auf Port \textit{23}. Da dieser Dienst
 
 \subsubsection{Generierung von Flags}\label{subsubsec:Generierung_von_Flags}
 
-Derzeitig erfolgt die Generierung der Flags sowohl auf den Clients als auch auf dem Server. Dies ist insofern notwendig, da der Server sonst nicht prüfen kann, ob die von den Studierenden abgegebenen Flags gültig sind. Für die Generierung wird folgender Algorithmus verwendet. (todo)
+Derzeitig erfolgt die Generierung der Flags sowohl auf den Gastsystemen als auch auf dem Auswertungs- und Überwachungssystem. Dies ist notwendig, da ansonsten eine Überprüfung der Gültigkeit der Flags und Verrechnung der Punkte nicht durchgeführt werden kann. Die Flags werden durch einen Algorithmus generiert. Dieser erzeugt pro Team eine bestimmte Anzahl an Flags. 
 
-Dieser Algorithmus erstellt pro Team, hier durch die IP-Adresse repräsentiert, eine bestimmte Anzahl an Flags. Dazu wird ein sogenannter seed mit Hilfe der Hashfunktion MD5 gehasht. Der Seed setzt sich aus \textit{Salt + IP-Adresse + \textquote{Aufgabe} + Zähler} zusammen.
+Dazu wird die Flag mithilfe der Streuwertfunktion (Hashfunktion) MD5 und der Eingabe, einem sogenanntem seed, berechnet. Eine Hashfunktion bildet aus einer Eingabe variabler Länge eine Ausgabe mit einer festen Länge. Bei selber Eingabe wird immer der gleiche Ausgabewert berechnet. Des Weiteren ist es bei einer guten Hashfunktion nicht möglich von der Ausgabe auf den Eingabewert zuschließen.
+(todo: Quelle Ueberholz)
+(todo: was ist MD5, ist das wirklich wichtig?)
 
-Der Salt wird benötigt, um den Flags eine gewisse Lebenszeit zu geben. In der derzeitigen Implementierung enthält der Salt das aktuelle Jahr sowie das jeweilige Semester. So werden nur die Flags des aktuellen Semesters akzeptiert und eine Verwendung von Flags aus alten Semestern ist nicht möglich.
+Der in der Anwendung genutzte seed setzt sich aus der Verkettung von \textit{Salt}, \textit{IP-Adresse}, dem Wort \textquote{\textit{Aufgabe}} und einem \textit{Zähler} zusammen.
 
-Mithilfe der IP-Adresse werden die Flags dem jeweiligen Team zugeordnet.
+Ein Salt wird benötigt, um den Flags eine Lebenszeit zu geben. In der derzeitigen Implementierung enthält der Salt das aktuelle Jahr sowie das jeweilige Semester. So sind nur Flags des aktuellen Semesters gültig und werden vom Auswertungs- und Überwachungssystems akzeptiert. Eine Verwendung von Flags aus vorherigen Semestern wird somit effektiv vorgebeugt.
 
-Der String (Zeichenfolge) \textquote{Aufgabe} wird als Geheimnis verwendet, um das Fälschen von Flags zu verhindern.
+Die IP-Adresse stellt hierbei den Bezug zum jeweiligen Team dar.
 
-Damit pro Team mehrere eindeutige Flags geniert werden können, wird ein sogenannter Zähler genutzt. Dieser Zähler ist auf 0 initialisiert und wird pro generierter Flag um eins erhöht, bis die benötigte Anzahl an Flags generiert worden ist.\cite[S.48]{sosnaKonzeptionUndRealisierung2010}
+Die Zeichenfolge \textquote{Aufgabe} wird als Geheimnis verwendet, um das Fälschen von Flags zu erschweren und im bestenfall zu verhindern.
+
+Damit pro Team mehrere eindeutige Flags geniert werden können, wird ein sogenannter Zähler genutzt. Dieser Zähler ist auf 0 initialisiert und wird pro generierter Flag um eins erhöht, bis die benötigte Anzahl an Flags generiert ist.\cite[S.48]{sosnaKonzeptionUndRealisierung2010}
 
 \subsubsection{Webserver}\label{subsubsec:Webserver}
 
@@ -57,9 +61,13 @@ Neben diesen Darstellungen befindet sich auf dem Server ein sogenannter Flagshop
 Die Betreuer haben die Möglichkeit über die Web-GUI ein neues Spiel anzulegen, das Spiel zu starten oder zu stoppen. Auch kann von dem Spiel ein Backup erstellt werden. Neben diesen Funktionen zur Spielsteuerung können an die Teams Strafen für unfaires oder regelverletzendes Verhalte verteilt werden. Diese nehmen direkten Einfluss auf die Punkte des jeweiligen Teams. Auch besteht die Möglichkeit weiter Benutzer für das Administrationsinterface zu registrieren.
 
 \paragraph{Flagshop} \label{para:Flagshop}
-Im Flagshop wird es den Studierenden ermöglicht weiter Flags zu kaufen. Um einen Einkauf im Flagshop durchzuführen, müssen die Teams sich vorher registrieren. Diese Registrierung erfragt eine Hand von scheinbar erforderlichen Daten (todo: besser). Das Format und die Erforderlichkeit der Daten kann durch eine Manipulierung der HTML Seite geändert werden. Für jeder diese Manipulation erhält der Nutzer Flags. Auch wird die Güte des angegebenen Passwortes anhand von Länge, Sonderzeichen, Groß- und Kleinbuchstaben, Ziffern bewertet und mit Flags belohnt.
+Der Flagshop ermöglicht den den Studierenden weiter Flags mit ihren Punkten zu kaufen. Der Kauf von Flags lohnt sich schon, da die verkauften Flags mehr Punkte bringen als das sie kosten. Um einen Einkauf im Flagshop durchzuführen, müssen die Teams sich vorher einen Account erstellen. Die Registrierung erfragt neben dem benötigten Benutzernamen und Passwort auch für den Flagshop irrelevante Daten ab. Diese ähneln persönlichen Informationen, welche bei den meisten Onlineshop angegeben werden müssen. Das Format, hier die Repräsentation als Zahl oder Zeichenfolge sowie die Länge, und die Erforderlichkeit der Daten wird nur im HTML-Formular festgelegt. Durch eine Manipulierung des Formulars kann dieses mit nicht konformen oder nicht vorhanden Daten abgesendet werden. Für jeder der nicht vorhanden oder nicht konformen Informationen erhält der Studierende eine Flag. Daneben wird die Güte des angegebenen Passwortes anhand von Länge und Anzahl an Sonderzeichen, Groß- und Kleinbuchstaben sowie Ziffern bewertet und mit Flags belohnt.
 
-Nach der Registrierung können die Studierende sich für Punkte Flags kaufen. Dazu stehen zwei Pakete mit 8 bzw. 6 Flags für den Preis von 4 Punkten pro Paket zur Verfügung. Der Preis kann auf zwei Arten reduziert werden. Entweder werden die Pakt IDs per Hand auf nicht vorhanden IDs geändert. So berechnet der Flagshop nur noch einen Preis von insgesamt 4 Punkten für beide Pakete. Um die Flags kostenlos zu erhalten, kann das \textit{hidden input} Feld in dem der Preis zwischen gespeichert wird auf 0 gesetzt werden. So sind die Flags kostenlos. \cite[S. 63]{abtsUeberarbeitungUndErweiterung2016}
+Nach der Registrierung können die Studierende sich für ihre Punkte Flags kaufen. Dazu stehen zwei Pakete mit 8 bzw. 6 Flags für den Preis von jeweils 4 Punkten pro Paket zur Verfügung. Dieser Preis kann auf zwei Arten reduziert werden. 
+Bei der ersten Art müssen die beiden Pakete gleichzeitig im Warenkorb sein und die Identifikationsnummern (ID) dieser auf nicht vorhanden Nummern gesetzt werden. Die Manipulation resultiert in einem reduzierten Preis von 4 Punkten für beide Pakete. Dies ist extra im Flagshop einprogrammiert und soll die Studierenden auf Manipulation von IDs aufmerksam machen.
+Durch die zweite Art ist es möglich die Paket umsont zu erhalten. Dazu muss im Warenkorb, dass sogenannte \textit{hidden input} Feld in dem der aktuelle Preis des Warenkorbs gespeichert wird auf 0 gesetzt werden. So berechnet der Flagshop für den Kauf keine Kosten und die Flags können kostenlos erhalten werden.\cite[S. 63]{abtsUeberarbeitungUndErweiterung2016}
+
+Ein \textit{hidden input} Feld wird in der Repräsentation eines HTML-Dokumentes nicht angezeigt, kann jedoch durch die Entwicklertools der Browser betrachtet und verändert werden. \cite{w3schoolsHTMLHiddenInput}
 
 Auf diese Weise ist es auch möglich einen negativen Preis festzulegen und so dem eigenen Team Punkte zuzuschreiben, da eine Überprüfung in \textit{/flagshop/shop.php} nicht richtig implementiert ist. So wird nicht geprüft, ob der von dem Nutzer eingegeben Preis kleiner als 0 ist, sondern ob der Preis gleich 0 ist. Sollte diese der Fall sein, wird der Preis auf 0 gesetzt. Bei richtiger Implementierung würde ein negativer Preis auf 0 korrigiert.
 
