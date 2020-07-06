@@ -3,15 +3,21 @@
 
 Das Praktikum wird im Labor für Echtzeitsysteme (EZS Labor) der Hochschule Niederrhein durchgeführt.
 
-Das Labor ist mit acht Gruppenarbeitsplätzen für Studierende sowie Arbeitsplätzen für die Betreuer und Mitarbeiter ausgestattet. Ein Arbeitsplatz der Betreuer kann zu einem neunten Gruppenarbeitsplatz umfunktioniert werden.
+\begin{center}
+	\includegraphics[width=\linewidth, keepaspectratio]{analyse/netzwerk-topologie-bak}
+	\captionof{figure}{Übersicht über die Laborausstattung (Netzwerktopologie)}
+	\label{fig:network-topology}
+\end{center}
 
-An einem Gruppenarbeitsplatz können 2 Studierende gleichzeitig arbeiten, da diese mit einem leistungsfähigem Desktop-PC und einem Raspberry Pi\footnote{Einplatinencomputer mit der Größe einer Kreditkarte} sowie den dazugehörigen Peripheriegeräten (Maus, Tastatur \& Monitor) ausgestattet sind.
+Wie in der Abbildung \ref{fig:network-topology} zu sehen, ist das Labor mit acht Gruppenarbeitsplätzen für Studierende sowie Arbeitsplätzen für die Betreuer und Mitarbeiter ausgestattet. Ein Betreuerarbeitsplatz kann zu einem neunten Gruppenarbeitsplatz umfunktioniert werden.
+
+An einem Gruppenarbeitsplatz (in der Abbildung \ref{fig:network-topology} grau hinterlegt) können 2 Studierende gleichzeitig arbeiten, da diese mit einem leistungsfähigen Desktop-PC und einem Raspberry Pi\footnote{Einplatinencomputer mit der Größe einer Kreditkarte} sowie den dazugehörigen Peripheriegeräten (Maus, Tastatur \& Monitor) ausgestattet sind.
 Auf den Desktop-PCs ist Ubuntu\footnote{Ubuntu ist eine freie Linux Distribution auf Basis von Debian} und auf den Raspberry Pis ist Raspbian\footnote{Abwandlung von Debian für den Raspberry Pi} als Betriebssystem installiert.
 
-Auf den Desktop-PCs ist die Software VirtualBox der Firma Oracle installiert. Diese Software ermöglicht es auf dem Rechner einen weiteren Rechner zu virtualisieren. Dieser weitere PC wird Guest genannt und kann den Host, den Rechner auf dem die Software VirtualBox läuft, nicht schädigen oder beeinflussen. Sollte auf dem Guest ein Virus aktiv werden, kann dieser nicht den Host angreifen. Hierbei sollte beachtet werden, dass die Software VirtualBox Fehler haben kann oder der Nutzer Einstellungen getroffen hat, sodass der Host doch angreifbar ist.
+Auf den Desktop-PCs ist die Software VirtualBox der Firma Oracle installiert. Diese ermöglicht das Virtualisieren eines weiteren Rechners. Diese Virtuelle Maschine wird Gast genannt und beheimatet die Dienste und Anwendungen, welche während des Versuchs benötigt werden. Durch die Nutzung der Virtualisierung muss die Software nicht auf dem Wirtsystem installiert werden. So ist dieses auch für andere Versuche im Rahmen der Lehrveranstaltung nutzbar, ohne das auf Inkompatibilitäten von Softwares der verschieden Versuche geachtet werden muss. Auch bietet VirtualBox die Möglichkeit sogenannte Snapshots anzulegen. Ein Snapshot ist eine Momentaufnahme eines aktuellen Systemzustandes. Diese stellt eine Komplettsicherung des Systems dar. Durch diese ist es möglich, die Systeme auf den gleichen Stand zu bringen. Dieses wird benötigt, um eine Vergleichbarkeit zwischen den Studierenden zu gewährleisten.\cite{OracleVMVirtualBox}
 
-Neben diesen Rechner steht ein Linux Server zur Verfügung, auf welchem das Auswertungs- und Überwachungssystem läuft.
+Neben diesen Rechner steht ein Linux Server zur Verfügung, auf welchem das Auswertungs- und Überwachungssystem betrieben wird.
 
-Alle Rechner, auch die Guest System der Studentengruppe, sind untereinander via Ethernet verbunden.
+Alle Rechner, auch die Gastsysteme der Studentengruppen, sind untereinander über ein Netzwerkswitch via Ethernet verbunden.
 
 Außerdem steht ein Beamer zur Verfügung auf dem die aktuelle Spielübersicht dargestellt werden kann.

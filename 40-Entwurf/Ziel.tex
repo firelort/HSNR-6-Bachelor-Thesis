@@ -6,19 +6,19 @@ Bei dem Entwurf des neuen Systems sind neben den in der Analyse beschrieben Anfo
 Die bereits implementierten Features Flagshop und Challenges sollen auch im neuen System verfügbar sein. Zusätzlich sollen die Studierenden aktiv angeregt werden diese auch zu nutzen.
 
 \paragraph{Lose Kopplung}
-Zwischen dem Scanner (Big Brother) und dem Webserver (Game Information System) soll eine lose Kopplung herrschen, damit die Entwicklung der beiden Komponenten unabhängig voneinander fortgesetzt werden kann.
+Zwischen dem Scanner und dem Webserver soll eine lose Kopplung herrschen, damit die Entwicklung der beiden Komponenten unabhängig voneinander fortgesetzt werden kann.
 
 \paragraph{Datenhaltung in Datenbank}
-Die Nutzung einer Datenbank sollte aufgrund zweier Überlegungen angestrebt werden. Erstens sind alle Daten an einem Ort gebündelt. Zweitens kann die Berechnung von Punkten an die Datenbank abgeben werden. Datenbanken sind unter anderem für solche Aufgaben optimiert.
+Die Nutzung einer Datenbank sollte aufgrund zweier Überlegungen angestrebt werden. Erstens sind alle Daten an einem Ort gebündelt. Zweitens kann die Berechnung von Punkten an die Datenbank abgeben werden. Datenbanken sind unter anderem für solche Aufgaben geeignet.
 
 \paragraph{Modernisierung der GUI}
 Das Graphical User Interface soll modernisiert werden, sodass es heutigen Standards entspricht. Auch soll hierdurch die Verständlichkeit verbessert und die Challenges sowie der Flagshop besser platziert werden.
 
 \paragraph{Einheitliche Programmiersprache}
-Eine einheitliche Programmiersprache sollte, sofern dieses Möglich ist, genutzt werden, um beispielsweise Konventionen über die gesamten Komponenten nutzen zu können. Auch vermeidet eine einheitliche Programmiersprache Fehler, welche durch verschiedene Konventionen und Syntaxen, der verschieden Programmiersprachen auftreten können.
+Eine einheitliche Programmiersprache sollte, sofern dieses möglich ist, genutzt werden, um beispielsweise Konventionen über die gesamten Komponenten nutzen zu können. Auch vermeidet eine einheitliche Programmiersprache Fehler, welche durch verschiedene Konventionen und Syntaxen, der verschieden Programmiersprachen auftreten können. (todo: Arguement, das es zwei Systeme sind -> zwei Programmiersprachen okay entkräften)
 
-\paragraph{Module/Frameworks sparsam nutzen}
-Bei der Implementierung der Software sollte soweit dieses Notwendig und Sinnvoll ist auf bereits vorhandene Module und Frameworks zurückgegriffen werden. Durch die Minimierung von Abhängigkeiten ist die Wartung von Verwendung der Software durch Dritte leichter möglich. Auch wird die Gefahr von Bugs auslösenden Updates minimiert. Bei der Nutzung von Modulen und Frameworks sollte auf deren Verbreitung und Wartung geachtet werden, damit nicht inaktive Module/Frameworks mit eventuellen Schwächen genutzt werden.
+\paragraph{Module sparsam nutzen}
+Bei der Implementierung der Software sollte so weit dieses notwendig und sinnvoll ist auf bereits vorhandene Module und Frameworks zurückgegriffen werden. Durch die Minimierung von Abhängigkeiten ist die Wartung von Verwendung der Software durch Dritte leichter möglich. Auch wird die Gefahr von Fehler auslösenden Updates minimiert. Bei der Nutzung von Modulen und Frameworks sollte auf deren Verbreitung und Wartung geachtet werden, damit nicht inaktive Module/Frameworks mit eventuellen Schwächen genutzt werden.
 
 \paragraph{Containerisierung}
 Die Anwendung soll mit möglichst kleinem Wartungsaufwand überall benutzbar sein. Um dieses zu gewährleisten, sollte eine Containerisierung genutzt werden. Bei der Nutzung ist darauf zu achten, ob und mit welchen Einschränkungen diese nutzbar ist.
