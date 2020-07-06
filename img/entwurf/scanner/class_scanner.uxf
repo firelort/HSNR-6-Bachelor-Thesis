@@ -1,0 +1,90 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>1710</x><y>170</y><w>230</w><h>220</h></coordinates><panel_attributes>/ScanOperation/
+{abstract}
+--
+-name: String
+-public_name: String
+-result: Boolean
+-logger: Logger
++ip:  String
++config: Config
+--
+-is_port_open(port: Integer): Boolean
++get_name(): name
++get_public_name:  public_name
+/+start()/
++get_result(): Boolean
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>820</y><w>290</w><h>90</h></coordinates><panel_attributes>/ScanBubbleOperation/
+{abstract}
+--
+-port: Integer
+--
+-is_bubble_port_open(port: Integer): Boolean
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1810</x><y>380</y><w>200</w><h>510</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70;180;70;180;490;110;490</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>960</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanBubbleOperation
+--
+
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1450</x><y>900</y><w>350</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>330;10;330;40;10;40;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>960</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanBubbleNgOperation
+--
+
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1770</x><y>900</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>560</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanFTPSaveOperation
+--
+
+--
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>480</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanHostUpOperation
+--
+
+--
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>480</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanHtaccessSaveOperation
+--
+
+--
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>640</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanSqlPasswordChangeOperation
+--
+
+--
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>720</y><w>290</w><h>80</h></coordinates><panel_attributes>ScanTelnetSaveOperation
+--
+
+--
+-is_telnet_up(): Boolean
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1310</x><y>820</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanXssSaveOperation
+--
+
+--
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>660</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanHttpUpOperation
+--
+
+--
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>740</y><w>290</w><h>60</h></coordinates><panel_attributes>ScanHttpsUpOperation
+--
+
+--
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1630</x><y>560</y><w>290</w><h>80</h></coordinates><panel_attributes>ScanHttpsUpOperation
+--
+
+--
+-is_sql_injection_up(): Boolean
++start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>380</y><w>610</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>590;10;590;70;10;70;10;130;80;130</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>380</y><w>610</w><h>230</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>590;10;590;70;10;70;10;210;80;210</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>380</y><w>610</w><h>310</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>590;10;590;70;10;70;10;290;80;290</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>380</y><w>610</w><h>390</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>590;10;590;70;10;70;10;370;80;370</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>380</y><w>610</w><h>490</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>590;10;590;70;10;70;10;470;80;470</additional_attributes></element><element><id>Relation</id><coordinates><x>1810</x><y>380</y><w>200</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70;180;70;180;130;110;130</additional_attributes></element><element><id>Relation</id><coordinates><x>1810</x><y>380</y><w>200</w><h>230</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70;180;70;180;210;110;210</additional_attributes></element><element><id>Relation</id><coordinates><x>1810</x><y>380</y><w>200</w><h>330</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70;180;70;180;310;110;310</additional_attributes></element><element><id>Relation</id><coordinates><x>1810</x><y>380</y><w>200</w><h>410</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70;180;70;180;390;110;390</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1250</x><y>130</y><w>310</w><h>300</h></coordinates><panel_attributes>Scanner
+--
+-scanner_operation: List
+-counter: Integer
+-ip: String
+-group_id: Integer
+-config: Config
+-active_scanner: Dictionary
+-db_connection: DatabaseConnection
+-logger: Logger
+-host_up: ScanHostUpOperation
+-http_up: ScanHttpUpOperation
+-scanner_list: List
+-scanner_http_list: List
+--
+-get_id_of_scan_operation(name: String): Integer
+-init_scanner()
+-remove_results()
+-init_database()
++get_scan_operation(): List
++start()
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1550</x><y>240</y><w>180</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=0..n
+hat &gt;</panel_attributes><additional_attributes>10;20;160;20</additional_attributes></element></diagram>

@@ -1,0 +1,54 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLGeneric</id><coordinates><x>950</x><y>230</y><w>930</w><h>600</h></coordinates><panel_attributes>symbol=component
+style=wordwrap
+*Rest Interface*</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>1330</x><y>330</y><w>200</w><h>80</h></coordinates><panel_attributes>&lt;&lt;Resource&gt;&gt;
+Hello World
+--
+
+--
+&lt;&lt;GET&gt;&gt; get(): JSON</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1420</x><y>259</y><w>120</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;.
+&lt;&lt;ResourcePath&gt;&gt;
+/v1</panel_attributes><additional_attributes>10;70;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1070</x><y>599</y><w>120</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;.
+&lt;&lt;ResourcePath&gt;&gt;
+/old</panel_attributes><additional_attributes>10;110;10;10</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>980</x><y>520</y><w>200</w><h>90</h></coordinates><panel_attributes>&lt;&lt;Resource&gt;&gt;
+LogList
+--
+
+--
+&lt;&lt;GET&gt;&gt; get(): JSON
+&lt;&lt;POST&gt;&gt; post(): JSON
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>980</x><y>710</y><w>200</w><h>80</h></coordinates><panel_attributes>&lt;&lt;Resource&gt;&gt;
+OldLogList
+--
+
+--
+&lt;&lt;GET&gt;&gt; get(): JSON</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1070</x><y>399</y><w>380</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;.
+&lt;&lt;ResourcePath&gt;&gt;
+/log</panel_attributes><additional_attributes>10;120;10;70;360;70;360;10</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>1210</x><y>520</y><w>200</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Resource&gt;&gt;
+GameControl
+--
+
+--
+&lt;&lt;GET&gt;&gt; get(): JSON
+&lt;&lt;POST&gt;&gt; post(): JSON
+&lt;&lt;PUT&gt;&gt; put(): JSON
+&lt;&lt;DELETE&gt;&gt; delete()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1300</x><y>399</y><w>150</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;.
+&lt;&lt;ResourcePath&gt;&gt;
+/gamecontrol</panel_attributes><additional_attributes>10;120;10;70;130;70;130;10</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>1440</x><y>520</y><w>200</w><h>80</h></coordinates><panel_attributes>&lt;&lt;Resource&gt;&gt;
+ChallengeList
+--
+
+--
+&lt;&lt;GET&gt;&gt; get(): JSON</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1420</x><y>409</y><w>140</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;.
+&lt;&lt;ResourcePath&gt;&gt;
+/challenge</panel_attributes><additional_attributes>120;110;120;60;10;60;10;10</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>1440</x><y>710</y><w>200</w><h>80</h></coordinates><panel_attributes>&lt;&lt;Resource&gt;&gt;
+ChallengeList
+--
+
+--
+&lt;&lt;POST&gt;&gt; post(): JSON</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1530</x><y>589</y><w>120</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;.
+&lt;&lt;ResourcePath&gt;&gt;
+/&lt;id&gt;</panel_attributes><additional_attributes>10;120;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1420</x><y>409</y><w>350</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;.
+&lt;&lt;ResourcePath&gt;&gt;
+/flagshop</panel_attributes><additional_attributes>330;110;330;60;10;60;10;10</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>1660</x><y>520</y><w>200</w><h>60</h></coordinates><panel_attributes>symbol=component
+&lt;&lt;Service&gt;&gt;
+Flagshop</panel_attributes><additional_attributes></additional_attributes></element><element><id>Text</id><coordinates><x>1830</x><y>780</y><w>30</w><h>30</h></coordinates><panel_attributes>4/4</panel_attributes><additional_attributes></additional_attributes></element></diagram>
