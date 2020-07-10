@@ -47,8 +47,9 @@
 \renewcommand{\UrlBreaks}{\do\/\do\-\do\_\do\&\do\?}	% allows URL breaking on /, -, _ and &
 
 % Eigene Commands
-\newcommand{\thesisTitle}{Vorläufiges Thema}
-\newcommand{\thesisSubject}{Vorläufiges Subject}
+\newcommand{\thesisTitle}{Entwurf und Realisierung eines Capture the Flag Core Systems}
+\newcommand{\thesisTitleEnglish}{Design and implementation of a Capture the Flag Core System}
+\newcommand{\thesisSubject}{CTF System für IT-Sicherheitsschulungen}
 \newcommand{\thesisAuthor}{Robert Hartings}
 \newcommand{\Matrikelnummer}{1164453}
 
@@ -127,9 +128,9 @@
 	
 	\chapter{Technologien}
 	\label{chap:Technologien}
-	\input{50-Technologien/Frontend}
 	\input{50-Technologien/Backend}
 	\input{50-Technologien/Database}
+	\input{50-Technologien/Frontend}
 	
 	\chapter{Realisierung}
 	\label{chap:Realisierung}
@@ -139,6 +140,7 @@
 	% Dummy client hinzufügen -> bool in der gruppen liste, wenn bool gesetzt ist wird der client nicht gescannt & sperat im UI angezeigt
 	% Flask Restful ->  Request Parser durch bspw. Marshmallow LINK tausen, da er ab Version 2.0.0 deprecated ist, derzeitige version 0.3.8
 	% Lokale Webseite auf Clients dem neunen Design anpassen.
+	% Überlegen, ob der Token nicht durch den Server generiert werden sollte und dem Client mitgeteilt wird
 	%\input{70-Ende/xyz}
 	
 	% Nachspann einleiten:

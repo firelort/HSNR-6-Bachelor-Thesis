@@ -1,5 +1,7 @@
 \section{Game Client} \label{sec:Game_Client}
+Der Gameclient bleibt durch diese Bachelorarbeit unberührt. Es ist jedoch eine Änderung an diesem vorzunehmen, damit er mit dem \textit{Game Information System} kompatibel ist.
+Am Spiel können nur noch Gruppen teilnehmen, die ihre Teilnahme gegenüber dem GIS bekunden. Bei dieser Anmeldung erwartet das GIS einen Token, welcher bei der Generierung der Flags verwendet wird. 
 
-Änderungen die am Client durchgeführt werden müssen
-- Startgame -> register inkl. token
--> Flags Generierung
+In derzeitige implementierte Startgame Routine findet durch den GameClient keine Bekundung der Teilnahme statt, somit wird auch kein Token übermittelt.
+
+Auch muss die Hashfunktion zur Generierung an die im GIS verwendeten Funktion angepasst werden, damit die generierten Flags vergleichbar bleiben.

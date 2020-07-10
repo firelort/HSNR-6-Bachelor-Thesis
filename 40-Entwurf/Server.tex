@@ -1,9 +1,12 @@
 \section{Webserver} \label{sec:Webserver}
-Der Webserver biete die Möglichkeit der Verwaltung des Spiels, der Abgabe von Flags sowie der Durchführung von Käufen im Flagshop und Challenges. Auch können Informationen zum Spiel, wie Einstellungen, Spielstand, Strafen und Teilnehmer abgerufen werden. todo
+Der Webserver bietet die Möglichkeit der Verwaltung des Spiels, der Abgabe von Flags sowie der Durchführung von Käufen im Flagshop und Challenges. Auch können Informationen zum Spiel, wie Einstellungen, Spielstand, Strafen und Teilnehmer abgerufen werden.
 
-\subsection{Verwendung mehrere Microservice}
-Verwendung von Microservices pro Anwendungsfall. FlagAbgabe, Nutzerverwaltun
-Warum habe ich das verworfen -> Zu viel Aufwand, zu wenig Value
+\subsection{Verwendung mehrerer Microservices}
+Der Webserver kann nach dem Architekturmuster Microservices implementiert werden. Hierbei besteht die Anwendung aus mehreren unabhängig Komponenten, welche, sofern dies notwendig ist, untereinander kommunizieren. Die Komponenten sind so klein wie möglich und können jederzeit durch eine andere Implementierung ausgetauscht werden.\cite{wolffMicroservicesGrundlagenFlexibler2015} 
+
+So wären die verschiedenen Komponenten des Webservers (Flagabgabe, Nutzerverwaltung, Spielsteuerung, etc.) unabhängig von einander und können leichter weiterentwickelt oder ersetzt werden.
+
+Die Verwendung dieses Architekturmuster würde bei der aktuellen Aufgabenstellung zu hohen Aufwand für zu wenig Nutzen bedeuten.
 
 \subsection{Fat Webserver}
 Der Webserver beinhaltet sowohl die Logik als auch die Darstellung. Bei einer Anfrage an den Webserver, wird eine Antwort bestimmt und diese dann in eine Vorlage / ein HTML Dokument eingebettet. Danach wird dieses zurück an den Nutzer gesendet.
@@ -112,9 +115,10 @@ Neben den in Tabelle \ref{table:http-methods} aufgezeigten Methoden gibt es noch
 	\label{table:gis-routes}
 \end{table}
 
+
+(todo: Module / Komponenten des REST-Interface)
 \paragraph{Authentifizierung}
-\includegraphics[width=\linewidth]{entwurf/gis/comp-rest-auth}
-\captionof{figure}{Übersicht über die Authentifizierung}
+
 \includegraphics[width=\linewidth]{entwurf/gis/dfd-watchdog-security}
 \captionof{figure}{Datenfluss in der Security Komponente (Datenflussdiagramm)}
 
@@ -123,9 +127,16 @@ Neben den in Tabelle \ref{table:http-methods} aufgezeigten Methoden gibt es noch
 - Änderung des Vorgehens -> Generierung auf dem Server -> Versand an den Client (Secret nicht auf dem Client, Abfangen aller Flags möglich, Verschlüsselung bringt nix, da Nutzer root Rechte hat)
 
 \paragraph{Challenges}
-
+todo:
 Challenge Informationen und Lösung der Challenge über API, Darstellung / Inhalt der Challenge über anderen Webserver (da wo auch der Webclient ausgelieftert wird), da gedanke ist nur Daten zu übertragen und keine HTML Seiten etc.
 
 \subsection{Reverse Proxy}
-- Anforderungen an den Reverse Proxy oder kommt das in die Realisierung
-- Warum wird ein Reverse Proxy verwendet
+Für das Betreiben wird auf den bereits im EZS Labor verwendeten Apache HTTP-Server zurückgegriffen. Durch die Entscheidung bleibt dieser als einziges als Einstiegspunkt für Anfragen zuständig. Auch wird die Protokollierung der Anfragen sowie die Verschlüsselung der Verbindung an die Webserver Software abgegeben.
+
+Der Reverse Proxy muss bei der Weiterleitung der Anfrage an das GIS die eigentliche IP-Adresse der Anfrage weiterleiten. Dieses wird benötigt um die IP-Adresse, und so die zugehörige Gruppe, bei der Registrierung und dem Login zu bestimmen. Die originale IP-Adresse der Anfrage soll in einen HTTP Header gespeichert werden.
+
+In einen HTTP Header können Server und Client zusätzliche Informationen zur Anfrage oder Antwort beifügen.\cite{mdncontributorsHTTPHeaders2020}
+
+Um einen Spoofing-Angriff zu erschweren und das Vertrauen in den Header mit der IP-Adresse zu erhöhen, soll ein weiterer Header mit einem Geheimnis gesetzt werden. Anhand dieses Geheimnis kann das GIS entscheiden, ob die Anfrage über einen vertrauenswürdigen Proxy weitergeleitet oder ob ein Spoofing-Angriff durchgeführt worden ist. Dieses wird benötigt, da die Anwendung auch ohne einen Reverse Proxy betrieben werden kann. In diesem Anwendungsfall kann die angreifende Person sich als Proxy für eine andere Gruppe ausgeben.
+
+Bei einem Spoofing-Angriff versendet die angreifende Person Anfragen für andere IP-Adressen und erhält die Antwort. So kann dieser im Namen andere agieren und diesen beispielsweise Minuspunkte verschaffen.
