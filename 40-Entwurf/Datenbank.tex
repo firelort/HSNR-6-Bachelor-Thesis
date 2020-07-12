@@ -1,15 +1,7 @@
 \section{Datenbank}
-- Daten in Verbindung setzen, keine redundanz
-- Ordnung der Daten
-- zentrale Speicherort
-- Atomare Operation -> keine unvollständigen Daten
-- Daten müssen erhalten bleiben
-- Abfragen besser optimiert als auf Dateien
-- Views zur Berechnung von Punkten
+Im Gegensatz zur bestehenden Anwendung wird auf eine relationale Datenbank anstatt auf Dateien zurückgegriffen. Dieses resultiert unter anderem aus der gestiegenen Datenmenge. Eine NoSQL Datenbank wird nicht benötigt, da sich die Daten in Schemen untergliedern lassen. Die Nutzung einer Datenbank stellt sicher, dass sich die Daten an einer zentralen Stelle befinden und nicht über die Anwendung verstreut sind. Auch wird eine Mögliche Redundanz von Daten verhindert, da in Datenbanken mit Referenzen gearbeitet werden kann. Durch die AKID-Eigenschaft (im eng. ACID - Atomarität, Konsistenz, Isolation und Dauerhaftigkeit) der Datenbanken wird sichergestellt, dass Daten in der Datenbank vollständig und konsistent sind. Ferne sind die Abfragen besser optimiert.
 
-Daten haben Schema, Keine großen Datenmengen
-
--> relationale db
+Des Weiteren ist es möglich die Punkteberechnung in der Datenbank unter Zuhilfenahme von \textit{Views} durchzuführen.
 
 \subsection{ASDF-Tabellen}
 \begin{center}
