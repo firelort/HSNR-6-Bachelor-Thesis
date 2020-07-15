@@ -1,0 +1,38 @@
+\section{Installationsanleitung}
+Beide Programme sind unter Zuhilfenahme des Versionsverwaltung (VCS) \textit{git} entwickelt worden und liegen derzeit auf der GitLab Instanz des Gemeinschaftslabors Informatik (GLI) des Fachbereiches Elektrotechnik und Informatik der Hochschule Niederrhein. Sie sind im zugangsbeschränkten Repository \textit{Its2}, erreichbar über\\ \textit{https://gl.kr.hsnr.de/ezslabor/abschlussarbeiten/its2}, abgelegt.
+
+Um die Anwendung nutzen zu können, muss das Repository heruntergeladen werden.
+Dazu kann dieses als zip- oder tar-Archive mithilfe der Weboberfläche oder unter Verwendung von \textit{git clone} heruntergeladen werden. Die Methode \textit{git clone} ist bevorzugt, da so Änderungen leichter herunter- oder hochgeladen werden können.
+
+\begin{lstlisting}[language=bash, caption={git clone (bash)}, captionpos=b, label={lst:git-clone}]
+$ git clone https://gl.kr.hsnr.de/ezslabor/abschlussarbeiten/its2.git
+\end{lstlisting}
+
+Zur einfachen Nutzung der Anwendung ist im Repository neben einer \textit{docker-compose.yaml} Datei auch ein \textit{Makefile} angelegt. Die \textit{docker-compose.yaml} Datei sorgt sich um das Zusammenspiel sowie die Konfiguration der einzelnen Container. Falls die Dockerimages für Big Brother oder GIS nicht vorhanden sein sollten, werden diese automatisch erzeugt. Dieses funktioniert nur, wenn die Ordner- und Dateistruktur nicht verändert wird.
+
+In der \textit{docker-compose.yaml} Datei ist darauf zu achten, dass Docker Socket in die Anwendung übergeben wird, da ansonsten die Steuerung des Scanners fehlschlägt.
+
+Im Makefile sind drei Befehle (\textit{init, start, stop}) hinterlegt, welche zur einfachen Nutzung von \textit{docker-compose} beitragen sollen.
+
+Der Befehl \textit{init} führt eine Initialisierung der Anwendung aus. Dazu wird der bash Befehl (\ref{lst:rest-init}) im REST-Interface Container ausgeführt wird.
+Dieser sorgt dafür, dass die Datenbank durch die hinterlegten Migrationen auf den benötigten Zustand gebracht wird. Danach wird ein Nutzer mit dem Namen \textit{admin}, der Rolle \textit{admin} und dem Passwort \textit{admin} angelegt. Über diesen Benutzer können weitere Accounts angelegt werden. Der Account kann nach der Erstellung eines weiteren Administrator-Accounts gelöscht werden.
+\begin{lstlisting}[language=bash, caption={Initalisierung REST-Interface (bash)}, captionpos=b, label={lst:rest-init}]
+$ pipenv run flask db downgrade base && 
+  pipenv run flask db upgrade && 
+  pipenv run flask user create admin --role admin \
+  --password admin
+\end{lstlisting}
+
+Danach wird der Scanner gestartet und die Initialisierung der Service-Datenbank wird ausgeführt. Nachdem alle Services eingetragen worden sind, beendet sich der Container und der letzte \textit{docker-compose} Befehl (\ref{lst:docker-compose-down}) wird ausgeführt. Dieser sorgt dafür, dass alle Container und Netzwerke, welche durch \textit{docker-compose} angelegt worden sind, entfernt werden.
+
+\begin{lstlisting}[language=bash, caption={Aufräumen mit docker-compose down (bash)}, captionpos=b, label={lst:docker-compose-down}]
+$ docker-compose down
+\end{lstlisting}
+
+Nach der Initalisierung ist die Anwendung einsatzbereit und kann über \textit{make start} und \textit{make stop} gestartet und beendet werden.
+
+Bei \textit{start} werden alle Container angelegt und im Hintergrund gestartet. Danach wird der Scanner Container beendet. Dies ist Notwendig, damit das GIS, diesen starten, pausieren und stoppen kann.
+
+Bei \textit{stop} wird nur der Befehl \textit{docker-compose down} ausgeführt, welcher die oben beschriebene Wirkung hat.
+
+Sollten die Anwendung einzeln verwendet oder installiert werden, muss die Dokumentation der jeweiligen Anwendung konsultiert werden.
