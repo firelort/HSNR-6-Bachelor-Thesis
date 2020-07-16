@@ -4,4 +4,4 @@ Am Spiel können nur noch Gruppen teilnehmen, die ihre Teilnahme gegenüber dem 
 
 In derzeitige implementierte Startgame Routine findet durch den GameClient keine Bekundung der Teilnahme statt, somit wird auch kein Token übermittelt.
 
-Auch muss die Hashfunktion zur Generierung an die im GIS verwendeten Funktion angepasst werden, damit die generierten Flags vergleichbar bleiben.
+Auch muss die Hashfunktion zur Generierung an die im GIS verwendeten Funktion angepasst werden, damit die generierten Flags vergleichbar bleiben. In der derzeitigen Implementierung wird der Hash-Algorithmus \textit{sha512} verwendet, kann jedoch einfach auf \textit{md5} zurück geändert werden.
