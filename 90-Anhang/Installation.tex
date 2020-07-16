@@ -1,8 +1,8 @@
 \section{Installationsanleitung}
-Beide Programme sind unter Zuhilfenahme des Versionsverwaltung (VCS) \textit{git} entwickelt worden und liegen derzeit auf der GitLab Instanz des Gemeinschaftslabors Informatik (GLI) des Fachbereiches Elektrotechnik und Informatik der Hochschule Niederrhein. Sie sind im zugangsbeschränkten Repository \textit{Its2}, erreichbar über\\ \textit{https://gl.kr.hsnr.de/ezslabor/abschlussarbeiten/its2}, abgelegt.
+Beide Programme sind unter Zuhilfenahme des Versionsverwaltungssystems \textit{git} entwickelt worden und liegen derzeit auf der GitLab Instanz des Gemeinschaftslabors Informatik (GLI) des Fachbereiches Elektrotechnik und Informatik der Hochschule Niederrhein. Sie sind im zugangsbeschränkten Repository \textit{Its2}, erreichbar über\\ \textit{https://gl.kr.hsnr.de/ezslabor/abschlussarbeiten/its2}, abgelegt.
 
 Um die Anwendung nutzen zu können, muss das Repository heruntergeladen werden.
-Dazu kann dieses als zip- oder tar-Archive mithilfe der Weboberfläche oder unter Verwendung von \textit{git clone} heruntergeladen werden. Die Methode \textit{git clone} ist bevorzugt, da so Änderungen leichter herunter- oder hochgeladen werden können.
+Dazu kann dieses als zip- oder tar-Archive mithilfe der Weboberfläche oder unter Verwendung von \textit{git clone} heruntergeladen werden. Die Methode \textit{git clone} ist zu bevorzugen, da so Änderungen leichter herunter- oder hochgeladen werden können.
 
 \begin{lstlisting}[language=bash, caption={git clone (bash)}, captionpos=b, label={lst:git-clone}]
 $ git clone https://gl.kr.hsnr.de/ezslabor/abschlussarbeiten/its2.git
@@ -29,10 +29,10 @@ Danach wird der Scanner gestartet und die Initialisierung der Service-Datenbank 
 $ docker-compose down
 \end{lstlisting}
 
-Nach der Initalisierung ist die Anwendung einsatzbereit und kann über \textit{make start} und \textit{make stop} gestartet und beendet werden.
+Nach der Initialisierung ist die Anwendung einsatzbereit und kann über \textit{make start} und \textit{make stop} gestartet und beendet werden.
 
-Bei \textit{start} werden alle Container angelegt und im Hintergrund gestartet. Danach wird der Scanner Container beendet. Dies ist Notwendig, damit das GIS, diesen starten, pausieren und stoppen kann.
+Bei \textit{start} werden alle Container angelegt und im Hintergrund gestartet. Danach wird der Scanner Container beendet. Dies ist notwendig, damit das GIS, diesen starten, pausieren und stoppen kann.
 
 Bei \textit{stop} wird nur der Befehl \textit{docker-compose down} ausgeführt, welcher die oben beschriebene Wirkung hat.
 
-Sollten die Anwendung einzeln verwendet oder installiert werden, muss die Dokumentation der jeweiligen Anwendung konsultiert werden.
+Sollten die Anwendungen einzeln verwendet oder installiert werden, muss die Dokumentation der jeweiligen Anwendung konsultiert werden.
