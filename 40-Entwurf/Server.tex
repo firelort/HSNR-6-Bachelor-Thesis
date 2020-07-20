@@ -26,7 +26,7 @@ Zum ersten ist es möglich den Client und Server unabhängig voneinander zu entw
 \subsection{Thin Webserver}
 \begin{center}
 	\includegraphics[width=\linewidth]{entwurf/gis/comp-gis}
-	\captionof{figure}{Rest Interface im Überblick (Komponentendiagramm)}
+	\captionof{figure}{REST Interface im Überblick (Komponentendiagramm)}
 \end{center}
 
 Der Server besteht aus der Komponente \textit{Game Information System}, welche wiederum aus drei weiteren Komponenten besteht. 
@@ -41,7 +41,7 @@ Die letzte Komponente beinhaltet Unit-Tests. Mithilfe der implementierten Unit-T
 Da der Thin Server nur eine Brücke zwischen Nutzer und Scanner oder Datenbank darstellt, kann von einer API (Application-Programming-Interface) gesprochen werden. Mithilfe dieser API kann beispielsweise der aktuelle Spielstand aus der Datenbank ausgelesen und Strafen eingetragen werden.
 
 \subsubsection{API}
-Um bei der Implementierung der API einem Standard / einem Vorgehen zu folgen, wird der de facto Standard für HTTP-APIs Represntational State Transfer (REST) verwendet.
+Um bei der Implementierung der API einem Standard / einem Vorgehen zu folgen, wird der de facto Standard für HTTP-APIs Representational State Transfer (REST) verwendet.
 
 Ein RESTful Interface ermöglicht, dass Ressourcen auf dem Webserver eindeutig identifizierbar sind, damit diese als Ziel von Operationen ausgewählt werden können. Des Weiteren werden einheitliche Schnittstellen genutzt. Dazu müssen Standardmethoden und -repräsentationen genutzt werden.
 
@@ -49,7 +49,7 @@ Durch diese Anforderungen biete das REST Interface die Möglichkeiten alle zur V
 
 Alle Routen werden mit dem Präfix \textit{/v1} versehen, um bei späteren Iterationen der API Kollisionen zu verhindern und die Nutzung der API v1 weiterhin zu ermöglichen. 
 
-Bei der Implementierung sollen die zur Verfügung stehenden HTTP Methoden benutzt werden. Das Rest-Interface soll auch mit entsprechenden HTTP Codes antworten, um die Antwort und den Erfolg einer Anfrage auch ohne Antworttext interpretieren zu können. Bei der Datenübertragung zwischen Client und Server soll das JavaScript Object Notation (JSON) Format für die Formatierung der gesendeten Daten verwendet werden.
+Bei der Implementierung sollen die zur Verfügung stehenden HTTP Methoden benutzt werden. Das REST-Interface soll auch mit entsprechenden HTTP Codes antworten, um die Antwort und den Erfolg einer Anfrage auch ohne Antworttext interpretieren zu können. Bei der Datenübertragung zwischen Client und Server soll das JavaScript Object Notation (JSON) Format für die Formatierung der gesendeten Daten verwendet werden.
 
 \begin{table}
 	\centering
@@ -63,59 +63,9 @@ Bei der Implementierung sollen die zur Verfügung stehenden HTTP Methoden benutz
 	\label{table:http-methods}
 \end{table}
 
-Neben den in Tabelle \ref{table:http-methods} aufgezeigten Methoden gibt es noch weitere HTTP Methoden, welche keine Anwendung in dem zu implementierenden Rest-Interface erhalten.
+Neben den in Tabelle \ref{table:http-methods} aufgezeigten Methoden gibt es noch weitere HTTP Methoden, welche keine Anwendung in dem zu implementierenden REST-Interface erhalten.
 
-\begin{table}
-	\centering
-	\begin{tabular}{l l}
-		Route									 & Methods \\ [0.5ex]
-		\hline
-		/										 & GET \\
-		/associate								 & GET, POST \\
-		/associate/<int:associate\_id>			 & DELETE \\
-		/auth/flagshop/login					 & POST \\
-		/auth/login								 & POST \\
-		/auth/refresh							 & POST \\
-		/auth/revoke/access						 & DELETE \\
-		/auth/revoke/refresh					 & DELETE \\
-		/backup									 & GET \\
-		/backup/<int:backup\_id>				 & GET \\
-		/challenge								 & GET, POST \\
-		/challenge/<int:challenge\_id>			 & DELETE, GET, PUT \\
-		/challenge/solve						 & GET \\
-		/challenge/solve/<int:challenge\_id>	 & DELETE, POST \\
-		/client									 & GET, POST \\
-		/client/<int:group\_id>					 & DELETE, GET \\
-		/flag									 & POST \\
-		/flagshop/package						 & GET, POST \\
-		/flagshop/package/<int:package\_id>		 & DELETE, PUT \\
-		/flagshop/transaction					 & DELETE, GET, POST \\
-		/flagshop/user							 & GET, POST \\
-		/flagshop/user/<user\_name>				 & DELETE, PUT \\
-		/log									 & GET, POST \\
-		/log/old								 & GET \\
-		/match/control							 & DELETE, POST, PUT \\
-		/match/info								 & GET \\
-		/match/score							 & GET \\
-		/note									 & GET, POST \\
-		/note/<int:note\_id>					 & DELETE, GET, PUT \\
-		/penalty								 & GET, POST \\
-		/penalty/<int:penalty\_id>				 & DELETE, GET, PUT \\
-		/scanner								 & DELETE, GET, POST \\
-		/scanner/notify							 & POST \\
-		/secure									 & GET \\
-		/service								 & GET \\
-		/service/<int:service\_id>				 & DELETE, GET, PUT \\
-		/setting								 & GET, PUT \\
-		/user									 & DELETE, GET, POST \\
-		/user/<int:user\_id>					 & DELETE, GET, PUT \\
-		/user/import							 & POST \\
-	\end{tabular}
-	\caption{Übersicht über die zu implementierenden Routen}
-	\label{table:gis-routes}
-\end{table}
-
-
+\subsection{Funktionale Eigenschaften}
 (todo: Module / Komponenten des REST-Interface)
 \paragraph{Authentifizierung}
 

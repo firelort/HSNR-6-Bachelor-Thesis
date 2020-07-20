@@ -1,12 +1,22 @@
 \section{Containerisierung} \label{sec:Containerisierung}
-(todo: Weiter ausarbeiten, mit quellen versehen, andere Position)
-Durch die Nutzung von Containerisierung ist es möglich die Anwendung agiler und skalierbarer zu betreiben. Auch werden so Abhängigkeiten zwischen den Komponenten reduziert und eine losere Kopplung erreicht, dies führt auch zu einer klareren Struktur und übersichtlicheren Programmierung.
+Bei der Containerisierung wird jeder Container als eine eigene logische Maschine betrachtet. Es können mehrere Container gleichzeitig auf einer physischen Maschine betrieben werden. 
+Die verschiedenen Container laufen unabhängig voneinander und wissen nicht über die Existenz weitere Container Bescheid. Sollte eine Kommunikation zwischen zwei Container benötigt werden, erfolgt diese über die Netzwerkschnittstelle ähnlich der Kommunikation zwischen Anwendungen, die auf verschiedener physischer Geräte.
 
-Die Containerisierung wird mithilfe von Docker erreicht. Docker ist ein seit 2013 bestehende Open-Source Containerisierungssoftware, welche ein weite Verbreitung genießt. Sie war der de facto Standard für Containerisierung, wird in den letzten Jahren, jedoch durch Container-Orchestrierung Softwares, wie Kubernetes oder OpenShift, stückweise verdrängt.
+Im Gegensatz zur Virtualisierung teilen sich die Container das zugrunde liegende Betriebssystem nicht. Dieses reduziert den Verbrauch von Ressourcen wie CPU und Arbeitsspeicher, da diese nur für die Anwendung und nicht das Betriebssystem benötigt werden.
 
-Da eine Container-Orchestrierung viel mehr bietet als im Rahmen dieses Projektes benötigt wird und eine Verwaltung und Installation von solch einer Software nicht einfach ist, wird Docker, welches den Anforderung genügt, verwendet. So bietet Docker den Vorteil der einfacheren Bedienbarkeit und Installation sowie der benötigten Flexibilität.
+Containerisierung wird verwendet, um Anwendungen getrennt betreiben zu können. So können verschiedene Versionen einer Software gleichzeitig auf der gleichen physischen Maschine betrieben werden, ohne dass es zu Interferenzen kommt oder das veränderte Konfigurationen notwendig sind.
 
-Mithilfe von Docker Compose ist es möglich Applikationen, welche aus mehreren Containern bestehen auch Stack genannt, zu verwalten und zu betreiben.
-Auch ist einfacher Abhängigkeiten zwischen den Containern zu modellieren und Verbindungen zwischen Containern herzustellen.
+Des Weiteren läuft ein Container auf die gleiche Art und Weise unabhängig von der darunter liegenden Hardwarearchitektur. So läuft ein Container auf dem Rechner des Entwickelnden genauso wie ein Container in einem Rechenzentrum. Durch diese Eigenschaft sind die Anwendungen in Containeren portabel.
 
-links: https://cloud.google.com/containers?hl=de, https://entwickler.de/leseproben/containerisierung-der-it-579775782.html
+Durch die Isolierungen können Anwendungen keinen negativen Einfluss auf weitere Container nehmen.
+
+Docker wurde erstmalig im Jahr 2013 als Open-Source-Software veröffentlicht und zählt derzeitig zu den am weit verbreitetste Anwendung für Containierisierung. Es ist der de facto Standard für Containierisierung. 
+\cite{boersmaContainerizationDefinitionBest2019}
+
+Heutzutage nutzen immer mehr Unternehmen Orchestierungstechnologien wie Kubernetes oder OpenStack um Container zentral über mehrere physische Maschienen zu verwalten und zu skalieren.
+\cite{gaviganHistoryAngular2018}
+
+Eine Installation eines Kubernetes Clusters im EZS-Labor ist bisher noch nicht vorhanden. Auch ist eine Installation für diese Bachelorarbeit aufgrund der Kosten-Nutzen-Differenz nicht empfehlenswert.
+
+Anstatt einer Orchestierungssoftware wird \textit{Docker Compose} genutzt werden.
+Mithilfe dieses können mehrere Container zu einem Service zusammengefasst und verwaltet werden. \textit{Docker Compose} wird verwendet um die beiden serverseitigen Anwendungen sowie die beiden Datenbanken zu einem Service zusammenzufassen. Auch sorgt es dafür, dass die Container in einem eigenen virtuellen Netzwerk laufen und nur untereinander kommunizieren können. \cite{dockerinc.OverviewDockerCompose2020} 
