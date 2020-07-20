@@ -9,11 +9,11 @@ Auf einer Shop-Seite befinden sich 10 Produkte inkl. Bild und Kurzbeschreibung. 
 Der Vorteil von MPAs ist die Optimierbarkeit für Suchmaschinen, das sogenannte SEO (Search Engine Optimization). Ein gutes SEO Rating sorgt dafür, dass die Webseite bei Suchmaschinen weit oben zu finden ist. Dies ist besonders für Webseiten und Shops wichtig, welche um Kunden konkurrieren. Anzuführen sind hier diverse Webshops und Zeitungen.
 
 \paragraph{Single Page Applications} \label{para:Single_Page_Applications}
-Die Single Page Applications, kurz SPA, stellt das genaue Gegenteil von MPA dar. Bei SPA besteht die Anwendung aus genau einem HTML-Dokument, dessen Inhalt bei Bedarf dynamisch nachgeladen wird. Dafür findet ein asynchroner Datenaustausch zwischen Client und Server statt, bei dem benötigte Ressourcen, wie Bilder, JavaScript und CSS ausgetauscht wird. Durch dieses Verfahren wird sicher gestellt, dass gleiche Elemente oder Ressourcen nicht erneut heruntergeladen werden müssen. Bei Änderungen werden nur Teile des DOMs\footnote{Das Document Object Model repräsentiert die Webseite als Baumstruktur} ersetzt und neu gerendert.
+Die Single Page Applications, kurz SPA, stellt das genaue Gegenteil von MPA dar. Bei SPA besteht die Anwendung aus genau einem HTML-Dokument, dessen Inhalt bei Bedarf dynamisch nachgeladen wird. Dafür findet ein asynchroner Datenaustausch zwischen Client und Server statt, bei dem benötigte Ressourcen, wie Bilder, JavaScript und CSS ausgetauscht werden. Durch dieses Verfahren wird sicher gestellt, dass gleiche Elemente oder Ressourcen nicht erneut heruntergeladen werden müssen. Bei Änderungen werden nur Teile des DOMs\footnote{Das Document Object Model repräsentiert die Webseite als Baumstruktur} ersetzt und neu gerendert.
 
 Die Interaktion mit dem DOM oder auch Virtual DOM kann selber entwickelt werden. Jedoch ist hierbei zu raten, auf bereits bestehende Frameworks wie Angular (Entwickelt unter der Leitung vom Angular Team bei Google), React (Entwickelt unter der Leitung von Facebook) oder Vue (Evan You und Core Team) zurück zugreifen. 
 
-Der große Vorteil von SPA ist die Geschwindigkeit der Anwendung, da hier nur einzelne Teile ausgetauscht werden müssen. Auch bieten SPA den Vorteil, dass die Entwicklung von Front- und Backend entkoppelt wird. Das heißt, dass die Programmiere des Front- und Backends weitestgehend unabhängig von einander arbeiten können.
+Der große Vorteil von SPAs ist die Geschwindigkeit der Anwendung, da hier nur einzelne Teile ausgetauscht werden müssen. SPAs bieten außerdem den Vorteil, dass die Entwicklung von Front- und Backend entkoppelt wird. Das heißt, dass die Programmierenden des Front- und Backends weitestgehend unabhängig von einander arbeiten können.
 
 Die SEO Optimierung gestaltet sich schwieriger, da es sich um eine dynamische Anwendung handelt.
 Zur Nutzung von SPA muss im Browser JavaScript verfügbar und aktiviert sein.
@@ -61,7 +61,59 @@ Zur Nutzung von SPA muss im Browser JavaScript verfügbar und aktiviert sein.
 \label{tab:Vor-_und_Nachteile_SPA/MPA}
 \end{table}
 
-Für die Entwicklung der Anwendung entscheide ich mich für die Verwendung einer SPA. Dieses geschieht unter den Gesichtspunkten der Entkopplung zwischen Front- und Backend, der Performance der Anwendung und der Zukunftssicherheit, welche meiner Meinung nach für SPA besteht. Die Nachteile vom SPA betreffen meine Anwendung gering. So ist auf den Rechnern im Labor ein moderner Webbrowser installiert und in diesem JavaScript aktiviert. Auch handelt es sich um eine interne Anwendung, bei der die SEO Optimierung keine Rolle spielt. Einzig die Gefahr von XSS Attacken besteht, diese hoffe ich durch eine geeignete Wahl der Technologien sowie der Implementierung zu reduzieren.\cite{melnikSinglePageApplication2020}
+Für die Entwicklung der Anwendung entscheide ich mich für die Verwendung einer SPA. Dieses geschieht unter den Gesichtspunkten der Entkopplung zwischen Front- und Backend, der Performance der Anwendung und der Zukunftssicherheit, welche meiner Meinung nach für SPA besteht. Die Nachteile vom SPA betreffen meine Anwendung gering. So ist auf den Rechnern im Labor ein moderner Webbrowser installiert und in diesem JavaScript aktiviert. Auch handelt es sich um eine interne Anwendung, bei der die SEO Optimierung keine Rolle spielt. Einzig die Gefahr von XSS Attacken besteht, diese hoffe ich durch eine geeignete Wahl der Technologien sowie der Implementierung zu reduzieren.  \cite{melnikSinglePageApplication2020}
 
 \subsection{Mockups} \label{subsec:Mockup}
-(todo: Mockups einfügen)
+
+Für das Layout der Oberfläche wird die Designsprache Material Design von Google verwendet, da dieses konkrete Gestaltungsregeln vorgibt und einen Styleguide zur Verfügung stellt. Material Design wurde im Jahr 2014 vorgestellt und in Apps von Google verwendet. Besonders die Optimierung der Benutzerfreundlichkeit steht im Vordergrund. Eine Besonderheit des Material Design ist, dass physikalische Gesetzte beachtet werden und die Inhalte für eine Prioisierung auf einer virtuellen z-Ebene verschoben werden. \cite{kulturbanause-teamMaterialDesignDesignsprache2017}
+
+Den Prinzipien des Dark Theme von Material Design wird gefolgt, da die bestehende Anwendung bereits nur im Dark Mode vorhanden ist. Des Weiteren werden Anwendungen derzeitig häufig mit Dark Mode als Default Theme veröffentlicht und bestehende Anwendungen ohne Dark Mode erhalten diesen. \cite{colbyWindows10Dark2020}
+
+Das Dark Themes trägt zur Verbesserung der visuellen Ergonomie bei, was zu einer Reduktion der Belastung der Augen führt. Des Weiteren wird bei OLED-Bildschirmen die Batterieleistung geschont. \cite{googleDarkTheme}
+
+Damit die Icons zum Design der Seite passen und aus einer Charge stammen, werden Icons von Material Design Icons\footnote{\url{https://materialdesignicons.com/}} verwendet. Hier sind die offizielle Icons sowie Icons von der Community, die dem Material Design folgen, vorhanden.
+
+\begin{center}
+	\includegraphics[width=\linewidth]{entwurf/webclient/base}
+	\captionof{figure}{Grundlayout der Weboberfläche (Mockup)}
+	\label{fig:mockup-base}
+\end{center}
+
+Das Grundlayout ist wie in \autoref{fig:mockup-base} abgebildet in drei Bereiche, Header, Navigation und Content, eingeteilt. 
+
+Der Bereich des Headers ist im oberen Teil erkennbar. Dort ist ein Logo, derzeitig noch das Logo aus der alten Anwendung, eine Überschrift sowie ein Untertitel platziert. Über die Überschrift und den Untertitel können die verschieden Seiten (Admin-, Spieler-, Flagshop- und Challengeseite) unterscheidbar gemacht werden.
+
+Die Navigation ist auf der linken Seite erkennbar und als Sidebar mit Icons realisiert. Diese beinhaltet Verweise zu den Unterseiten. Sollte ein Eintrag der Navigation aktiv sein, wird dieser mithilfe der im Material Design vorgesehenen Farbe hervorgehoben.
+
+Der Rest der Seite ist der Content Bereich. Dieser wird dynamisch mit dem anzuzeigenden Inhalt gefüllt.
+
+\begin{center}
+	\includegraphics[width=\linewidth]{entwurf/webclient/base-extended}
+	\captionof{figure}{Ausgeklapptes Menu beim hovern(Mockup)}
+	\label{fig:mockup-base-extended}
+\end{center}
+
+Damit die Navigation verständlich wird, gibt es wie in \autoref{fig:mockup-base-extended} zu erkennen neben den Icons auch beschreibenden Text. Dieser Text wird angezeigt, wenn der Nutzer mit der Maus über die Sidebar hovert. Bei dem Hovern wird die Sidebar über den Content ausgefahren und überdeckt diesen.
+
+\begin{center}
+	\includegraphics[width=\linewidth]{entwurf/webclient/base-with-error}
+	\captionof{figure}{Fehlernachrichten (Mockup)}
+	\label{fig:mockup-base-with-error}
+\end{center}
+
+Sollte der Nutzer über Ereignisse informiert werden, stehen zwei Möglichkeiten zur Verfügung.
+
+Wenn das Ereignis wichtig ist, wird ein Banner verwendet. Dieser Banner besteht aus drei Elementen, einem Element für die Nachricht und zwei Buttons. Der linke der beiden ermöglicht es dem Nutzer eine Aktion direkt auszuführen. Dies kann unter anderem eine Weiterleitung zu einer bestimmten Seite sein, über die der Nutzer weitere Informationen erhält. Über den anderen Button kann der Banner ausgeblendet werden. Es wird maximal ein Banner zeitgleich angezeigt.
+
+Die andere Möglichkeit den Nutzer zu informieren, ist die sogenannte Snackbar. Diese wird verwendet, wenn die Benutzererfahrung nicht unterbrochen werden soll und keine Benutzereingabe benötigt wird.
+Die Snackbar wird am  unteren rechten Rand platziert und verschwindet im Gegensatz zum Banner nach einer definierten Zeit automatisch. Wenn möglich wird auch hier maximal eine Snackbar gleichzeitig verwendet.
+
+\begin{center}
+	\includegraphics[width=\linewidth]{entwurf/webclient/table}
+	\captionof{figure}{Ansicht des Spielstandes (Mockup)}
+	\label{fig:mockup-table}
+\end{center}
+
+In \autoref{fig:mockup-table} ist ein Teil der Ansicht des Interaktiven Scoreboards inklusive der Strafen abgebildet. Die Ansicht ist in das Grundlayout der Anwendung (\autoref{fig:mockup-base}) eingebettet. Die Tabelle wird durch eine hellere Farbe dargestellt, da eine Verschiebung auf der z-Achse im Dark Theme nicht funktioniert. Damit die Zeilen in der Tabelle besser erkennbar sind, ist jede zweite Zeile hervorgehoben. 
+
+Dienste, die beim letzten Scan den gewünschten Zustand hatten, werden mit einem kontrastarmen grün dargestellt. Im Gegensatz zu der vorhanden Anwendung wird auf eine rote Darstellung der Dienste, bei unerwünschtem Zustand, verzichtet. Einzig die Gesamtpunkte werden im negativen Bereich rot dargestellt.
