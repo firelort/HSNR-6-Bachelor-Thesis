@@ -10,7 +10,7 @@ Des Weiteren ist es möglich die Punkteberechnung in der Datenbank unter Zuhilfe
 	\label{fig:db-asdf-table}
 \end{center}
 
-In der Abbildung \ref{fig:db-asdf-table} ist neben der alleinstehenden Tabelle \textbf{\textit{settings}} die Tabelle \textbf{\textit{users}} sowie die n zu m Beziehung zwischen \textbf{\textit{users}} und \textbf{\textit{groups}} dargestellt. Die n zu m Beziehung wird über eine Referenztabelle (\textbf{\textit{penalties}}) mit einer 1 zu n Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{penalties}} und einer 0,1 zu n Beziehung zwischen \textbf{\textit{users}} und \textbf{\textit{penalties}} modelliert. In der n zu m Beziehung werden die ausgesprochen Strafen gespeichert. Jede Gruppe kann von mehreren Betreuern oder dem System mehrmals verwarnt werden.
+In der \autoref{fig:db-asdf-table} ist neben der alleinstehenden Tabelle \textbf{\textit{settings}} die Tabelle \textbf{\textit{users}} sowie die n zu m Beziehung zwischen \textbf{\textit{users}} und \textbf{\textit{groups}} dargestellt. Die n zu m Beziehung wird über eine Referenztabelle (\textbf{\textit{penalties}}) mit einer 1 zu n Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{penalties}} und einer 0,1 zu n Beziehung zwischen \textbf{\textit{users}} und \textbf{\textit{penalties}} modelliert. In der n zu m Beziehung werden die ausgesprochen Strafen gespeichert. Jede Gruppe kann von mehreren Betreuern oder dem System mehrmals verwarnt werden.
 
 \subsubsection{Einstellungen}
 Die \textbf{\textit{settings}} Tabelle beinhaltet Einstellungen des Spiels als key-value Paar. Hierbei sind beide Spalten strings und der key einzigartig. Zu den Einstellungen gehört beispeilsweise das Scan-Intervall, die Flags pro Team sowie das Ende der Discover- und Attackzeit.
@@ -28,7 +28,7 @@ Die durch das System oder die Betreuer verteilten Strafen werden in der Tabelle 
 	\label{fig:db-group-table}
 \end{center}
 
-Wie in Abbildung \ref{fig:db-group-table} zu sehen existiert zwischen der Tabelle \textbf{\textit{groups}} und \textbf{\textit{group\_members}} eine 1 zu n Beziehung. Dies bedeutete, dass eine Gruppe mehrere Mitglieder haben kann, aber jedes Mitglied nur genau in einer Gruppe vertreten sein kann.
+Wie in \autoref{fig:db-group-table} zu sehen existiert zwischen der Tabelle \textbf{\textit{groups}} und \textbf{\textit{group\_members}} eine 1 zu n Beziehung. Dies bedeutete, dass eine Gruppe mehrere Mitglieder haben kann, aber jedes Mitglied nur genau in einer Gruppe vertreten sein kann.
 
 \subsubsection{Gruppe}
 In der Tabelle \textbf{\textit{groups}} werden alle teilnehmenden GameClients vermerkt. Jede Gruppe besitzt eine eindeutige \textit{ID} und einen eindeutigen \textit{Namen}. Der \textit{Name} der Gruppe repräsentiert die IP-Adresse des GameClients und ist nach Classless Internet Domain Routing Konvention (CIDR) abgelegt. Des Weiteren besitzt die \textbf{\textit{groups}} Tabelle die Spalte \textit{token}. In dieser wird der individuelle Token, welcher zur Flaggenerierung benötigt wird, abgespeichert. Dies ist nötig, damit der Server die selben Flags wie der GameClient generieren kann und die Betreuer die Richtigkeit verifizieren können.
@@ -44,7 +44,7 @@ Die Tabelle \textbf{\textit{group\_members}} beinhaltet alle IP-Adressen, welche
 \end{center}
 
 
-In der Abbildung \ref{fig:db-flags-table} erkennbar ist die 1 zu n Beziehung zwischen der Tabelle \textbf{\textit{groups}} und \textbf{\textit{flags}}. Dieses hat zur Folge, dass eine Gruppe mehrere Flags besitzen kann, jedoch eine Flag immer genau zu einer Gruppe gehört. In der Abbildung ist weiter die n zu m Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{flags}} abgebildet. Diese wird in eine Verknüpfungstabelle namens \textbf{\textit{flags\_submitted}} mit zwei 1 zu n Beziehungen zerlegt. Diese Tabelle enthält die abgegeben Flags.
+In der \autoref{fig:db-flags-table} erkennbar ist die 1 zu n Beziehung zwischen der Tabelle \textbf{\textit{groups}} und \textbf{\textit{flags}}. Dieses hat zur Folge, dass eine Gruppe mehrere Flags besitzen kann, jedoch eine Flag immer genau zu einer Gruppe gehört. In der Abbildung ist weiter die n zu m Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{flags}} abgebildet. Diese wird in eine Verknüpfungstabelle namens \textbf{\textit{flags\_submitted}} mit zwei 1 zu n Beziehungen zerlegt. Diese Tabelle enthält die abgegeben Flags.
  
 \subsubsection{Flags}
 Die während eines Spiels generierten und benötigten Flags werden in der Tabelle \textbf{\textit{flags}} abgelegt. Hierzu wird der Wert der Flag als string in der Spalte \textit{flag\_value} festgehalten. Neben diesem wird Nutzungsart unter Zuhilfenahme eines Enums und die Gruppenzugehörigkeit als Referenz gespeichert. Neben diesem wird in der Spalte \textit{already\_bought} als bool vermerkt, ob diese Flag bereits im Flagshop erworben worden ist. Diese Spalte besitzt nur Relevanz für die dementsprechenden Flagshop Flags.
@@ -60,7 +60,7 @@ Die durch die Studierenden abgegeben Flags werden in der Tabelle \textbf{\textit
 \end{center}
 
 
-In der Abbildung \ref{fig:db-service-table} ist die \textbf{\textit{services}} Tabelle sowie die n zu m Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{services}} zu sehen. Diese wird als Referenztabelle (\textbf{\textit{group\_service\_status}}) mit zwei 1 zu n Beziehungen dargestellt.
+In der \autoref{fig:db-service-table} ist die \textbf{\textit{services}} Tabelle sowie die n zu m Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{services}} zu sehen. Diese wird als Referenztabelle (\textbf{\textit{group\_service\_status}}) mit zwei 1 zu n Beziehungen dargestellt.
 
 \subsubsection{Services}
 In der \textbf{\textit{services}} Tabelle sind alle vom Big Brother überwachten Dienste und Schwachstellen eingetragen. Jeder dieser Einträge besteht aus einer eindeutigen ID, dem internen Namen der Operation (\textit{name}), dem angezeigten Namen (\textit{public\_name}) und der Gewichtung im Gesamtergebnis (\textit{weight}). Auch kann die Überprüfung der Schwachstelle mithilfe des bool-Wertes \textit{active} an- oder abgeschaltete werden.
@@ -75,7 +75,7 @@ In der Referenztabelle \textbf{\textit{group\_service\_status}} wird das Ergebni
 	\label{fig:db-flagshop-table}
 \end{center}
 
-Die Abbildung \ref{fig:db-flagshop-table} stellt die 1 zu n Beziehung zwischen den Tabellen \textbf{\textit{groups}} und \textbf{\textit{flagshop\_user}} dar. Das heißt, dass jeder Gruppe mehrere Flagshop Benutzer zugehörig sein können, jeder Benutzer aber genau einer Gruppe angehört. Des Weiteren wird die n zu m Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{flagshop\_packages}} als Referenztabelle\\ (\textbf{\textit{groups\_bought\_flagshop\_packages}}) mit zwei 1 zu n Beziehungen dargestellt. Diese beinhaltet die gekauften Flagshop Pakete pro Team.
+Die \autoref{fig:db-flagshop-table} stellt die 1 zu n Beziehung zwischen den Tabellen \textbf{\textit{groups}} und \textbf{\textit{flagshop\_user}} dar. Das heißt, dass jeder Gruppe mehrere Flagshop Benutzer zugehörig sein können, jeder Benutzer aber genau einer Gruppe angehört. Des Weiteren wird die n zu m Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{flagshop\_packages}} als Referenztabelle\\ (\textbf{\textit{groups\_bought\_flagshop\_packages}}) mit zwei 1 zu n Beziehungen dargestellt. Diese beinhaltet die gekauften Flagshop Pakete pro Team.
 
 \subsubsection{Flagshop Nutzer}
 Für die Nutzung des Flagshops müssen die Gruppen einen oder mehrere Flagshop Nutzer anlegen. Diese werden in der Tabelle \textbf{\textit{flagshop\_user}} abgelegt. Hierfür wird neben der erstellenden Gruppe (\textit{group\_id}) auch das Passwort (\textit{password}) und der Name (\textit{name})  abgespeichert. Der Primärschlüssel wird aus der Gruppe und dem Namen gebildet. So ist der Nutzername für die Gruppe eindeutig. Mehrere Gruppen können aber Nutzeraccounts mit demselben Namen anlegen.
@@ -92,7 +92,7 @@ Die durch die Gruppen gekauften Flagshop Pakete werden in der Tabelle\\ \textbf{
 	\captionof{figure}{Ansicht der Service-Tabellen (ER-Diagramm)}
 	\label{fig:db-challenge-table}
 \end{center}
-In der Abbildung \ref{fig:db-challenge-table} ist die \textbf{\textit{Challenge}} Tabelle und die n zu m Beziehung zwischen den Tabelle \textbf{\textit{groups}} und \textbf{\textit{challenges}} zu sehen. Diese Beziehung ist als Verknüpfungstabelle\\ (\textbf{\textit{group\_has\_challenges}}) mit zwei 1 zu n Beziehung realisiert.
+In der \autoref{fig:db-challenge-table} ist die \textbf{\textit{Challenge}} Tabelle und die n zu m Beziehung zwischen den Tabelle \textbf{\textit{groups}} und \textbf{\textit{challenges}} zu sehen. Diese Beziehung ist als Verknüpfungstabelle\\ (\textbf{\textit{group\_has\_challenges}}) mit zwei 1 zu n Beziehung realisiert.
 
 \subsubsection{Challenges}
 Die \textbf{\textit{challenges}} Tabelle beinhaltet alle Challenges, welche von den Studierenden gelöst werden können. Jede Challenge besitzt eine eindeutige ID. Neben dieser wird für jede Challenge ein Titel / Name in \textit{name}, ein Hinweis in \textit{hint}, das zum Lösen benötigte Passwort in \textit{password}, die Anzahl der Punkte in \textit{points} und der Pfad, über den die Challenge abgerufen werden kann, gespeichert.
@@ -107,7 +107,7 @@ Alle angefangenen und abgeschlossenen Challenges werden in der Tabelle \textbf{\
 	\label{fig:db-etc-table}
 \end{center}
 
-Wie in Abbildung \ref{fig:db-etc-table} erkennbar besitzen die Tabellen keine Abhängigkeiten und Verbindungen zu anderen. Im Folgenden werden die Tabellen für die Logs, die Notizen und die alten Spielstände vorgestellt.
+Wie in \autoref{fig:db-etc-table} erkennbar besitzen die Tabellen keine Abhängigkeiten und Verbindungen zu anderen. Im Folgenden werden die Tabellen für die Logs, die Notizen und die alten Spielstände vorgestellt.
 
 \subsubsection{Logs}
 Um die Aktionen innerhalb der Anwendung nachverfolgen zu können, werden diese in die \textbf{\textit{logs}} Tabelle geschrieben. Jeder Eintrag besteht aus einer ID, einem Enum in dem der Typ der Aktion festgehalten wird (\textit{action}), einem Zeitpunkt (\textit{timestamp}) und dem Inhalt der Aktion \textit{data}. 
