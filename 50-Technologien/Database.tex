@@ -1,14 +1,14 @@
 \section{Datenhaltung} \label{sec:Datenhaltung}
-Es gibt eine Vielzahl von verschiedenen relationalen Datenbankmanagementsystemen, welche alle einen ähnlichen Funktionsumfang mitbringen.
+Es gibt eine Vielzahl von verschiedenen relationalen Datenbankmanagementsystemen, die alle einen ähnlichen Funktionsumfang mitbringen.
 
-Im Folgenden werden nur die kostenlos nutzbaren und am weit verbreitetsten Datenbanken dargestellt. Zu dieser Liste zählen MySQL (Oracle), PostgreSQL (PostgreSQL Global Development Group), MariaDB (MariaDB Foundation) und SQLite (Dwayne Richard Hipp). \cite{db-enginesDBEnginesRanking}
+Im Folgenden werden nur die kostenlos nutzbaren und am weitesten verbreiteten Datenbanken dargestellt. Zu dieser Liste zählen MySQL (Oracle), PostgreSQL (PostgreSQL Global Development Group), MariaDB (MariaDB Foundation) und SQLite (Dwayne Richard Hipp). \cite{db-enginesDBEnginesRanking}
 
-Im Anschluss wird die Wahl der Datenbank für die Anwendung begründet.
+Im Anschluss an die Darstellung wird die Wahl der Datenbank für die Anwendung begründet.
 
 \subsection{MySQL und MariaDB}
-MySQL ist das beliebteste Open-Source SQL Datenbankmanagementsystem, welches im Jahr 1995 veröffentliche worden ist. Dieses ist als Client/Server Architektur implementiert, kann aber auch in eingebetteten Systemen verwendet werden. \cite{oraclecorporationMySQLMySQLReference2020} MySQL ist in C / C++ geschrieben und kompatibel mit vielen Programmiersprachen, darunter auch Python. Des Weiteren ist es auf diversen Plattformen einsetzbar und für große Datenmengen optimiert. \cite{oraclecorporationMySQLMySQLReference2020a}
+MySQL ist das beliebteste Open-Source SQL Datenbankmanagementsystem, das im Jahr 1995 veröffentlicht worden ist. Dieses ist als Client/Server Architektur implementiert, kann aber auch in eingebetteten Systemen verwendet werden. \cite{oraclecorporationMySQLMySQLReference2020} MySQL ist in C / C++ geschrieben und kompatibel mit vielen Programmiersprachen, darunter auch Python. Des Weiteren ist es auf diversen Plattformen einsetzbar und für große Datenmengen optimiert. \cite{oraclecorporationMySQLMySQLReference2020a}
 
-MariaDB ist eine Abspaltung von MySQL. Diese resultierte aus der bevorstehenden Übernahme von MySQL durch Sun Microsystems unter der Führung von Oracle. \cite{ionosMariaDBVsMySQL2020}
+MariaDB ist eine Abspaltung von MySQL. Sie resultierte aus der bevorstehenden Übernahme von MySQL durch Sun Microsystems unter der Führung von Oracle. \cite{ionosMariaDBVsMySQL2020}
 
 \subsection{PostgreSQL}
 PostgreSQL ist frei verfügbar und ohne Lizenzierung nutzbar. Es wurde als universitäres Projekt an der University of California at Berkeley Computer Science Department gestartet. Es sind neben den SQL92 und SQL99 Standard auch einige eigene Erweiterungen implementiert. \cite{boenigkWasIstPostgreSQL} 
@@ -16,7 +16,7 @@ PostgreSQL ist frei verfügbar und ohne Lizenzierung nutzbar. Es wurde als unive
 Nach Angaben der Entwickler ist \textquote[\cite{thepostgresqlglobaldevelopmentgroupPostgreSQLDocumentation122020}]{PostgreSQL [...] heute die fortschrittlichste Open-Source-Datenbank, die es gibt.} 
 
 \subsection{SQLite}
-Im Gegensatz zu den bereits vorgestellten Datenbanken handelt es sich bei SQLite um eine serverlose Datenbank, welche nicht aufgesetzt oder verwaltet werden muss. SQLite speichert die Daten in einer gewöhnlichen Datei, welche kopiert und verteilt werden kann. \cite{sqliteFeaturesSQLite}
+Im Gegensatz zu den bereits vorgestellten Datenbanken handelt es sich bei SQLite um eine serverlose Datenbank, die nicht aufgesetzt oder verwaltet werden muss. SQLite speichert die Daten in einer gewöhnlichen Datei, welche kopiert und verteilt werden kann. \cite{sqliteFeaturesSQLite}
 
 \subsection{Wahl der Datenbanksoftware}
 Die PostgreSQL Datenbank wird den Alternativen vorgezogen, da es für den Anwendungsfall keine nennenswerten Unterschiede zwischen den Datenbanken gibt. Die erhöhte Komplexität von PostgreSQL im Vergleich zu SQLite kann durch die Nutzung eines Dockerimages reduziert werden. Des Weiteren haben sich die Studierenden mit der PostgreSQL Datenbank in der Veranstaltung \textit{Datenbanksysteme} beschäftigt und im EZS-Labor besitzen bereits Mitarbeiter Kenntnisse von PostgreSQL.
