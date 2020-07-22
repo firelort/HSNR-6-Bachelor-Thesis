@@ -1,0 +1,411 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --main-bg-color: #121212;
+
+    --main-text-color-high: rgba(255, 255, 255, 0.87);
+    --main-text-color-medium: rgba(255, 255, 255, 0.60);
+    --main-text-color-disabled: rgba(255, 255, 255, 0.38);
+    --main-line-color: rgba(255, 255, 255, 0.12);
+
+    --main-snackbar-bg-color: #FFFFFF;
+    --main-snackbar-text-color: #121212;
+    --main-snackbar-primary-color: #3700b3;
+
+    --main-banner-bg-color: #121212;
+
+    --elevation-00dp: linear-gradient(0deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), #121212;
+    --elevation-01dp: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
+    --elevation-02dp: linear-gradient(0deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.07)), #121212;
+    --elevation-03dp: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), #121212;
+    --elevation-04dp: linear-gradient(0deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.09)), #121212;
+    --elevation-06dp: linear-gradient(0deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.11)), #121212;
+    --elevation-08dp: linear-gradient(0deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12)), #121212;
+    --elevation-12dp: linear-gradient(0deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.14)), #121212;
+    --elevation-16dp: linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15)), #121212;
+    --elevation-24dp: linear-gradient(0deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16)), #121212;
+
+    --main-error-color: #cf6679;
+
+    --main-primary-color: #9ca8db;
+    --main-primary-color-variant: #2f49ac;
+    --main-secondary-color: #c2b05a;
+    --main-secondary-color-variant: #936500;
+}
+
+.green {
+    color: greenyellow;
+}
+
+.red {
+    color: #dc5a60;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    background: var(--main-bg-color);
+    color: var(--main-text-color-high);
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+div.page {
+    height: 100%;
+    width: 100%;
+}
+
+aside.sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    max-width: 75px;
+    overflow: hidden;
+    transition: max-width 0.3s ease-in-out;
+    background: var(--elevation-16dp);
+    z-index: 10;
+}
+
+aside.sidebar:hover {
+    max-width: 1000px;
+}
+
+aside.sidebar div.sidebar-logo {
+    height: 75px;
+    border-bottom: var(--main-line-color) 1px solid;
+}
+
+ul.sidebar-menu {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+li.sidebar-item {
+    width: auto;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+aside.sidebar a.sidebar-link {
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    color: var(--main-text-color-medium);
+}
+
+li.sidebar-item-active a.sidebar-link {
+    color: var(--main-text-color-high);
+}
+
+aside.sidebar a.sidebar-link svg {
+    flex-shrink: 0;
+}
+
+aside.sidebar a.sidebar-link span {
+    padding-right: 10px;
+}
+
+aside.sidebar .icon {
+    width: 35px;
+    height: 35px;
+    margin: 0 20px;
+}
+
+aside.sidebar .logo {
+    width: 65px;
+    height: 65px;
+    margin-top: 5px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+main.main {
+    margin-left: 75px;
+    height: 100%;
+    width: calc(100% - 75px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-body {
+    height: 100%;
+    overflow-y: scroll;
+    scrollbar-color: var(--main-text-color-medium) var(--main-bg-color);
+    scrollbar-width: thin;
+}
+
+header.main-header {
+    /*** CSS for this ***/
+    height: 75px;
+    padding-left: 15px;
+    flex-shrink: 0;
+    overflow: hidden;
+
+    /*** Darkmode Color +**/
+    background: var(--elevation-04dp);
+    border-bottom: var(--main-line-color) 1px solid;
+
+    /*** CSS for Children ***/
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.title {
+    text-transform: uppercase;
+}
+
+.card {
+    background: var(--elevation-01dp);
+
+    border-radius: 4px;
+    margin: 20px;
+    padding: 20px;
+    overflow-x: auto;
+
+    /* Scrollbar */
+    scrollbar-color: var(--main-text-color-medium) var(--main-bg-color);
+    scrollbar-width: thin;
+}
+
+/* SCROOLLBAR WEBKIT */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--main-bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--main-text-color-medium);
+    border-radius: 10px;
+}
+
+
+.card-title {
+    margin: 20px;
+    overflow-x: auto;
+}
+
+table.score, table.penalty {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.score th, table.penalty th {
+    padding: 10px 10px;
+}
+
+table.score td {
+    padding: 20px 10px;
+    white-space: nowrap;
+    text-align: right;
+}
+
+table.score td:first-child {
+    text-align: center;
+}
+
+table.penalty td {
+    padding: 15px 10px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+table.score tr:nth-child(even), table.penalty tr:nth-child(even) {
+    background: var(--elevation-04dp);
+}
+
+
+.input-group {
+    position: relative;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.input-group input {
+    position: relative;
+
+    z-index: 1;
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+
+    border: 2px solid var(--main-line-color);
+    border-radius: 5px;
+    box-shadow: none;
+
+    background-color: transparent;
+    color: var(--main-text-color-high);
+
+    transition: all .2s ease-out;
+}
+
+.input-group input + label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: var(--main-text-color-medium);
+    transition: all .2s ease-out;
+}
+
+.input-group input:focus {
+    border-color: var(--main-primary-color);
+}
+
+.input-group input:focus + label, .input-group input.has-value + label {
+    top: -5px;
+    font-size: 70%;
+    text-transform: uppercase;
+    background: var(--elevation-01dp);
+    padding: 0 10px;
+    z-index: 2;
+}
+
+.input-group input:focus + label {
+    color: var(--main-primary-color);
+}
+
+.input-group input.has-value + label {
+    color: var(--main-text-color-disabled);
+}
+
+.input-group input.has-value:invalid {
+    border-color: var(--main-error-color);
+}
+
+.input-group input.has-value:invalid + label {
+    color: var(--main-error-color);
+}
+
+.tooltip {
+    margin-left: 20px;
+    position: relative;
+    display: inline-block;
+    cursor: help;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    opacity: 0;
+
+    padding: 5px;
+    width: 150px;
+
+    background: var(--elevation-12dp);
+    color: var(--main-text-color-high);
+    border-radius: 6px;
+
+    text-align: center;
+    position: absolute;
+
+    z-index: 2;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.input-buttons {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input-buttons input[type=submit], .input-buttons input[type=reset] {
+    border: none;
+    color: var(--main-text-color-high);
+
+    padding: 16px 32px;
+    cursor: pointer;
+
+}
+
+.input-buttons input[type=submit] {
+    background: var(--main-primary-color);
+}
+
+.input-buttons input[type=reset] {
+    background: var(--main-secondary-color);
+}
+
+
+#snackbar {
+    visibility: visible;
+    position: fixed;
+    z-index: 5;
+
+    right: 30px;
+    bottom: 30px;
+    text-align: right;
+
+    background-color: var(--main-snackbar-bg-color);
+    color: var(--main-snackbar-text-color);
+
+    border-radius: 4px;
+    padding: 16px;
+
+}
+
+#banner {
+    visibility: visible;
+    position: fixed;
+    z-index: 5;
+
+    top: 75px;
+    left: 75px;
+    width: inherit;
+
+    background: var(--elevation-01dp);
+    color: var(--main-text-color-medium);
+
+    padding: 16px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.banner-btn {
+    color: var(--main-primary-color);
+
+    background-color: unset;
+    border: 0;
+    padding: 14px 28px;
+    margin: 0;
+    cursor: pointer;
+    text-transform: uppercase;
+}

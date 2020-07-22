@@ -1,4 +1,4 @@
-\documentclass[a4paper, 12pt, parskip=half]{scrbook}
+\documentclass[a4paper, 12pt, parskip=half]{scrbook} %oneside
 
 % Einfaches Copy and Paste ermöglichen
 \usepackage{cmap}
@@ -152,9 +152,9 @@
 	%	Layout: Seite  |  Kapitel
 	\lefoot[\textbf{\pagemark~~$\mid$}]{\textbf{\pagemark~~$\mid$}}
 	\chapter{Anhang}
-	\input{90-Anhang/Anhang}
 	\input{90-Anhang/Installation}
 	\input{90-Anhang/Bedienung}
+	\input{90-Anhang/Anhang}
 	
 	% Tabellenverzeichnis
 	\listoffigures
@@ -167,8 +167,6 @@
 	
 	% Quellenverzeichnis
 	\printbibliography
-	
-	A
 	 
 	% Stichwortverzeichnis
 	\printindex

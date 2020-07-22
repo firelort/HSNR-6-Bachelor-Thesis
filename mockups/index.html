@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+
+    <title>Game Information System</title>
+
+    <link rel="stylesheet" type="text/css" href="css/normalize.css'" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+    <script src=js/functions.js"></script>
+
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+</head>
+
+<body>
+
+    <div class="page">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img class="logo" src="img/anonymous_emblem.svg" />
+            </div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-item {% if 'login' == active_page %}sidebar-item-active{% endif %}">
+                    <a href="" class="sidebar-link">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M10,17V14H3V10H10V7L15,12L10,17M10,2H19A2,2 0 0,1 21,4V20A2,2 0 0,1 19,22H10A2,2 0 0,1 8,20V18H10V20H19V4H10V6H8V4A2,2 0 0,1 10,2Z" />
+                        </svg>
+                        <span class="title">Login</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a href="" class="sidebar-link">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M12 5.69L17 10.19V18H15V12H9V18H7V10.19L12 5.69M12 3L2 12H5V20H11V14H13V20H19V12H22L12 3Z" />
+                        </svg>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M20,18H22V6H20M11.59,7.41L15.17,11H1V13H15.17L11.59,16.58L13,18L19,12L13,6L11.59,7.41Z" />
+                        </svg>
+                        <span class="title">Flaggen abgabe</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {% if 'challenges' == active_page %}sidebar-item-active{% endif %}">
+                    <a href="#" class="sidebar-link">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z" />
+                        </svg>
+                        <span class="title">Challenges</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {% if 'flagshop' == active_page %}sidebar-item-active{% endif %}">
+                    <a href="#" class="sidebar-link">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M18.36 9L18.96 12H5.04L5.64 9H18.36M20 4H4V6H20V4M20 7H4L3 12V14H4V20H14V14H18V20H20V14H21V12L20 7M6 18V14H12V18H6Z" />
+                        </svg>
+                        <span class="title">Flagshop</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {% if 'notes' == active_page %}sidebar-item-active{% endif %}">
+                    <a href="#" class="sidebar-link">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M15 3H5A2 2 0 0 0 3 5V19A2 2 0 0 0 5 21H19A2 2 0 0 0 21 19V9L15 3M19 19H5V5H14V10H19M17 14H7V12H17M14 17H7V15H14" />
+                        </svg>
+                        <span class="title">Notizen</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        <main class="main">
+            <header class="main-header">
+                <h2 class="title">Catch me, if you can</h2>
+                <h3>Hochschule Niederrhein, Labor für Realzeitsysteme</h3>
+            </header>
+            <div class="main-body" id="content-generated">
+                <div class="card-title">
+                    <h2>Interaktives Scoreboard</h2>
+                </div>
+                <div class="card">
+                    <table class="score">
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Uptime</th>
+                                <th>Bubble</th>
+                                <th>Web-Up</th>
+                                <th>XSS-Safe</th>
+                                <th>FTP-Safe</th>
+                                <th>Telnet-Safe</th>
+                                <th>SQLInject-Safe</th>
+                                <th>phpMyAdmin</th>
+                                <th>Challenges</th>
+                                <th>Flagshop</th>
+                                <th>Discover</th>
+                                <th>Offensiv</th>
+                                <th>Defensiv</th>
+                                <th>Strafe</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>192.168.87.11</td>
+                                <td class="green">-20 (100%)</td>
+                                <td>-2 (6%)</td>
+                                <td>0 (100%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td class="red">+1000</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.12</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-16</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.13</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-16</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.14</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-16</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.15</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-16</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.16</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-16</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.17</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-16</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.18</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-16</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.19</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)
+                                </td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-2 (0%)</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-16</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-title">
+                    <h2>Strafen</h2>
+                </div>
+                <div class="card">
+                    <table class="penalty">
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Zeitpunkt</th>
+                                <th>Strafpunkte</th>
+                                <th>Begründung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>192.168.87.11</td>
+                                <td>18:52</td>
+                                <td>10</td>
+                                <td>Flaggen während der Disovertime abgegeben</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.11</td>
+                                <td>18:52</td>
+                                <td>10</td>
+                                <td>Flaggen während der Disovertime abgegeben</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.11</td>
+                                <td>18:52</td>
+                                <td>10</td>
+                                <td>Flaggen während der Disovertime abgegeben</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.11</td>
+                                <td>18:52</td>
+                                <td>10</td>
+                                <td>Flaggen während der Disovertime abgegeben</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.11</td>
+                                <td>18:52</td>
+                                <td>10</td>
+                                <td>Flaggen während der Disovertime abgegeben</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.11</td>
+                                <td>18:52</td>
+                                <td>10</td>
+                                <td>Flaggen während der Disovertime abgegeben</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.11</td>
+                                <td>18:52</td>
+                                <td>10</td>
+                                <td>Flaggen während der Disovertime abgegeben</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.11</td>
+                                <td>18:52</td>
+                                <td>10</td>
+                                <td>Flaggen während der Disovertime abgegeben</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.11</td>
+                                <td>18:52</td>
+                                <td>10</td>
+                                <td>Flaggen während der Disovertime abgegeben</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.11</td>
+                                <td>18:52</td>
+                                <td>10</td>
+                                <td>Flaggen während der Disovertime abgegeben</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.87.11</td>
+                                <td>18:52</td>
+                                <td>10</td>
+                                <td>Flaggen während der Disovertime abgegeben</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

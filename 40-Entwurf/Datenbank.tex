@@ -1,5 +1,5 @@
 \section{Datenbank}
-Im Gegensatz zur bestehenden Anwendung wird auf eine relationale Datenbank anstatt auf Dateien zurückgegriffen. Das Vorgehen resultiert unter anderem aus der gestiegenen Datenmenge. Eine NoSQL Datenbank wird nicht benötigt, da sich die Daten in Schemen untergliedern lassen. Die Nutzung einer Datenbank stellt sicher, dass sich die Daten an einer zentralen Stelle befinden und nicht über die Anwendung verstreut sind. Auch wird eine mögliche Redundanz von Daten verhindert, da in Datenbanken mit Relationen gearbeitet werden kann. Durch die AKID-Eigenschaft (im eng. ACID - Atomarität, Konsistenz, Isolation und Dauerhaftigkeit) der Datenbanken wird sichergestellt, dass Daten in der Datenbank vollständig und konsistent sind. Ferner sind die Abfragen auf eine Datenbank besser optimiert, als Abfragen auf eine Datei. (todo: quelle hinzufügen)
+Im Gegensatz zur bestehenden Anwendung wird auf eine relationale Datenbank anstatt auf Dateien zurückgegriffen. Das Vorgehen resultiert unter anderem aus der gestiegenen Datenmenge. Eine NoSQL Datenbank wird nicht benötigt, da sich die Daten in Schemen untergliedern lassen. Die Nutzung einer Datenbank stellt sicher, dass sich die Daten an einer zentralen Stelle befinden und nicht über die Anwendung verstreut sind. Auch wird eine mögliche Redundanz von Daten verhindert, da in Datenbanken mit Relationen gearbeitet werden kann. Durch die AKID-Eigenschaft (im eng. ACID - Atomarität, Konsistenz, Isolation und Dauerhaftigkeit) der Datenbanken wird sichergestellt, dass Daten in der Datenbank vollständig und konsistent sind. Ferner sind die Abfragen auf eine Datenbank besser optimiert, als Abfragen auf eine Datei. \cite{drillingWasIstDatenbank2017}
 
 Des Weiteren ist es möglich, die Punkteberechnung in der Datenbank unter Zuhilfenahme von \textit{Views} durchzuführen.
 
@@ -10,16 +10,16 @@ Des Weiteren ist es möglich, die Punkteberechnung in der Datenbank unter Zuhilf
 	\label{fig:db-asdf-table}
 \end{center}
 
-In der \autoref{fig:db-asdf-table} ist neben der alleinstehenden Tabelle \textbf{\textit{settings}} die Tabelle \textbf{\textit{users}} sowie die n:m-Beziehung  zwischen \textbf{\textit{users}} und \textbf{\textit{groups}} dargestellt. Die  n:m-Beziehung wird über eine Referenztabelle (\textbf{\textit{penalties}}) mit einer 1:n-Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{penalties}} und einer 0,1:n-Beziehung zwischen \textbf{\textit{users}} und \textbf{\textit{penalties}} modelliert. In der n:m-Beziehung werden die ausgesprochenen Strafen gespeichert. Jede Gruppe kann von mehreren Betreuern oder dem System mehrmals verwarnt werden.
+In der \autoref{fig:db-asdf-table} ist neben der alleinstehenden Tabelle \textbf{\textit{settings}} die Tabelle \textbf{\textit{users}} sowie die n:m-Beziehung  zwischen \textbf{\textit{users}} und \textbf{\textit{groups}} dargestellt. Die  n:m-Beziehung wird über eine Referenztabelle (\textbf{\textit{penalties}}) mit einer 1:n-Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{penalties}} und einer 0,1:n-Beziehung zwischen \textbf{\textit{users}} und \textbf{\textit{penalties}} modelliert. In der n:m-Beziehung werden die ausgesprochenen Strafen gespeichert. Jede Gruppe kann von mehreren betreuenden Personen oder dem System mehrmals verwarnt werden.
 
 \subsubsection{Einstellungen}
 Die \textbf{\textit{settings}}-Tabelle beinhaltet Einstellungen des Spiels als key-value Paar. Hierbei sind beide Spalten strings und der key einzigartig. Zu den Einstellungen gehören beispielsweise das Scan-Intervall, die Anzahl der Flags pro Team sowie das Ende der Discover- und Attackzeit.
 
 \subsubsection{Nutzer}
-In der Tabelle \textbf{\textit{users}} sind die Log-In Informationen der Administratoren, Betreuer und Spieler hinterlegt. Da der Login aus Nutzername und Passwort besteht, werden die Spalten \textit{name} und \textit{password} benötigt. Auch muss anhand des Nutzernamens eindeutig auf einen Account geschlossen werden, deshalb ist die Spalte \textit{name} als unique gekennzeichnet. Die Rolle des Nutzers wird mithilfe eines Enums (\textit{role}) (Liste von benannten Werten) definiert.
+In der Tabelle \textbf{\textit{users}} sind die Log-In Informationen der Administrierende, der betreuenden Personen und der Spieler hinterlegt. Da der Login aus Nutzername und Passwort besteht, werden die Spalten \textit{name} und \textit{password} benötigt. Auch muss anhand des Nutzernamens eindeutig auf einen Account geschlossen werden, deshalb ist die Spalte \textit{name} als unique gekennzeichnet. Die Rolle des Nutzers wird mithilfe eines Enums (\textit{role}) (Liste von benannten Werten) definiert.
 
 \subsubsection{Strafen}
-Die durch das System oder die Betreuer verteilten Strafen werden in der Tabelle \textbf{\textit{penalties}} gespeichert. Dazu wird neben dem Grund der Strafe (\textit{reason}), dem Zeitpunkt der Bestrafung (\textit{timestamp}) und auch die Anzahl an Strafpunkten (\textit{points}) festgehalten. Damit Gruppen von einem Betreuer öfters bestraft werden können, ist der Primärschlüssel des Eintrages die ID der Strafe.
+Die durch das System oder die betreuenden Personen verteilten Strafen werden in der Tabelle \textbf{\textit{penalties}} gespeichert. Dazu wird neben dem Grund der Strafe (\textit{reason}), dem Zeitpunkt der Bestrafung (\textit{timestamp}) und auch die Anzahl an Strafpunkten (\textit{points}) festgehalten. Damit Gruppen von einer betreuenden Person öfters bestraft werden können, ist der Primärschlüssel des Eintrages die ID der Strafe.
 
 \subsection{Gruppen-Tabellen}
 \begin{center}
@@ -31,7 +31,7 @@ Die durch das System oder die Betreuer verteilten Strafen werden in der Tabelle 
 Wie in \autoref{fig:db-group-table} zu sehen existiert zwischen der Tabelle \textbf{\textit{groups}} und \textbf{\textit{group\_members}} eine 1:n-Beziehung. Dies bedeutet, dass eine Gruppe mehrere Mitglieder haben kann, aber jedes Mitglied nur genau in einer Gruppe vertreten sein kann.
 
 \subsubsection{Gruppe}
-In der Tabelle \textbf{\textit{groups}} werden alle teilnehmenden GameClients vermerkt. Jede Gruppe besitzt eine eindeutige \textit{ID} und einen eindeutigen \textit{Namen}. Der \textit{Name} der Gruppe repräsentiert die IP-Adresse des GameClients und ist nach der \textit{Classless Internet Domain Routing (CIDR)} Konvention abgelegt. Des Weiteren besitzt die \textbf{\textit{groups}} Tabelle die Spalte \textit{token}. In dieser wird der individuelle Token, welcher zur Flaggenerierung benötigt wird, abgespeichert. Dies ist nötig, damit der Server dieselben Flags wie der GameClient generieren kann und die Betreuer die Korrektheit verifizieren können.
+In der Tabelle \textbf{\textit{groups}} werden alle teilnehmenden GameClients vermerkt. Jede Gruppe besitzt eine eindeutige \textit{ID} und einen eindeutigen \textit{Namen}. Der \textit{Name} der Gruppe repräsentiert die IP-Adresse des GameClients und ist nach der \textit{Classless Internet Domain Routing (CIDR)} Konvention abgelegt. Des Weiteren besitzt die \textbf{\textit{groups}} Tabelle die Spalte \textit{token}. In dieser wird der individuelle Token, welcher zur Flaggenerierung benötigt wird, abgespeichert. Dies ist nötig, damit der Server dieselben Flags wie der GameClient generieren kann und die betreuenden Personen die Korrektheit verifizieren können.
 
 \subsubsection{Gruppenmitglieder}
 Die Tabelle \textbf{\textit{group\_members}} beinhaltet alle IP-Adressen, welche im Namen einer Gruppe agieren dürfen. Dafür wird die IP-Adresse im Feld \textit{alias\_ip} und die vertretende Gruppe als Referenz im Feld \textit{group\_id} gespeichert. Da das Feld \textit{alias\_ip} als Primärschlüssel verwendet wird, kann jede IP-Adresse nur genau eine Gruppe vertreten.
@@ -76,11 +76,11 @@ In der Referenztabelle \textbf{\textit{group\_service\_status}} wird das Ergebni
 
 Die \autoref{fig:db-flagshop-table} stellt die 1:n-Beziehung zwischen den Tabellen \textbf{\textit{groups}} und \textbf{\textit{flagshop\_user}} dar. Das heißt, dass jeder Gruppe mehrere Flagshop Benutzer zugehörig sein können, jeder Benutzer aber genau einer Gruppe angehört. Des Weiteren wird die n:m-Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{flagshop\_packages}} als Referenztabelle\\ (\textbf{\textit{groups\_bought\_flagshop\_packages}}) mit zwei 1:n-Beziehung dargestellt. Diese beinhaltet die gekauften Flagshop-Pakete pro Team.
 
-\subsubsection{Flagshop Nutzer}
+\subsubsection{Flagshop-Nutzer}
 Für die Nutzung des Flagshops müssen die Gruppen einen oder mehrere Flagshop-Nutzer anlegen. Diese werden in der Tabelle \textbf{\textit{flagshop\_user}} abgelegt. Hierfür werden neben der erstellenden Gruppe (\textit{group\_id}) auch das Passwort (\textit{password}) und der Name (\textit{name}) abgespeichert. Der Primärschlüssel wird aus der Gruppe und dem Namen gebildet. So ist der Nutzername für die Gruppe eindeutig. Mehrere Gruppen können aber Nutzeraccounts mit demselben Namen anlegen.
 
-\subsubsection{Flagshop Pakete}
-Die Betreuer und Administratoren können Flagshop Pakete anlegen, die von den Studierenden gekauft werden können. Diese werden in der Tabelle \textbf{\textit{flagshop\_packages}} abgelegt und erhalten Informationen zum Preis (\textit{price}) und der Anzahl der erhaltenen Flags (\textit{flag\_count}). Auch muss ein Name für das Paket über das Feld \textit{name} angegeben werden.
+\subsubsection{Flagshop-Pakete}
+Die betreuenden Personen und Administrierende können Flagshop Pakete anlegen, die von den Studierenden gekauft werden können. Diese werden in der Tabelle \textbf{\textit{flagshop\_packages}} abgelegt und erhalten Informationen zum Preis (\textit{price}) und der Anzahl der erhaltenen Flags (\textit{flag\_count}). Auch muss ein Name für das Paket über das Feld \textit{name} angegeben werden.
 
 \subsubsection{Gekaufte Flagshop Pakete}
 Die von den Gruppen gekauften Flagshop Pakete werden in der Tabelle\\ \textbf{\textit{groups\_bought\_flagshop\_packages}} abgespeichert. Auch wird im Feld \textit{price\_paid} der beim Kauf gezahlte Preis festgehalten, da die Studierenden den Preis eines Flagshop Paketes beim Kauf reduzieren können. Jedes Paket kann genau einmal von jeder Gruppe gekauft werden, da sich der Primärschlüssel aus Gruppe (\textit{group\_id}) und Paket (\textit{flagshop\_packages\_id}) zusammen setzt.
@@ -115,7 +115,7 @@ Um die Aktionen innerhalb der Anwendung nachverfolgen zu können, werden diese i
 Innerhalb der \textbf{\textit{logs}} Tabelle werden nur die Aktionen des derzeitig aktiven Spiels gespeichert. Neben diesen werden auch noch die Aktionen des letzten Spiels in der Tabelle \textbf{\textit{logs\_old}} gespeichert. Sollte ein Spiel beendet werden, werden die Aktionen des alten Spiels mit den neuen Aktionen überschrieben.
 
 \subsubsection{Notizen}
-In der Tabelle \textbf{\textit{notes}} soll den Betreuern und Administratoren die Möglichkeit geboten werden, Notizen und Hinweise zum Rahmen und zur Durchführung des Versuches zu geben. Diese Notizen können durch die Studierenden eingesehen werden. Dafür werden Titel und Inhalt jeweils in einem string gespeichert. Um einzelne Notizen abrufen zu können, erhalten diese eine eindeutige ID.
+In der Tabelle \textbf{\textit{notes}} soll den betreuenden Personen und Administrierende die Möglichkeit geboten werden, Notizen und Hinweise zum Rahmen und zur Durchführung des Versuches zu geben. Diese Notizen können durch die Studierenden eingesehen werden. Dafür werden Titel und Inhalt jeweils in einem string gespeichert. Um einzelne Notizen abrufen zu können, erhalten diese eine eindeutige ID.
 
 \subsubsection{Alte Spiele}
 Die Tabelle \textbf{\textit{backups}} soll alle alten Spielstände speichern. Dazu wird jedem Backup eine eindeutige ID zugewiesen und der Zeitpunkt des Erstellens wird in \textit{created\_at} abgespeichert. Die Informationen zu einem Spiel sind im JSON Format in der Spalte \textit{data} abgelegt.

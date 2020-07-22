@@ -161,7 +161,11 @@ Den betreuenden Personen soll es möglich gemacht werden permanente Hinweise zu 
 Studierende können die verfassten Notizen einsehen, um Hinweise oder Anweisung zum Versuch zu erhalten.
 
 \subsubsection{Flagshop}
-(todo: Bild)
+\begin{center}
+	\includegraphics[width=\linewidth]{entwurf/gis/dfd-gis-flagshop}
+	\captionof{figure}{Datenfluss im Flagshop (Datenflussdiagramm)}
+\end{center}
+
 
 Der Flashop muss die Verwaltung von Flagshop-Nutzern und Flagshop-Paketen sowie einen Kauf der Flagshop-Pakete ermöglichen.
 
@@ -172,7 +176,10 @@ Außerdem müssen Flagshop-Pakete durch die Betreuenden verwaltet werden. Die Er
 Studierende können Flagshop-Pakete erwerben. Besonderheit hierbei soll sein, dass diese einen Preis mitsenden und so die Flagshop-Pakete für einen anderen Preis als angegeben erwerben können.
 
 \subsubsection{Challenges}
-(todo: Bild)
+\begin{center}
+	\includegraphics[width=\linewidth]{entwurf/gis/dfd-gis-challenge}
+	\captionof{figure}{Datenfluss der Challenges (Datenflussdiagramm)}
+\end{center}
 
 Die Studierenden müssen Informationen zu Challenge sowie deren Ablageort abrufen können. Des Weiteren müssen sie die Challenge abschließen können. Hierfür sollen die Challenges am Ende ein Passwort mitteilen, welches ebenfalls in der Datenbank vorhanden ist. Die Studierenden können dieses Passwort dann als Beweis der Lösung der Challenge an das GIS übermitteln.
 
@@ -181,7 +188,7 @@ Die Challenges werden entweder mit der SPA ausgeliefert oder sollen von einem We
 \subsection{Reverse Proxy}
 Für das Betreiben wird auf den bereits im EZS Labor verwendeten Apache HTTP-Server zurückgegriffen. Durch die Entscheidung bleibt dieser als einziger Einstiegspunkt für Anfragen zuständig. So kann die Protokollierung der Anfragen sowie die Verschlüsselung der Verbindung an die Webserver Software abgegeben.
 
-Der Reverse Proxy muss bei der Weiterleitung der Anfrage an das GIS die eigentliche IP-Adresse der Anfrage mitteilen(todo: replace mitteilen). Dies wird benötigt, um die zugehörige Gruppe, bei der Registrierung und dem Login zu bestimmen. Die originale IP-Adresse der Anfrage soll in einen HTTP Header gespeichert werden.
+Der Reverse Proxy muss bei der Weiterleitung der Anfrage an das GIS sicherstellen, dass die eigentliche IP-Adresse der Anfrage dem GIS zugänglich ist. Dies wird benötigt, um die zugehörige Gruppe, bei der Registrierung und dem Login zu bestimmen. Die originale IP-Adresse der Anfrage soll in einen HTTP Header gespeichert werden.
 
 In einen HTTP Header können Server und Client zusätzliche Informationen zur Anfrage oder Antwort beifügen. \cite{mdncontributorsHTTPHeaders2020}
 
