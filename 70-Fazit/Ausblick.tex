@@ -1,11 +1,12 @@
 \section{Ausblick}
+\label{sec:Ausblick}
 Im Folgenden wird ein Ausblick auf mögliche Veränderungen und Erweiterungen gegeben.
 
 \subsubsection{Implementierung Webseite}
-Die angedachte Single Page Applikation konnte aus Zeitgründen nicht in dieser Bachelorarbeit implementiert werden. Die Webseite kann anhand des hier vorgestellten Entwurfs und der diskutierten Technologie in einer weiteren Bachelorarbeit aufgegriffen werden. Hierbei sollte in jedem Fall ein eigener Vergleich aktueller Technologien sowie eine kritische Auseinandersetzung mit der in dieser Arbeit vorgeschlagen Idee durchgeführt werden. Es ist aber auch möglich die Idee einer SPA zu verwerfen und eine klassische Multi Page Applikation, welche dann die API nutzt, zu entwickeln.
+Die angedachte Single Page Applikation konnte aus Zeitgründen nicht in dieser Bachelorarbeit implementiert werden. Die Webseite kann anhand des hier vorgestellten Entwurfs und der diskutierten Technologie in einer weiteren Bachelorarbeit aufgegriffen werden. Hierbei sollte in jedem Fall ein eigener Vergleich aktueller Technologien sowie eine kritische Auseinandersetzung mit der in dieser Arbeit vorgeschlagenen Idee durchgeführt werden. Es ist aber auch möglich die Idee einer SPA zu verwerfen und eine klassische Multi Page Applikation, welche dann die API nutzt, zu entwickeln.
 
-\subsubsection{Implementierung weiter Scan-Operationen}
-Durch den modularen Aufbau der Scanners ist es leicht möglich neue Scan-Operationen zu implementieren. Dieses kann genutzt werden, um auf dem Client weitere Schwachstellen und / oder Dienste zu implementieren, welche dann durch Big Brother überwacht und durch die Studierenden behoben oder online gehalten werden müssen. Herr Abts hat in seiner Bachelorarbeit\footcite{abtsUeberarbeitungUndErweiterung2016} Ideen für Schwachstellen im Kapitel Ausblick genannt. 
+\subsubsection{Implementierung weiterer Scan-Operationen}
+Durch den modularen Aufbau des Scanners ist es leicht möglich neue Scan-Operationen zu erstellen. Dies kann genutzt werden, um auf dem Client weitere Schwachstellen und/oder Dienste zu implementieren, welche dann durch Big Brother überwacht und durch die Studierenden behoben oder online gehalten werden müssen. Herr Abts hat in seiner Bachelorarbeit\footcite{abtsUeberarbeitungUndErweiterung2016} Ideen für Schwachstellen im Kapitel Ausblick genannt. 
 
 \subsubsection{Veränderungen in der Anwendung}
 In der derzeitigen Implementierung wird zum Parsen einer Anfrage der im verwendeten Modul Flask-RESTful implementierte \textit{reqparse (request parser)} verwendet. Dieser soll mit der Flask RESTful Version 2.0.0 entfernt werden und müsste daher gegen beispielsweise Marshmallow\footnote{\url{https://marshmallow.readthedocs.io/en/stable/}} oder den Flask internen Anfragen-Parser getauscht werden. Es besteht derzeitig keine Dringlichkeit, da Flask-RESTful am 6. Februar 2020 erst in der Version \textit{0.3.8} erschien. Sollte die Anwendung nicht weiterentwickelt werden, ist auch keine Änderung notwendig, da dann die Flask-RESTful Version unverändert bleibt.

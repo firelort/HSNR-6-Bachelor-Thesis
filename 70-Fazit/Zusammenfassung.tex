@@ -1,1 +1,24 @@
 \section{Zusammenfassung}
+Diese Arbeit hat sich mit dem Entwurf und der Realisierung eines Capture the Flag Core Systems beschäftigt. Das System soll im Rahmen des zweiten Praktikumsversuchs der Lehrveranstaltung IT-Sicherheit an der Hochschule Niederrhein eingesetzt werden. Es ersetzt das bestehende Überwachungs- und Auswertungssystem.
+
+Das Capture the Flag Core System besteht aus zwei Komponenten: Big Brother und Game Information System. Die Komponente Big Brother implementiert einen Scanner, der zur Überwachung der GameClients benötigt wird. In der Komponente Game Information System befindet sich die Implementierung einer REST-Schnittstelle, die zur Verwaltung und Durchführung des Spieles verwendet wird.
+
+In \autoref{chap:Einleitung} wurde zuerst die Bedeutung und Herausforderungen des Themas IT Sicherheit herausgestellt. Folgend wurde der Versuch \textquote{Catch me, if you can} skizziert.
+
+Des Weiteren wurde die Aufgabenstellung dieser Arbeit erläutert.
+
+Im \autoref{chap:Analyse} werden die Voraussetzungen für die CTF-Software herausgearbeitet. Zu diesen zählen die Begebenheiten im Labor, der Aufbau der Lehrveranstaltung und die aus dem alten System zu übernehmenden Funktionen.
+
+Am Ende des Kapitels wurden Anforderungen abgeleitet, welche bei dem Entwurf und der Realisierung des neuen Systems beachtet werden mussten.
+
+In \autoref{chap:Entwurf} wurden die beiden Softwarekomponenten sowie eine Datenbank anhand der Anforderungen und der gesetzten Ziele entworfen. Auch wurden Gründe für die Nutzung der Containieriserung dargestellt. 
+
+Der Entwurf macht keine Einschränkungen in puncto verwendeter Softwares, da diese im nächsten Kapitel (\ref{chap:Technologien}) dargestellt und verglichen werden.
+
+In \autoref{chap:Technologien} wurden verschiedene Technologien für die Realisierung des Backends, der Datenbank und des Frontends vorgestellt. Anhand der vorliegen Informationen wurde eine Technologie für die Realisierung gewählt.
+
+In \autoref{chap:Realisierung} werden das Game Information System, Big Brother und die Datenbank auf Grundlage des Entwurfs sowie der ausgesuchten Technologien implementiert. Hierbei wurde auf verschieden Features und Besonderheiten eingegangen. Das Kapitel wurde untergliedert, um die unabhängigen Komponenten einzelnen zu erläutern.
+
+Im \autoref{sec:Ausblick} wird auf mögliche Änderungen und Erweiterungen der im Rahmen des Versuches eingesetzten Softwares eingegangen.
+
+Eine Installations- und Bedingungsanleitung befindet sich im Anhang.
