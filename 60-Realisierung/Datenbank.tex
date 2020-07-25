@@ -16,7 +16,7 @@ Die Folgenden Views wurden in der Datenbank erstellt, um die Punkteberechnung zu
 	\label{fig:realisierung-view-offence}
 \end{center}
 
-Wie in \autoref{label} erkennbar werden die Angriffspunkte (\textit{offence\_points}) über die Tabellen \textit{flags} und \textit{flags\_submitted} berechnet. Dafür wird für jede Gruppe, die Flags abgegeben hat, alle ihrer abgegebenen Flags mit allen vorhanden Flags gejoint, bei denen die besitzende Gruppe ungleich der abgebenden Gruppe ist. Die Anzahl der übergeblieben Flags wird gezählt und als Offensivpunkte ausgewiesen.
+Wie in \autoref{fig:realisierung-view-offence} erkennbar werden die Angriffspunkte (\textit{offence\_points}) über die Tabellen \textit{flags} und \textit{flags\_submitted} berechnet. Dafür wird für jede Gruppe, die Flags abgegeben hat, alle ihrer abgegebenen Flags mit allen vorhanden Flags gejoint, bei denen die besitzende Gruppe ungleich der abgebenden Gruppe ist. Die Anzahl der übergeblieben Flags wird gezählt und als Offensivpunkte ausgewiesen.
 
 \begin{lstlisting}[frame=single, language=sql, caption={SQL View Angriffspunkte}, captionpos=b, label={lst:database-offence-points}]
 SELECT flags_submitted.group_id, count(flags_submitted.flag_value) AS points
