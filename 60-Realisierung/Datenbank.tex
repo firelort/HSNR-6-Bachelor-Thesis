@@ -115,13 +115,19 @@ Wenn eine Gruppe keine Ausgaben getätigt hat, wird diese auch nicht in die View
 	\label{fig:realisierung-view-challenge}
 \end{center}
 
-Im Gegensatz zum alten Überwachungs- und Auswertungssystems wird der Start einer Challenge nicht länger mit Minuspunkten bestraft. todo: Abschreckung für Studierende -> Versuchen Challenge nicht
+Im Gegensatz zum alten Überwachungs- und Auswertungssystems wird der Start einer Challenge nicht länger mit Minuspunkten bestraft. Diese Minuspunkte bewirken meiner Meinung nach eine Abschreckung der Studierenden, sodass diese die Challenges nicht versuchen. Im Rahmen einer Lehrveranstaltung sollten die Studierenden ermutigt werden, verschiedene themenbezogene Aufgaben zu lösen.
 
 Die Challengepunkte werden mithilfe der Tabellen \textit{challenges} und \textit{group\_has\_challenges} in der View \textit{challenge\_points} bestimmt. Für jede Gruppe werden die Punkte der gelösten Challenges summiert.
 
 Sollten negativ Punkte für gestartete Challenges verteilt werden, muss der SQL Code der View angepasst werden, damit für jede gestartete Challenge Negativpunkte verrechnet werden. 
 
 \subsubsection{Gesamtpunkte}
+\begin{center}
+	\includegraphics[width=\linewidth]{realisierung/database/view-total}
+	\captionof{figure}{View Gesamtpunkte (ER-Diagramm)}
+	\label{fig:realisierung-view-total}
+\end{center}
+
 In der View \textit{total\_points} werden pro Gruppe alle vorher genannten Punkte inklusive einer Gesamtpunkteanzahl dargestellt. 
 
 Die Gesamtpunkte setzen sich aus den genannten Punkten zusammen. Die Gesamtpunkte werden anhand der folgenden Formel berechnet.
@@ -137,6 +143,11 @@ COALESCE(challenge.points, ((0)::smallint))
 \end{lstlisting}
 
 \subsection{Servicestatus}
+\begin{center}
+	\includegraphics[width=\linewidth]{realisierung/database/view-service-status}
+	\captionof{figure}{View Servicestatus (ER-Diagramm)}
+	\label{fig:realisierung-view-service-status}
+\end{center}
 
 Der aktuelle Servicestatus wird auch innerhalb einer View (\textit{group\_service\_online\_status}) ermöglicht. Diese View blendet nur Informationen der Tabelle \textit{group\_service\_status} aus, deshalb hätte auch die Tabelle selber genutzt werden können.
 

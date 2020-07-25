@@ -2,11 +2,13 @@
 
 Im Folgenden wird die Implementierung des Scanners namens Big Brother beschrieben.
 
-Für die Realisierung wurde die Programmiersprache Python gewählt, da diese bereits im Game Information System eingesetzt wird und zum anderen in der Lehre der Hochschule Niederrhein vorkommt. Eine Programmierung in beispielsweise C oder C++ wäre auch denkbar gewesen.
+Für die Realisierung wurde die Programmiersprache Python gewählt, da diese bereits im Game Information System eingesetzt wird und zum anderen in der Lehre der Hochschule Niederrhein vorkommt. Eine Programmierung in beispielsweise C oder C++ wäre auch denkbar gewesen, aber aufgrund der unterschiedlichen Konventionen zwischen C und Python nicht gewählt worden.
 
-Die für die Prüfung der GameClients benötigten Daten befinden sich in der gemeinsamen Datenbank von GIS und Big Brother. Deshalb wird als Erstes mithilfe der in der Konfiguration (ref insert) hinterlegen Informationen eine Verbindung zur Datenbank aufgebaut. Hierzu wird das Python-Paket \textit{psycopg2} verwendet, welcher als Adapter zwischen PostgreSQL Datenbank und dem Python Programm fungiert. 
+Big Brother baut zu beginn eine Verbindung mithilfe der in der Konfiguration (ref insert) hinterlegen Informationen zur Datenbank auf. In dieser befinden sich die Daten, welche von Big Brother und dem GIS gemeinsam genutzt werden. Aus dieser Datenbank erhält Big Brother seine Aufgabe und die zu überwachenden GameClients und das GIS das Ergebnis der Scans.
 
-Nach dem Aufbau der Verbindung wird die Aufgabe des Scanners bestimmt. Sollte in der Datenbank nicht explizit die Aufgabe der Initialisierung spezifiziert werden, wird angenommen, dass die GameClients gescannt werden sollen. (\ref{lst:bigbrother-startup})
+Um die Verbindung zur Postgresql Datenbank aufzubauen, wird das Python-Paket \textit{psycopg2} verwendet, dieses dient als Adapter zwischen PostgreSQL Datenbanken und Python Programmen. 
+
+Nach dem erfolgreichen Aufbau der Verbindung zur Datenbank wird die Aufgabe des Scanners bestimmt. Sollte in der Datenbank nicht explizit die Aufgabe der Initialisierung spezifiziert werden, wird angenommen, dass die GameClients gescannt werden sollen. (\ref{lst:bigbrother-startup})
 
 \begin{lstlisting}[language=Python, frame=single, caption={todo}, captionpos=b, label={lst:bigbrother-startup}]
 cursor.execute(f"SELECT value FROM {SETTING_TABLE_NAME} WHERE key = 'scanner.task'")
