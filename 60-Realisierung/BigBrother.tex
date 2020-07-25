@@ -29,7 +29,7 @@ else:
 \subsection{Implementierung der Initialisierung}
 
 Bei der Initialisierung wird zuerst die bestehende Datenbank Tabelle mit den vorhanden Services zurückgesetzt.
-Im Anschluss werden alle im Big Brother Implementierten Service in die Datenbank Tabelle geschrieben. 
+Im Anschluss werden alle im Big Brother Implementierten Service in die Datenbank Tabelle geschrieben. Dazu wird ein Dummy-Scanner angelegt und die Scan-Operationen ausgelesen.
 
 Durch diese Vorgehensweise können alte Datenbestände keine Fehler verursachen.
 
@@ -52,7 +52,7 @@ cursor.execute(f"INSERT INTO {SETTING_TABLE_NAME}(key, value) VALUES ('{default_
 \end{lstlisting}
 
 
-\subsection{Implementierung des Scanners}
+\subsection{Implementierung der Scan-Operations}
 Die im alten System vorhandene Überwachung ist in der Programmiersprache PHP implementiert und wurden im Rahmen dieser Arbeit in das Python Programm überführt.
 
 Die verschiedenen Aufgaben der Überwachung wurden wie im Entwurf ausgearbeitet in einzelne sogennante Scan-Operationen getrennt. Diese soll das Verständnis fördern und den Aufwand der Wartbarkeit reduzieren. Durch diesen Ansatz können einzelne Scan-Operationen leichter ersetzt oder verändert werden. Des Weiteren ist es so möglich neue Scan-Operationen zu integrieren.
@@ -215,7 +215,9 @@ def start(self) -> None:
 \end{lstlisting}
 
 \subsubsection{XSS}
+Bei der XSS Scan-Operation wird geprüft, ob das Bewertungsformular auf den GameClients weiterhin für XSS-Angriffe offen ist.
 
+Hierzu werden anstatt einer realer Bewertung der Name und die Bewertung mit JavaScript ersetzt und an den Server gesendet. Sollte das gesendete JavaScript ungefiltert auf der Webseite auftauchen, wurde die XSS-Schwachstelle nicht behoben.
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother XSS Save}, captionpos=b, label={lst:bigbrother-xss-save}]
 def start(self) -> None:
   try:
@@ -235,11 +237,14 @@ def start(self) -> None:
 \end{lstlisting}
 
 \subsubsection{Telnet}
+Die Klasse der Telnet Scan-Operation implementiert eine Hilfsfunktion, welche prüft, ob der Telnetport (\textit{23}) erreichbar ist. Hierfür wird die von der Basisklasse implementierte Methode zum Prüfen offener Ports verwendet.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother Telnet}, captionpos=b, label={lst:bigbrother-telnet}]
 def _is_telnet_up(self) -> bool:
 	return self._is_port_open(23)
 \end{lstlisting}
+
+Die eigentliche Scan-Operation ruft nur die Hilfsfunktion auf und speichert das invertierte Ergebnis ab, da die Studierenden den Telnet Server abstellen sollen.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother Telnet}, captionpos=b, label={lst:bigbrother-telnet}]
 def start(self) -> None:
@@ -249,6 +254,7 @@ def start(self) -> None:
 
 \subsubsection{Htaccess}
 
+Bei dieser Scan-Operation wird geprüft, ob die auf allen Systemen voreingestellten Nutzerdaten für den Htaccess-Schutz geändert worden sind. Zur Überprüfung wird die geschützte Seite mit den Standardnutzerdaten aufgerufen, sollte der Statuscode ungleich 401 (Unauthorized) sein, waren die Nutzerdaten korrekt oder der Webserver war nicht erreichbar.
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother Htaccess}, captionpos=b, label={lst:bigbrother-htaccess}]
 def start(self) -> None:
   try:
@@ -263,6 +269,11 @@ def start(self) -> None:
 \end{lstlisting}
 
 \subsubsection{SQL-Passwort}
+
+Im Gegensatz zum alten System wird das SQL-Passwort auf dem entfernten Rechner selbst geprüft.
+Dazu wird eine SSH Verbindung mit den Nutzerdaten, die in der \textit{settings}-Tabelle in der Datenbank hinterlegt sind, aufgebaut. Sollte die Verbindung fehlschlagen, wird angenommen, dass das SQL-Passwort nicht geändert ist.
+
+Über die SSH Verbindung kann die lokale Datenbank angesprochen werden. Sollte die Authentifizierung mit der Standardkennung aufgrund falscher Nutzerdaten fehlschlagen, wurde das SQL-Passwort geändert.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother SQL-Passwort}, captionpos=b, label={lst:bigbrother-sql-password}]
 def start(self) -> None:
@@ -290,9 +301,6 @@ def start(self) -> None:
     if connection is not None:
       connection.close()
 \end{lstlisting}
-Im Gegensatz zum alten System wird das SQL-Passwort auf dem entfernten Rechner selbst geprüft.
-Dazu wird eine SSH Verbindung aufgebaut ...
-
 
 \subsection{Konfiguration}
 
@@ -311,5 +319,34 @@ Die Standardkonfiguration ist sowohl im Anhang (\ref{lst:anhang-bigbrother-confi
 
 Einstellungen, die sich meiner Meinung nach häufiger änderen, sind in der Datenbank Tabelle \textit{settings} abgelegt, damit diese durch das Hochschulpersonal leichter verändert werden kann.
 
+\subsection{Implementierung der Scan-Funktion}
 
-TODO: Erstellung und durchführung der Scanvorgänge
+Die eigentliche Scan-Funktion wird mithilfe der Klasse \textit{ScanGuard} implementiert, da für jede Teilnehmende Gruppe ein Scanner gestartet wird. Bei der Erstellung eines Objektes dieser Klasse werden die Einstellungen, die teilnehmenden Gruppen und die aktiven Scan-Operationen übergeben.
+
+Der ScanGuard legt für jede Gruppe ein Objekt der Klasse \textit{Scanner} mit den benötigten Informationen wie IP, aktive Scan-Operationen und Einstellungen an.
+
+Danach wird in einer Endlosschleife der nächste Scan-Zeitpunkt errechnet und im folgenden alle Scanner nebenläufig mit der Bibliothek \textit{concurrent} gestartet. Im Anschluss wird auf die Beendigung der Scanner sowie das Erreichen des nächsten Scan-Zeitpunkt gewartet.
+
+\begin{lstlisting}[language=Python, frame=single, caption={Big Brother ScanGaurd}, captionpos=b, label={lst:bigbrother-scanguard}]
+while not self._stop_scanning:
+  sleep_until = datetime.now() + timedelta(seconds=self._timeout)
+  
+  future_list = []
+  for scanner in scanner_list:
+    future_list.append(pool.submit(scanner.start))
+    
+  wait(future_list)
+  ...
+  while not self._stop_scanning and datetime.now() < sleep_until:
+    sleep(500 / 1000)
+\end{lstlisting}
+
+Das Signal für die Beendigung des Programms wird abgefangen, damit die Endlosschleife und so das Programm gracefull beendet wird.
+
+\subsection{Implementierung eines Scanners}
+Bei der Erzeugung eines Objektes der Klassse \textit{Scanner} werden alle von allen benötigten Scan-Operationen Objekte angelegt.
+
+Wie im Quellcode \autoref{lst:bigbrother-scanner} wird beim Starten eines Scanners zu erst geprüft, ob der entfernter Rechner erreichbar ist. Sollte der entfernte Rechner nicht erreichbar sein, werden keine weiteren Scan-Operationen durchgeführt. Im Anschluss wird noch sequentiell geprüft, ob der HTTP-Dienst erreichbar ist. Ist der HTTP-Dienst erreichbar, werden die Scan-Operationen, die einen funktionieren HTTP-Dienst voraussetzen, der Liste der durchzuführenden Scans  hinzugefügt.
+
+Im Anschluss werden die restlichen Scan-Operationen nebenläufig gestartet. Nachdem alle Scan-Operationen abgeschlossen sind, wird das Ergebnis ausgewertet und in der Datenbank gespeichert. Hierzu wird die Anzahl der durchgeführten Scans und bei Erfolg auch die Anzahl der erfolgreichen Scans um eins inkrementiert. Auch wird der Zeitpunkt des Scans sowie der Erfolg vermerkt.
+

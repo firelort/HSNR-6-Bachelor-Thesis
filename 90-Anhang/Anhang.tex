@@ -80,3 +80,45 @@ JOIN (SELECT grp_1.id, sum(gsp.service_points) AS service_points
 FROM (groups grp_1 LEFT JOIN group_service_points gsp ON ((grp_1.id = gsp.group_id))) 
 GROUP BY grp_1.id) tmp ON ((grp.id = tmp.id)));
 \end{lstlisting}
+
+\begin{lstlisting}[language=Python, frame=single, caption={Big Brother Scanner}, captionpos=b, label={lst:bigbrother-scanner}]
+self._host_up.start()
+
+results['host_up'] = self._host_up.result
+results['http_up'] = False
+for scan_operation in self._scanner_list:
+  results[scan_operation.name] = False
+
+for scan_operation in self._scanner_list_http_up:
+  results[scan_operation.name] = False
+
+if results['host_up']:
+  self._http_up.start()
+  results['http_up'] = self._http_up.result
+  
+  future_list = []
+  for scan_operation in self._scanner_list:
+    future_list.append(pool.submit(scan_operation.start))
+    
+  if results['http_up']:
+    for scan_operation in self._scanner_list_http_up:
+      future_list.append(pool.submit(scan_operation.start))
+
+  wait(future_list)
+
+  for scan_operation in self._scanner_list:
+    results[scan_operation.name] = scan_operation.result
+
+  if results['http_up']:
+    for scan_operation in self._scanner_list_http_up:
+      results[scan_operation.name] = scan_operation.result
+
+for key in results:
+  if results[key]:
+    online_count_add = 1
+    else:
+  online_count_add = 0
+
+  try:
+    self._cursor.execute( f"UPDATE {GROUP_SERVICE_TABLE_NAME} SET online_count =  online_count + {online_count_add}, scan_count =  scan_count + 1, was_online = {results[key]}, last_scan = CURRENT_TIMESTAMP WHERE group_id = {self._id} AND service_id = {self._get_id_of_scan_operation(key)}")
+\end{lstlisting}
