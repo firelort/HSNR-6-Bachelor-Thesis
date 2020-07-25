@@ -18,6 +18,9 @@
 % Schriftart
 \usepackage{times}
 
+% Mathematisches Paket für Formeln
+\usepackage{amsmath}
+
 % Stichwortverzeichnis
 \usepackage{imakeidx}
 \makeindex
@@ -36,6 +39,11 @@
 
 % Paket für code Beispiele
 \usepackage{listings}
+\lstset{postbreak=\raisebox{0ex}[0ex][0ex]
+	{\ensuremath{\hookrightarrow\space}}}
+
+\lstset{breaklines=true, breakatwhitespace=true}
+\lstset{numbers=left, numberstyle=\scriptsize}
 
 % Paket für Bilder
 \usepackage{graphicx}
@@ -134,8 +142,10 @@
 	
 	\chapter{Realisierung}
 	\label{chap:Realisierung}
-	%\input{60-Realisierung/Realisierung}
-	%\input{60-Realisierung/xyz}
+	\input{60-Realisierung/Datenbank}
+	\input{60-Realisierung/BigBrother}
+	\input{60-Realisierung/GIS}
+	\input{60-Realisierung/Realisierung}
 	
 	\chapter{Fazit}
 	\label{chap:Fazit}
@@ -167,9 +177,6 @@
 	
 	% Quellenverzeichnis
 	\printbibliography
-	 
-	% Stichwortverzeichnis
-	\printindex
 	
 \end{document}
 

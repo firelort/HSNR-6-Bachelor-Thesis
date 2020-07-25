@@ -8,3 +8,75 @@
 	\caption{Berechtigungsmatrix der Routen}
 	\label{table:gis-permission}
 \end{table}
+
+
+\begin{lstlisting}[frame=single, language=python]
+	class Config(object):
+	database = {
+		"username": "USERNAME",
+		"password": "PASSWORD",
+		"database": "DATABASE",
+		"host": "HOST",
+		"port": 5432
+	}
+	
+	webserver = {
+		"url": "webserver notify url",
+		"auth": "Authentication Header"
+	}
+	
+	operations = {
+		"base": {
+			# timeout=1 -> Faster response if client is not reachable, 0 returns unexpected behaviour
+			"ping_timeout": 4,
+			# timeout=1 -> Faster response if client is not reachable, 0 returns unexpected behaviour
+			"ssh_timeout": 4
+		},
+		"sql": {
+			"username": "SQL Username",
+			"password": "SQL Password"
+		},
+		"sql_injection": {
+			"admin": {
+				"username": "ADMIN_SQL_USER",
+				"password": "ADMIN_SQL_PASSWORD"
+			},
+			"control": {
+				"flag": "FLAG",
+				"value": "FLAG_VALUE"
+			}
+		},
+		"htaccess": {
+			"username": "HTACCESS_USER",
+			"password": "HTACCESS_PASSWORD"
+		},
+		"bubble": {
+			"bubble_port": 12345,
+			"bubble_ng_port": 12345
+		}
+	}
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single, language=sql, caption={todo}, captionpos=b, label={lst:databas-total-points-sql}]
+CREATE VIEW public.total_points AS 
+
+SELECT grp.id, grp.name, 
+(COALESCE(cha.total_points, ((0)::smallint)::bigint))::smallint AS challenge_points,
+(COALESCE(dis.points, ((0)::smallint)::bigint))::smallint AS discover_points,
+(COALESCE(ofe.points, ((0)::smallint)::bigint))::smallint AS offence_points,
+(COALESCE(def.points, ((0)::smallint)::bigint))::smallint AS defence_points,
+(COALESCE(tmp.service_points, ((0)::smallint)::bigint))::smallint AS service_points,
+(COALESCE(fla.points_spend, ((0)::smallint)::bigint))::smallint AS flagsshop_points,
+(COALESCE(pen.total_penalty, ((0)::smallint)::bigint))::smallint AS penalty_points,
+(((((((COALESCE(cha.total_points, ((0)::smallint)::bigint))::smallint + (COALESCE(dis.points, ((0)::smallint)::bigint))::smallint) + (COALESCE(ofe.points, ((0)::smallint)::bigint))::smallint) - (COALESCE(def.points, ((0)::smallint)::bigint))::smallint) - (COALESCE(tmp.service_points, ((0)::smallint)::bigint))::smallint) - (COALESCE(fla.points_spend, ((0)::smallint)::bigint))::smallint) - (COALESCE(pen.total_penalty, ((0)::smallint)::bigint))::smallint) AS total_points
+FROM (((((((groups grp 
+LEFT JOIN challenge_points cha ON ((grp.id = cha.group_id)))
+LEFT JOIN discover_points dis ON ((grp.id = dis.group_id)))
+LEFT JOIN offence_points ofe ON ((grp.id = ofe.group_id)))
+LEFT JOIN defence_points def ON ((grp.id = def.group_id)))
+LEFT JOIN flagshop_points fla ON ((grp.id = fla.group_id)))
+LEFT JOIN penalty_points pen ON ((grp.id = pen.group_id)))
+JOIN (SELECT grp_1.id, sum(gsp.service_points) AS service_points
+FROM (groups grp_1 LEFT JOIN group_service_points gsp ON ((grp_1.id = gsp.group_id))) 
+GROUP BY grp_1.id) tmp ON ((grp.id = tmp.id)));
+\end{lstlisting}

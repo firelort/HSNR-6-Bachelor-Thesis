@@ -1,4 +1,5 @@
 \section{Datenbank}
+\label{sec:Entwurf-Datenbank}
 Im Gegensatz zur bestehenden Anwendung wird auf eine relationale Datenbank anstatt auf Dateien zurückgegriffen. Das Vorgehen resultiert unter anderem aus der gestiegenen Datenmenge. Eine NoSQL Datenbank wird nicht benötigt, da sich die Daten in Schemen untergliedern lassen. Die Nutzung einer Datenbank stellt sicher, dass sich die Daten an einer zentralen Stelle befinden und nicht über die Anwendung verstreut sind. Auch wird eine mögliche Redundanz von Daten verhindert, da in Datenbanken mit Relationen gearbeitet werden kann. Durch die AKID-Eigenschaft (im eng. ACID - Atomarität, Konsistenz, Isolation und Dauerhaftigkeit) der Datenbanken wird sichergestellt, dass Daten in der Datenbank vollständig und konsistent sind. Ferner sind die Abfragen auf eine Datenbank besser optimiert, als Abfragen auf eine Datei. \cite{drillingWasIstDatenbank2017}
 
 Des Weiteren ist es möglich, die Punkteberechnung in der Datenbank unter Zuhilfenahme von \textit{Views} durchzuführen.

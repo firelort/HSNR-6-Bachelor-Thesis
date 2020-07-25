@@ -1,0 +1,53 @@
+\section{Big Brother}
+
+Im Folgenden wird die Implementierung des Scanners namens Big Brother beschrieben.
+
+Für die Realisierung wurde die Programmiersprache Python gewählt, da diese bereits im Game Information System eingesetzt wird und zum anderen in der Lehre der Hochschule Niederrhein vorkommt. Eine Programmierung in beispielsweise C oder C++ wäre auch denkbar gewesen.
+
+Die für die Prüfung der GameClients benötigten Daten befinden sich in der gemeinsamen Datenbank von GIS und Big Brother. Deshalb wird als Erstes mithilfe der in der Konfiguration (ref insert) hinterlegen Informationen eine Verbindung zur Datenbank aufgebaut. Hierzu wird das Python-Paket \textit{psycopg2} verwendet, welcher als Adapter zwischen PostgreSQL Datenbank und dem Python Programm fungiert. 
+
+Nach dem Aufbau der Verbindung wird die Aufgabe des Scanners bestimmt. Sollte in der Datenbank nicht explizit die Aufgabe der Initialisierung spezifiziert werden, wird angenommen, dass die GameClients gescannt werden sollen. (\ref{lst:bigbrother-startup})
+
+\begin{lstlisting}[language=Python, frame=single, caption={todo}, captionpos=b, label={lst:bigbrother-startup}]
+cursor.execute(f"SELECT value FROM {SETTING_TABLE_NAME} WHERE key = 'scanner.task'")
+task_tuple = cursor.fetchone()
+	
+try:
+	task = task_tuple[0].upper()
+except TypeError:
+	task = "SCAN"
+...
+if task != "INIT":
+	start_scan(connection)
+else:
+	run_init(connection)	
+\end{lstlisting}
+
+
+\subsection{Implementierung der Initialisierung}
+
+\subsection{Implementierung des Scanners}
+
+\subsubsection{Host}
+
+\subsubsection{Bubble}
+
+\subsubsection{Bubble-Ng}
+
+\subsubsection{FTP}
+
+\subsubsection{Htaccess}
+
+\subsubsection{SQL-Injection}
+
+\subsubsection{SQL-Passwort}
+
+\subsubsection{Telnet}
+
+\subsubsection{Web}
+
+\subsubsection{XSS}
+
+
+
+TODO: auf Konstanten hinweisen
