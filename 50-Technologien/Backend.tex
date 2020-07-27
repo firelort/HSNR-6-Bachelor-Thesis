@@ -1,9 +1,9 @@
 \section{Backend} \label{sec:Backend}
-Bei der Entwicklung des Webservers wird auf ein Backend-Webframework zurückgegriffen. Das erleichtert die Entwicklung und Wartung der Webanwendung, indem Werkzeuge und Bibliotheken zur Verfügung gestellt werden, die allgemeine Aufgaben übernehmen. Zu diesen allgemeinen Aufgaben gehört das Verarbeiten von HTTP Anfragen, das Erstellen von HTTP Antworten und das Weiterleiten von Anfragen an die entsprechende Funktion. Bei der Implementierung der Logik müssen alle diese allgemeinen Aufgaben nicht mehr beachtet werden.
+Bei der Entwicklung des Webservers wird auf ein Backend-Webframework zurückgegriffen. Das erleichtert die Entwicklung und Wartung der Webanwendung, indem Werkzeuge und Bibliotheken zur Verfügung gestellt werden, die allgemeine Aufgaben übernehmen. Zu diesen allgemeinen Aufgaben gehört das Verarbeiten von HTTP-Anfragen, das Erstellen von HTTP-Antworten und das Weiterleiten von Anfragen an die entsprechende Funktion. Bei der Implementierung der Logik müssen alle diese allgemeinen Aufgaben nicht mehr beachtet werden.
 
 Um die Weiterentwicklung durch Studierende des Bachelor Informatik der Hochschule Niederrhein zu gewährleisten, werden nur Webframeworks, die eine Programmierung in C, C++, Python oder JavaScript vorsehen, in Betracht gezogen, da eben diese an der Hochschule Niederrhein gelehrt werden. Derzeitig sind neben Frameworks wie Spring (Java), Ruby on Rails (Ruby) und Laravel (PHP), die nicht in den Vergleich aufgenommen werden, Django (Python), Flask(Python) und Express(Node.js/JavaScript) verbreitet. \cite{mdncontributorsServersideWebFrameworks2020}
 
-In der Lehrveranstaltung \textit{Web-Engineering} wird die Entwicklung mehrere Backend-Server unter Zuhilfenahme von Python durchgeführt. Deshalb werden im folgenden nur Django und Flask betrachtet. 
+In der Lehrveranstaltung \textit{Web-Engineering} wird die Entwicklung mehrerer Backend-Server unter Zuhilfenahme von Python durchgeführt. Deshalb werden im folgenden nur Django und Flask betrachtet. 
 
 Anschließend wird ein Framework gewählt, mit dem der Backend-Server realisiert werden soll.
 
@@ -12,9 +12,9 @@ Django folgt der sogenannten \textit{Batteries Included} Philosophie.
 
 Bei dieser werden vielseitige Standardbibliotheken mit ausgeliefert, sodass ein Nutzer keine oder nur wenige separate Pakete herunterladen muss. \cite{kuchlingPEP206Python}
 
-Django liefert unter anderem Module für Caching, Logging, Versenden von E-Mails, RSS-Feeds, Pagination, Security und der automatischen Generierung von Administrationsseiten. \cite{djangoDjangoDocumentationDjango} Durch den \textit{Batteries Included} Ansatzes funktionieren die Komponenten reibungslos untereinander und sind mit dem Kern kompatibel. Des Weiteren sind die Dokumentationen der verschiedenen Module zentral an einem Ort verfügbar. 
+Django liefert unter anderem Module für Caching, Logging, Versenden von E-Mails, RSS-Feeds, Pagination, Security und der automatischen Generierung von Administrationsseiten. \cite{djangoDjangoDocumentationDjango} Durch den \textit{Batteries Included} Ansatzes funktionieren die Komponenten reibungslos untereinander und können die Kernanwendung problemlos erweitern. Des Weiteren sind die Dokumentationen der verschiedenen Module und Erweiterungen zentral an einem Ort verfügbar. 
 
-Django wurde von einem Team entwickelt, das ursprünglich Zeitungs-Websites erstellt und verwaltet hat. Dieses Team hat die gemeinsame Codebasis abstrahiert und in ein Framework überführt. Daher ist Django besonders gut, aber nicht nur, für Nachrichtenseiten und Content Managment Systeme (CMS) geeignet. \cite{mdncontributorsDjangoIntroduction2019}
+Django wurde von einem Team entwickelt, das ursprünglich Webseiten von Zeitungen erstellt und verwaltet hat. Dieses Team hat die gemeinsame Codebasis abstrahiert und in ein Framework überführt. Daher ist Django besonders gut, aber nicht nur, für Nachrichtenseiten und Content Managment Systeme (CMS) geeignet. \cite{mdncontributorsDjangoIntroduction2019}
 
 \subsection{Flask}
 Im Gegensatz zu Django ist Flask ein Mikroframework und verfolgt die \textit{Batteries Included} Philosophie nicht. Bei einem Mikroframework ist der Kern einfach, aber erweiterbar gestaltet und es gibt wenige bis keine Abhängigkeiten zu externen Bibliotheken. Dieser Ansatz überträgt der programmierenden Person mehr Verantwortung aber auch mehr Freiheiten. So trifft Flask beispielsweise nicht die Entscheidung, welche Datenbank genutzt werden soll. \cite{palletsForewordFlaskDocumentation2010} 

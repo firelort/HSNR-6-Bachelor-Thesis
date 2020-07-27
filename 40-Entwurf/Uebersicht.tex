@@ -13,18 +13,18 @@ Die erste Ebene \textit{User Client} beinhaltet die auf einem User Client laufen
 Bei der Komponente Webclient handelt es sich um einen geläufigen Webbrowser (häufig wird Firefox genutzt), welcher Informationen vom \textit{CTF Core System} abruft und Daten an dieses übermittelt.
 Zu den Informationen gehören beispielsweise die Spielinformationen, der Spielstand aber auch teilnehmende Gruppen und Einstellungen. Der Webclient übermittelt Daten wie gefundene Flags, Lösungen von Aufgaben und Änderungen an Einstellungen.
 
-Die Komponente \textit{GameClient} beinhaltet alle auf dem System für den Versuch installierten Anwendungen. Dazu zählen nicht nur die Dienste mit den Schwachstellen. Auch die clientseitige Spielverwaltungs-Software wird unter dieser Komponente zusammengefasst. Die Spielverwaltungs-Software sorgt für die richtige Konfiguration des User Clients und versteckt die Flags.
+Die Komponente \textit{GameClient} beinhaltet alle auf dem System für den Versuch installierten Anwendungen. Dazu zählen nicht nur die Dienste mit den Schwachstellen. Auch die clientseitige Spielverwaltungs-Software wird unter dieser Komponente zusammengefasst. Die Spielverwaltungs-Software sorgt für die richtige Konfiguration des User Clients und verteilt bzw. versteckt die Flags.
 
 \paragraph{CTF Core System}
 Die Ebene des \textit{CTF Core System} besteht aus den Komponenten \textit{Big Brother} und \textit{Game Information System}. 
 
-Die Komponente \textit{Big Brother} implementiert einen Scanner, welcher für die Überwachung des \textit{GameClients} mit seinen Schwachstellen zuständig ist. Die Ergebnisse werden in der \textit{Database} für die Bewertung und Dokumentation festgehalten.
+Die Komponente \textit{Big Brother} implementiert einen Scanner, welcher für die Überwachung des \textit{GameClients} mit seinen Schwachstellen zuständig ist. Die Ergebnisse werden in der Komponente \textit{Database} für die Bewertung und Dokumentation festgehalten.
 
 Die zweite Komponente \textit{Game Information System} stellt eine Schnittstelle zwischen der Datenbank und den Nutzern dar. Mithilfe dieser können Informationen unter Berücksichtigung von Berechtigungen auf einem einheitlichen Weg aus der Datenbank ausgelesen, verändert und hinzugefügt werden. 
 
 \paragraph{Datenhaltung}
 Die Ebene \textit{Datenhaltung} beinhaltet die Komponenten \textit{Redis} und \textit{Database}. 
 
-Die Komponente \textit{Redis} ist nach der gleichnamigen Software Redis benannt. Bei Redis handelt es sich auch um eine Datenbank und könnte daher mit in die Komponente \textit{Database} aufgenommen werden; die Trennung erfolgt aber auf der Grundlage der Verwendung innerhalb der Software Architektur. Die Redis-Datenbank wird als Cache verwendet und persistiert die Daten nicht.
+Die Komponente \textit{Redis} ist nach der gleichnamigen Software Redis benannt. Bei Redis handelt es sich auch um eine Datenbank und könnte daher mit in die Komponente \textit{Database} aufgenommen werden; die Trennung erfolgt aber auf der Grundlage der Verwendung innerhalb der Software-Architektur. Die Redis-Datenbank wird als Cache verwendet und persistiert die Daten nicht auf der Festplatte sondern nur im Hauptspeicher.
 
-Anders als bei Redis werden in der Komponente \textit{Database} die Daten auf eine Festplatte festgeschrieben, um diese persistent nutzen zu können.
+Anders als bei Redis werden in der Komponente \textit{Database} die Daten auf eine Festplatte geschrieben, um diese persistent nutzen zu können.

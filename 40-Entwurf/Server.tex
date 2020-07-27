@@ -9,7 +9,7 @@ So wären die verschiedenen Komponenten des Webservers (Flagabgabe, Nutzerverwal
 Die Verwendung dieses Architekturmusters bedeutet bei der aktuellen Aufgabenstellung zu hohen Aufwand für zu geringen Nutzen.
 
 \subsection{Fat Webserver}
-Der Webserver beinhaltet sowohl die Logik als auch die Darstellung. Bei einer Anfrage an den Webserver wird eine Antwort bestimmt und diese dann in eine Vorlage beziehungsweise ein HTML Dokument eingebettet. Danach wird die Antwort zurück an den Nutzer gesendet.
+Der Webserver beinhaltet sowohl die Logik als auch die Darstellung. Bei einer Anfrage an den Webserver wird eine Antwort bestimmt und diese dann in eine Vorlage beziehungsweise ein HTML Dokument eingebettet. Danach wird die Antwort zurück an den Anfragenden gesendet.
 
 Während der Implementierung des Prototyps und des weiteren Entwurfs hat sich ein Problem mit dem Flagshop Login herausgestellt.
 
@@ -85,7 +85,7 @@ Des Weiteren werden alle ausgestellten Token für die Dauer der Gültigkeit in d
 \includegraphics[width=\linewidth]{entwurf/gis/dfd-gis-role-token}
 \captionof{figure}{Datenfluss der Authentifizierung und Autorisierung (Datenflussdiagramm)}
 
-Die Authentifizierung des Benutzers wird über die in \autoref{subsub:login} erwähnten Tokens realisiert. Die Tokens müssen vom Client bei jeder Anfrage mitgesendet werden und enthalten neben der Nutzerkennung weiter Informationen zu Berechtigungen. 
+Die Authentifizierung des Benutzers wird über die in \autoref{subsub:login} erwähnten Tokens realisiert. Die Tokens müssen vom Client bei jeder Anfrage mitgesendet werden und enthalten neben der Nutzerkennung weitere Informationen zu Berechtigungen. 
 
 Dies reduziert die Anfragen an die Datenbank. Nachteil hierbei sind langsame Änderungen der Berechtigungen, da die neuen Berechtigungen erst mit dem Erstellen eines neuen Tokens übernommen werden. Da Änderungen an der Berechtigung selten vorkommen, kann dieser Nachteil relativiert werden.
 
@@ -100,7 +100,7 @@ Mit den im Token codierten Berechtigungen kann der Server die Autorisierung der 
 \end{center}
 
 Für die Authentifizierung und Autorisierung müssen die mitgesendeten Token validiert werden.
-Dazu erhalten diese einen Zeitstempel der Ausstellung und des Ablaufs. Sollte der Nutzer einen Logout durchführen, wird der Token in der Datenbank als widerrufen markiert. 
+Dazu erhalten diese einen Zeitstempel der Ausstellung und des Ablaufs und eine Signatur, die eine Manipulation verhindern soll. Führt der Nutzer einen Logout durch, wird der Token in der Datenbank als widerrufen markiert. 
 
 \subsubsection{Registierung von GameClients}
 \begin{center}
@@ -108,16 +108,16 @@ Dazu erhalten diese einen Zeitstempel der Ausstellung und des Ablaufs. Sollte de
 	\captionof{figure}{Datenfluss der Authentifizierung und Autorisierung (Datenflussdiagramm)}
 \end{center}
 
-Die teilnehmenden GameClients sollen aufgrund der Anforderung nicht länger hartkodiert in der Anwendung vorliegen, sondern dynamisch hinterlegt werden. Deshalb müssen die GameClients sich vor Spielstart registrieren.
+Die teilnehmenden GameClients sollen aufgrund der Anforderung nicht länger fest in der Anwendung vorliegen, sondern dynamisch hinterlegt werden. Deshalb müssen die GameClients sich vor Spielstart registrieren.
 
 \paragraph{Flaggengenerierung}
 Durch die benötigte Registrierung ist es möglich, dass der Algorithmus zur Flaggenerierung verändert wird. Dies soll geschehen, damit die Flags nicht länger pro Semester, sondern im besten Fall für immer, einzigartig sind.
 
 Damit die Flags einzigartig sind, überträgt der GameClient einen Token bei der Registrierung. Dieser wird sowohl vom GameClient als auch vom Server genutzt, um die benötigten Flags zu generieren.
 
-Die Idee, dass die Flaggenerierung nur auf dem Server stattfindet, wurde verworfen, da der Nutzer auf dem Client die Möglichkeit hat die Flags bei der Übertragung abzufangen und abzugeben. Eine Verschlüsselung oder andere Verfahren würden keinen Mehrwert in puncto Sicherheit liefern, da der Nutzer Root-Rechte auf seinem System hat und so auf eventuell vorhandene PGP Keys zugreifen kann. 
+Die Idee, dass die Flaggenerierung nur auf dem Server stattfindet, wurde verworfen, da die nutzende Person auf dem Client die Möglichkeit hat die Flags bei der Übertragung abzufangen und abzugeben. Eine Verschlüsselung oder andere Verfahren würden keinen Mehrwert in puncto Sicherheit liefern, da die nutzende Person Root-Rechte auf ihrem System hat. Eine Verschlüsselung der Flags mit dem PGP-Verfahren bringt keinen wirklichen Mehrwert, daauf den vorhandene PGP-Key zugreifen werden kann. 
 
-\subsubsection{Flag Abgabe}
+\subsubsection{Flag-Abgabe}
 
 Da die Flag Abgabe einen Hauptteil des Versuchs darstellt, müssen authentifizierte Spielende die auf dem eigenen oder gegnerischen System gefundene Flags abgeben können.
 
@@ -132,7 +132,7 @@ Ob die Abgabe im Angriffszeitraum geschieht muss geprüft werden. Andernfalls so
 
 Die Betreuenden sollen über das GIS das Spiel steuern können. Dabei müssen sie in der Lage sein, ein Spiel zu starten, zu pausieren und zu beenden. Die Steuerung des Scanners soll an das Spiel gekoppelt werden, aber auch eigenständig funktionieren.
 
-Des Weiteren sollen die betreuenden Personen Strafen an Gruppen, welche die Regeln gebrochen haben, verteilen. Hier muss die Gruppe, der Grund der Bestrafung sowie die Anzahl der Strafpunkte übermittelt werden.
+Des Weiteren sollen die betreuenden Personen die Möglichkeit besitzen, Strafen an Gruppen, welche die Regeln gebrochen haben, verteilen zu können. Hier muss die Gruppe, der Grund der Bestrafung sowie die Anzahl der Strafpunkte übermittelt werden.
 
 \subsubsection{Nutzerverwaltung}
 
@@ -152,7 +152,7 @@ Die betreuenden Personen des Versuchs, sollen die Möglichkeit erhalten einzelne
 
 \subsubsection{Einstellungen}
 
-Die betreuenden Personen sollen die Einstellungen des Spiels verändern können. Die Spieleinstellungen sollen als key-value-Paar vorliegen. Zu den Einstellungen zählen beispielsweise die Anzahl der generierten Flags pro Gruppe, aber auch, ob ein anonymer Login für die Rolle \textit{Player} vorgesehen ist.
+Die betreuenden Personen sollen die Einstellungen des Spiels verändern können. Die Spieleinstellungen sollen als Key-Value-Paar vorliegen. Zu den Einstellungen zählen beispielsweise die Anzahl der generierten Flags pro Gruppe, aber auch, ob ein anonymer Login für die Rolle \textit{Player} vorgesehen ist.
 
 \subsubsection{Notizen}
 
@@ -183,7 +183,7 @@ Studierende können Flagshop-Pakete erwerben. Die Besonderheit hierbei soll sein
 
 Die Studierenden müssen Informationen zu Challenges sowie deren Ablageort abrufen können. Des Weiteren sollen sie in der Lage sein die Challenges abzuschließen. Hierfür teilen die Challenges am Ende ein Passwort mit, welches ebenfalls in der Datenbank vorhanden ist. Die Studierenden können dieses Passwort dann als Beweis der Lösung der Challenge an das GIS übermitteln.
 
-Die Challenges werden entweder mit der SPA ausgeliefert oder sollen von einem Webserver zur Verfügung gestellt werden. Sie werden nicht über das GIS verteilt, da dies als API nur Daten und keine Ressourcen an den Client übermittelt.
+Die Challenges werden von einem Webserver zur Verfügung gestellt werden. Sie werden nicht über das GIS verteilt, da dies als API nur Daten und keine Ressourcen an den Client übermittelt.
 
 \subsection{Reverse Proxy}
 Für das Betreiben wird auf den bereits im EZS Labor verwendeten Apache HTTP-Server zurückgegriffen. Durch die Entscheidung bleibt dieser als einziger Einstiegspunkt für Anfragen zuständig. So kann die Protokollierung der Anfragen sowie die Verschlüsselung der Verbindung an die Webserver Software abgegeben werden.
@@ -194,4 +194,4 @@ In einen HTTP Header können Server und Client zusätzliche Informationen zur An
 
 Um einen Spoofing-Angriff zu erschweren und das Vertrauen in den Header mit der IP-Adresse zu erhöhen, soll ein weiterer Header mit einem Geheimnis gesetzt werden. Anhand dieses Geheimnisses kann das GIS entscheiden, ob die Anfrage über einen vertrauenswürdigen Proxy weitergeleitet oder ob ein Spoofing-Angriff durchgeführt worden ist. Die Erweiterung wird benötigt, da die Anwendung auch ohne einen Reverse Proxy betrieben werden kann. In diesem Anwendungsfall kann die angreifende Person sich als Proxy für eine andere Gruppe ausgeben.
 
-Bei einem Spoofing-Angriff versendet die angreifende Person Anfragen für andere IP-Adressen und erhält die Antwort. So kann diese im Namen anderer agieren und den Angegriffenen beispielsweise Minuspunkte verschaffen.
+Bei einem Spoofing-Angriff versendet die angreifende Person Anfragen für andere IP-Adressen und erhält die Antwort. So könnte diese im Namen anderer agieren und den Angegriffenen beispielsweise Minuspunkte verschaffen.

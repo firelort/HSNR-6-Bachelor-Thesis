@@ -1,6 +1,6 @@
 \section{Containerisierung} \label{sec:Containerisierung}
 Bei der Containerisierung wird jeder Container als eine eigene logische Maschine betrachtet. Es können mehrere Container gleichzeitig auf einer physischen Maschine betrieben werden. 
-Die verschiedenen Container laufen unabhängig voneinander und wissen nicht über die Existenz weitere Container Bescheid. Sollte eine Kommunikation zwischen zwei Container benötigt werden, erfolgt diese über die Netzwerkschnittstelle ähnlich der Kommunikation zwischen Anwendungen, die auf verschiedener physischer Geräte.
+Die verschiedenen Container laufen unabhängig voneinander und wissen nicht über die Existenz weitere Container Bescheid. Sollte eine Kommunikation zwischen zwei Container benötigt werden, erfolgt diese über die Netzwerkschnittstelle ähnlich der Kommunikation zwischen Anwendungen, die auf verschiedener physischer Geräte. Damit die Container kommunizieren können, muss vorher ein Netzwerk konfiguriert werden, in dem sich die Container gemeinsam befinden.
 
 Im Gegensatz zur Virtualisierung teilen sich die Container das zugrunde liegende Betriebssystem nicht. Dieses reduziert den Verbrauch von Ressourcen wie CPU und Arbeitsspeicher, da diese nur für die Anwendung und nicht das Betriebssystem benötigt werden.
 
@@ -13,10 +13,10 @@ Durch die Isolierungen können Anwendungen keinen negativen Einfluss auf weitere
 Docker wurde erstmalig im Jahr 2013 als Open-Source-Software veröffentlicht und zählt derzeitig zu den am weit verbreitetste Anwendung für Containierisierung. Es ist der de facto Standard für Containierisierung. 
 \cite{boersmaContainerizationDefinitionBest2019}
 
-Heutzutage nutzen immer mehr Unternehmen Orchestierungstechnologien wie Kubernetes oder OpenStack um Container zentral über mehrere physische Maschienen zu verwalten und zu skalieren.
+Heutzutage nutzen immer mehr Unternehmen Orchestierungstechnologien wie Kubernetes oder OpenStack um Container zentral über mehrere physische Maschinen zu verwalten und zu skalieren.
 \cite{gaviganHistoryAngular2018}
 
 Eine Installation eines Kubernetes Clusters im EZS-Labor ist bisher noch nicht vorhanden. Auch ist eine Installation für diese Bachelorarbeit aufgrund der Kosten-Nutzen-Differenz nicht empfehlenswert.
 
 Anstatt einer Orchestierungssoftware wird \textit{Docker Compose} genutzt werden.
-Mithilfe dieses können mehrere Container zu einem Service zusammengefasst und verwaltet werden. \textit{Docker Compose} wird verwendet um die beiden serverseitigen Anwendungen sowie die beiden Datenbanken zu einem Service zusammenzufassen. Auch sorgt es dafür, dass die Container in einem eigenen virtuellen Netzwerk laufen und nur untereinander kommunizieren können. \cite{dockerinc.OverviewDockerCompose2020} 
+Mithilfe dieses Tools können mehrere Container zu einem Service zusammengefasst und verwaltet werden. \textit{Docker Compose} wird verwendet um die beiden serverseitigen Anwendungen sowie die beiden Datenbanken zu einem Service zusammenzufassen. Auch sorgt es dafür, dass die Container in einem eigenen virtuellen Netzwerk laufen und nur untereinander kommunizieren können. \cite{dockerinc.OverviewDockerCompose2020} 
