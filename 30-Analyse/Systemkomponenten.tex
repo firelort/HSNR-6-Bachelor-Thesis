@@ -41,7 +41,7 @@ Derzeitig erfolgt die Generierung der Flags sowohl auf den Gastsystemen als auch
 
 Dazu wird die Flag mithilfe der Streuwertfunktion (Hashfunktion) MD5 und der Eingabe, einem sogenannten seed, berechnet. Eine Hashfunktion bildet aus einer Eingabe variabler Länge eine Ausgabe mit einer festen Länge. Bei identischer Eingabe wird immer der gleiche Ausgabewert berechnet. Des Weiteren ist es bei einer guten Hashfunktion nicht möglich, von der Ausgabe auf den Eingabewert zu schließen. \cite{menezesHandbookAppliedCryptography1996}
 
-Der in der Anwendung genutzte seed setzt sich aus der Verkettung von \textit{Salt}, \textit{IP-Adresse}, dem Wort \textquote{\textit{Aufgabe}} und einem \textit{Zähler} zusammen.
+Der in der Anwendung genutzte seed setzt sich aus der Verkettung von \textit{Salt}, \textit{IP-Adresse}, dem String \textquote{\textit{Aufgabe}} und einem \textit{Zähler} zusammen.
 
 Ein Salt wird benötigt, um den Flags eine Lebenszeit zu geben. In der derzeitigen Implementierung enthält der Salt das aktuelle Jahr sowie das jeweilige Semester. So sind nur Flags des aktuellen Semesters gültig und werden vom Auswertungs- und Überwachungssystem akzeptiert. Einer Verwendung von Flags aus vorherigen Semestern wird somit effektiv vorgebeugt.
 

@@ -3,61 +3,139 @@
 	\begin{tabular}{l l c c c c}
 		Methode & Route	& Admin & Supervisor & Player  & Flagshop \\ [0.5ex]
 		\hline &&&&&\\
-		GET & /	&  $\surd$ &  $\surd$  &  $\surd$ &  $\surd$ \\
+		GET		& /									& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		GET		& /associate 						& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		POST	& /associate						& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
+		DELETE	& /associate/<int:associate\_id>	& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
+		POST	& /auth/flagshop/login				& $\chi$ & $\chi$ & $\surd$ & $\chi$ \\
+		POST	& /auth/login						& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		POST	& /auth/refresh						& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
+		DELETE	& /auth/revoke/access				& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
+		DELETE	& /auth/revoke/refresh				& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
+		GET		& /backup							& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		GET 	& /backup/<int:backup\_id>			& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		GET		& /challenge						& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
+		POST	& /challenge						& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET		& /challenge/<int:challenge\_id>	& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
+		PUT		& /challenge/<int:challenge\_id>	& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		DELETE	& /challenge/<int:challenge\_id>	& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET		& /challenge/solve					& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		POST	& /challenge/solve/<int:challenge\_id>& $\chi$ & $\chi$ & $\surd$ & $\chi$ \\
+		DELETE	& /challenge/solve/<int:challenge\_id>& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET 	& /client							& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		POST	& /client							& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		GET 	& /client/<int:group\_id>			& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		DELETE	& /client/<int:group\_id>			& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		POST 	& /flag								& $\chi$ & $\chi$ & $\surd$ & $\chi$ \\
+		GET		& /flagshop/package					& $\surd$ & $\surd$ & $\chi$ & $\surd$ \\
+		POST	& /flagshop/package					& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		PUT 	&/flagshop/package/<int:package\_id>& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		DELETE	&/flagshop/package/<int:package\_id>& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET		& /flagshop/transaction				& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		POST	& /flagshop/transaction				& $\chi$ & $\chi$ & $\chi$ & $\surd$ \\
+		DELETE	& /flagshop/transaction				& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET		& /flagshop/user					& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		POST	& /flagshop/user					& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
+		PUT		& /flagshop/user/<user\_name>		& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		DELETE	& /flagshop/user/<user\_name>		& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET 	& /log								& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		POST 	& /log								& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET		& /log/old							& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		POST	& /match/control					& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		PUT		& /match/control					& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		DELETE	& /match/control					& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 	\end{tabular}
-	\caption{Berechtigungsmatrix der Routen}
+\caption{Berechtigungsmatrix der Routen 1/2}
+\label{table:gis-permission-1}
+\end{table}
+
+\begin{table}
+	\centering
+	\begin{tabular}{l l c c c c}
+		Methode & Route	& Admin & Supervisor & Player  & Flagshop \\ [0.5ex]
+		\hline &&&&&\\
+		GET		& /match/info						& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		GET		& /match/score						& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		GET		& /note								& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		POST	& /note								& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET 	& /note/<int:note\_id>				& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		PUT 	& /note/<int:note\_id>				& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		DELETE	& /note/<int:note\_id>				& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET		& /penalty							& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		POST	& /penalty							& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET		& /penalty/<int:penalty\_id>		& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		PUT		& /penalty/<int:penalty\_id>		& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		DELETE	& /penalty/<int:penalty\_id>		& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET		& /scanner							& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		POST	& /scanner							& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		DELETE	& /scanner							& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		POST	& /scanner/notify					& $\chi$ & $\chi$ & $\chi$ & $\chi$ \\
+		GET 	& /secure							& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
+		GET		& /service							& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET		& /service/<int:service\_id>		& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		PUT		& /service/<int:service\_id>		& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		DELETE	& /service/<int:service\_id>		& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET		& /setting							& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		PUT		& /setting							& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET		& /user								& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		POST	& /user								& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		DELETE	& /user								& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		GET 	& /user/<int:user\_id>				& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		PUT 	& /user/<int:user\_id>				& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		DELETE	& /user/<int:user\_id>				& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		GET		& /user/import						& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+	\end{tabular}
+	\caption{Berechtigungsmatrix der Routen 2/2}
 	\label{table:gis-permission}
 \end{table}
 
 
 \begin{lstlisting}[frame=single, language=python, caption={Config Vorlage Big Brother}, captionpos=b, label={lst:anhang-bigbrother-config-example}]
-	class Config(object):
-	database = {
-		"username": "USERNAME",
-		"password": "PASSWORD",
-		"database": "DATABASE",
-		"host": "HOST",
-		"port": 5432
-	}
-	
-	webserver = {
-		"url": "webserver notify url",
-		"auth": "Authentication Header"
-	}
-	
-	operations = {
-		"base": {
-			# timeout=1 -> Faster response if client is not reachable, 0 returns unexpected behaviour
-			"ping_timeout": 4,
-			# timeout=1 -> Faster response if client is not reachable, 0 returns unexpected behaviour
-			"ssh_timeout": 4
-		},
-		"sql": {
-			"username": "SQL Username",
-			"password": "SQL Password"
-		},
-		"sql_injection": {
-			"admin": {
-				"username": "ADMIN_SQL_USER",
-				"password": "ADMIN_SQL_PASSWORD"
-			},
-			"control": {
-				"flag": "FLAG",
-				"value": "FLAG_VALUE"
-			}
-		},
-		"htaccess": {
-			"username": "HTACCESS_USER",
-			"password": "HTACCESS_PASSWORD"
-		},
-		"bubble": {
-			"bubble_port": 12345,
-			"bubble_ng_port": 12345
-		}
-	}
+class Config(object):
+  database = {
+    "username": "USERNAME",
+    "password": "PASSWORD",
+    "database": "DATABASE",
+    "host": "HOST",
+    "port": 5432
+  }
+  
+  webserver = {
+    "url": "webserver notify url",
+    "auth": "Authentication Header"
+  }
+  
+  operations = {
+    "base": {
+      "ping_timeout": 4,
+      "ssh_timeout": 4
+    },
+    "sql": {
+      "username": "SQL Username",
+      "password": "SQL Password"
+    },
+    "sql_injection": {
+      "admin": {
+        "username": "ADMIN_SQL_USER",
+        "password": "ADMIN_SQL_PASSWORD"
+	  },
+	  "control": {
+	    "flag": "FLAG",
+	    "value": "FLAG_VALUE"
+	  }
+    },
+    "htaccess": {
+      "username": "HTACCESS_USER",
+      "password": "HTACCESS_PASSWORD"
+    },
+    "bubble": {
+      "bubble_port": 12345,
+      "bubble_ng_port": 12345
+    }
+  }
 \end{lstlisting}
 
-\begin{lstlisting}[frame=single, language=sql, caption={todo}, captionpos=b, label={lst:databas-total-points-sql}]
+\begin{lstlisting}[frame=single, language=sql, caption={SQL View Gesamtpunkte}, captionpos=b, label={lst:databas-total-points-sql}]
 CREATE VIEW public.total_points AS 
 
 SELECT grp.id, grp.name, 
@@ -122,3 +200,53 @@ for key in results:
   try:
     self._cursor.execute( f"UPDATE {GROUP_SERVICE_TABLE_NAME} SET online_count =  online_count + {online_count_add}, scan_count =  scan_count + 1, was_online = {results[key]}, last_scan = CURRENT_TIMESTAMP WHERE group_id = {self._id} AND service_id = {self._get_id_of_scan_operation(key)}")
 \end{lstlisting}
+
+\begin{table}
+	\centering
+	\begin{tabular}{l l}
+		Route									 & Methods \\ [0.5ex]
+		\hline
+		/										 & GET \\
+		/associate								 & GET, POST \\
+		/associate/<int:associate\_id>			 & DELETE \\
+		/auth/flagshop/login					 & POST \\
+		/auth/login								 & POST \\
+		/auth/refresh							 & POST \\
+		/auth/revoke/access						 & DELETE \\
+		/auth/revoke/refresh					 & DELETE \\
+		/backup									 & GET \\
+		/backup/<int:backup\_id>				 & GET \\
+		/challenge								 & GET, POST \\
+		/challenge/<int:challenge\_id>			 & DELETE, GET, PUT \\
+		/challenge/solve						 & GET \\
+		/challenge/solve/<int:challenge\_id>	 & DELETE, POST \\
+		/client									 & GET, POST \\
+		/client/<int:group\_id>					 & DELETE, GET \\
+		/flag									 & POST \\
+		/flagshop/package						 & GET, POST \\
+		/flagshop/package/<int:package\_id>		 & DELETE, PUT \\
+		/flagshop/transaction					 & DELETE, GET, POST \\
+		/flagshop/user							 & GET, POST \\
+		/flagshop/user/<user\_name>				 & DELETE, PUT \\
+		/log									 & GET, POST \\
+		/log/old								 & GET \\
+		/match/control							 & DELETE, POST, PUT \\
+		/match/info								 & GET \\
+		/match/score							 & GET \\
+		/note									 & GET, POST \\
+		/note/<int:note\_id>					 & DELETE, GET, PUT \\
+		/penalty								 & GET, POST \\
+		/penalty/<int:penalty\_id>				 & DELETE, GET, PUT \\
+		/scanner								 & DELETE, GET, POST \\
+		/scanner/notify							 & POST \\
+		/secure									 & GET \\
+		/service								 & GET \\
+		/service/<int:service\_id>				 & DELETE, GET, PUT \\
+		/setting								 & GET, PUT \\
+		/user									 & DELETE, GET, POST \\
+		/user/<int:user\_id>					 & DELETE, GET, PUT \\
+		/user/import							 & POST \\
+	\end{tabular}
+	\caption{Übersicht über die zu implementierenden Routen}
+	\label{table:gis-routes}
+\end{table}

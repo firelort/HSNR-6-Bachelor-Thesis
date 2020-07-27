@@ -1,4 +1,4 @@
-\section{Datenbank}
+\section{Datenbank}\label{sec:Realisierung-Datenbank}
 
 Die Realisierung des Datenbank-Schemas wird über Migrationen in der Komponente des Game Information Systems durchgeführt. Sie wird jedoch aus Verständnisgründen in diesem Kapitel erläutert.
 
@@ -16,7 +16,7 @@ Die Folgenden Views wurden in der Datenbank erstellt, um die Punkteberechnung zu
 	\label{fig:realisierung-view-offence}
 \end{center}
 
-Wie in \autoref{fig:realisierung-view-offence} erkennbar werden die Angriffspunkte (\textit{offence\_points}) über die Tabellen \textit{flags} und \textit{flags\_submitted} berechnet. Dafür wird für jede Gruppe, die Flags abgegeben hat, alle ihrer abgegebenen Flags mit allen vorhanden Flags gejoint, bei denen die besitzende Gruppe ungleich der abgebenden Gruppe ist. Die Anzahl der übergeblieben Flags wird gezählt und als Offensivpunkte ausgewiesen.
+Wie in \autoref{fig:realisierung-view-offence} erkennbar werden die Angriffspunkte (\textit{offence\_points}) über die Tabellen \textit{flags} und \textit{flags\_submitted} berechnet. Dies erfolgt, indem alle abgegebenen Flags mit den im Spiel vorhanden Flags verbunden werden (\textit{JOIN}), um nur Flags zu beachten, die von einer anderen Gruppe als der Besitzenden abgegeben wurden. Im Anschluss werden diese pro Gruppe gezählt und als Offensivpunkte ausgewiesen.
 
 \begin{lstlisting}[frame=single, language=sql, caption={SQL View Angriffspunkte}, captionpos=b, label={lst:database-offence-points}]
 SELECT flags_submitted.group_id, count(flags_submitted.flag_value) AS points
@@ -33,7 +33,7 @@ GROUP BY flags_submitted.group_id;
 \end{center}
 
 Ähnlich den Angriffspunkten (\ref{subsubsec:Angriffspunkte}) werden die Defensivpunkte (Strafe für verlorene Flags) berechnet.
-Anders als bei den Angriffspunkten werden alle vorhanden Flags mit den abgegebenen Flags für jede Gruppe gejoint, wenn die besitzende Gruppe ungleich der abgebenden Gruppe ist. In dieser Liste können Flags mehrfach auftreten, wenn mehrere Gruppen einer Gruppe Flags geklaut haben. Da im alten System ein Verlust einer Flag an mehrere Gruppen nur einmal mit Minuspunkten bestraft worden ist, wird in der Liste der Flags mit der SQL Klausel \textit{DISTINCT} Duplikate entfernt. Im Anschluss werden dann die verlorenen Flags pro Gruppe gezählt und so die Defensivpunkte bestimmt.
+Anders als bei den Angriffspunkten werden alle vorhanden Flags mit den abgegebenen Flags für jede Gruppe gejoint, wenn die besitzende Gruppe ungleich der abgebenden Gruppe ist. In dieser Liste können Flags mehrfach auftreten, wenn mehrere Gruppen einer Gruppe Flags gestohlen haben. Da im alten System ein Verlust einer Flag an mehrere Gruppen nur einmal mit Minuspunkten bestraft worden ist, wird in der Liste der Flags mit der SQL Klausel \textit{DISTINCT} Duplikate entfernt. Im Anschluss werden dann die verlorenen Flags pro Gruppe gezählt und so die Defensivpunkte bestimmt.
 
 \begin{lstlisting}[frame=single, language=sql, caption={SQL View Denfensivpunkte}, captionpos=b, label={lst:database-offence-points}]
 SELECT flags.group_id, count(DISTINCT flags.flag_value) AS points
@@ -65,7 +65,7 @@ GROUP BY flags_submitted.group_id;
 	\label{fig:realisierung-view-penalty}
 \end{center}
 
-Die View der Strafpunkte (\textit{penalty\_points}) summiert die in der \textit{penalties}-Tabelle vorhanden Strafpunkte pro Gruppe auf. Andere Informationen wie Grund der Strafe bleiben hierfür unberücksichtigt. Jede Gruppe (\textit{group\_id}) hat entsprechende Strafpunkte (\textit{total\_penalty}). Sollte eine Gruppe bisher noch keine Strafpunkte erhalten haben, wird diese in der View nicht aufgeführt.
+Die View der Strafpunkte (\textit{penalty\_points}) summiert die in der \textit{penalties}-Tabelle vorhanden Strafpunkte pro Gruppe auf. Andere Informationen wie Grund der Strafe bleiben hierfür unberücksichtigt. Jede Gruppe (\textit{group\_id}) hat entsprechende Strafpunkte (\textit{total\_penalty}). Sollte eine Gruppe bisher noch keine Strafpunkte erhalten haben, wird die Gruppe in der View nicht aufgeführt.
 
 \subsubsection{Servicepunkte}
 \begin{center}
@@ -89,7 +89,7 @@ Die Serviceprozentzahl stellt für die Studierenden und betreuenden Personen die
 	\frac{100}{Anzahl~erfolgreicher~Scanvorgaenge}~*~Anzahl~Scanvorgaenge~=~Wert~in~\%
 \end{equation*}
 
-Um das Ergebnis einer Division durch 0 zu verhindern, wird im SQL Quelltext die Funktion \textit{COALESCE} verwendet. Diese nimmt den ersten Wert ungleich Null. Bei der Punkteberechnung kann durch eine Gewichtung gleich 0 die Division ein Ergebnis von Null zurückgeben sein. Deshalb wird dann die Gewichtung standardmäßig auf eins gesetzt. Wenn eine Gruppe keine erfolgreichen Scanvorgänge zu vermelden hat, wird das Ergebnis der Formel auf 0 gesetzt.
+Um das Ergebnis einer Division durch 0 zu verhindern, wird im SQL Quelltext die Funktion \textit{COALESCE} verwendet. Diese nimmt den ersten Wert ungleich Null. Bei der Punkteberechnung kann durch eine Gewichtung von 0 die Division ein Ergebnis von Null zurückgeben. Deshalb wird dann die Gewichtung standardmäßig auf eins gesetzt. Wenn eine Gruppe keine erfolgreichen Scanvorgänge zu vermelden hat, wird das Ergebnis der Formel auf 0 gesetzt.
 
 \begin{lstlisting}[frame=single, language=sql, caption={SQL Abfang von Division durch 0}, captionpos=b, label={lst:database-service-points-divison-by-0}]
 COALESCE(NULLIF((services.weight)::integer, 0), 1)

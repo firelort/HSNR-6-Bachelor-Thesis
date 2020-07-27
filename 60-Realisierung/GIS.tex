@@ -1,1 +1,240 @@
 \section{Game Information System}
+Das Game Information System wurde als Rest-Schnittstelle implementiert. Sie kann über einen Rest-Client wie cURL, Insomnia oder einen eigenen Webclient angesprochen werden. Für die Realisierung wurde aufgrund der in \autoref{sec:Backend} angeführten Argumenten Flask als Framework gewählt.
+
+Zuerst wird die Flask Anwendung mithilfe der Konfigurationsdatei eingestellt. Danach werden alle verwendeten Erweiterung mit der Flask Anwendung vertraut gemacht. Im folgenden werden die Befehle des Command-line Interfaces angelegt. Zum Schluss werden die Routen registriert und nicht vorhandene Einstellung mit Standardwerten in die \textit{settings}-Tabelle der Datenbank geschrieben.
+
+In der Produktionsumgebung wird zur Betreibung der Web Server Gateway Interface(WSGI) HTTP Server \textit{gunicorn} verwendet, da der von Flask mitgebrachte WSGI Server nur für Entwicklungszwecke genutzt werden soll. Ein WSGI Server wird benötigt, um Anfragen an eine in Python geschriebene Webanwendung weiterzuleiten.
+
+\subsection{Konfiguration}
+Damit das CTF-Spiel durch die betreuenden Personen angepasst werden kann, gibt es neben einer Konfigurationsdatei auch Einstellungen, die in der Datenbank gespeichert werden.
+
+In der Konfigurationsdatei werden die Informationen gespeichert, die selten oder niemals geändert werden müssen. Die in der Datenbank gespeicherten Einstellungen können durch die betreuenden Personen über das REST-Interface geändert werden.
+
+\subsubsection{Konfigurationsdatei}
+In der Konfigurationsdatei sind mehrheitlich Einstellungen für die Flask Anwendung sowie die Erweiterungen definiert. Dazu zählen \textit{secret keys} aber auch die Verbindungsdaten zur PostgreSQL- und Redis-Datenbank. Die secret keys werden genutzt um die gesendeten Informationen beispielsweise JWTs zu signieren und bei einer Antwort zu validieren.
+
+\begin{lstlisting}[language=bash, frame=single, caption={GIS Auszug aus der Konfiguration}, captionpos=b, label={lst:gis-config}]
+FLAG_SECRET = "same_on_client"
+FLAGSHOP_FLAG_SECRET = "another_secret"
+SECRET_KEY = 'secret_key'
+BEHIND_PROXY = True
+PROXY_SECURE_VALUE = "http_header_pw"
+JWT_SCRET_KEY = 'jwt_secret_key'
+JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=15)
+JWT_REFRESH_TOKEN_EXPIRES = datetime.timedelta(hours=8)
+REDIS_URL = "redis://localhost:6379"
+SQLALCHEMY_DATABASE_URI = "postgresql://postgres:password@localhost:5432/postgres"
+\end{lstlisting}
+
+\subsubsection{Einstellungen}
+Über die Einstellungen lässt sich das Spiel leicht durch die betreuenden Personen verändern.
+Dazu gehört beispielsweise, ob der Login für die Studierenden mit validen Hackit-Zugangsdaten geschehen muss oder ob ein sogenannter anonymer Login erlaubt ist. Aber auch kann eingestellt werden, ob das Spiel am Ende der Angriffszeit automatisch beendet und aufgeräumt werden soll. 
+
+Nach dem ein Spiel beendet worden ist, ist es den Studierenden, anders als im derzeitig genutzten System, nicht mehr möglich weitere Aktionen durchzuführen. Für den Fall, dass dies nicht gewünscht ist, kann über die Einstellung das automatische beenden deaktiviert werden.
+
+Ist die Einstellung gesetzt, dass das Spiel automatisch aufgeräumt werden soll, werden alle Tabellen kurz nach der Beendigung zurück gesetzt. Tabellen in denen Informationen hinterlegen, die über mehrere Spiele verwendet werden, bleiben unberührt.
+
+\begin{lstlisting}[language=bash, frame=single, caption={GIS Auszug aus den Einstellungen}, captionpos=b, label={lst:gis-settings}]
+setting.require_hackit: true
+setting.end_game_automatically: true
+setting.backup_game_automatically: true
+setting.cleanup_game_automatically: true
+setting.flag_submitting_penalty_points: 10
+setting.flags_per_group: app.config['FLAG_COUNT']
+game.discover: 0
+game.attack: 0
+\end{lstlisting}
+
+\subsection{Object-Relational Mapping}
+Mit dem Object-Relational Mapping (ORM) können Daten aus der Datenbank mithilfe eines objektorientierten Paradigmas abgefragt oder manipuliert werden. Hierbei wird eine Verbindung zwischen einem Objekt in Python und einer Relation in der Datenbank geschaffen.
+
+Über die Manipulation des Objekts lassen sich Änderungen am Datenbestand in der Datenbank durchführen. 
+
+Für das ORM wird das Python-Toolkit \textit{SQLAlchemy} verwendet und durch die Flask Erweiterung \textit{Flask-SQLAlchemy} für die Nutzung innerhalb der Flask Anwendung konfiguriert. 
+
+Die Objekte werden von der durch SQLAlchemy bereitgestellten Klasse \textit{Model} abgeleitet. Begründung fehlt
+Für jede zu erzeugende Spalte in der Datenbank wird im ORM-Modell ein Attribut vom Typ \textit{Column}-Objekt erstellt. Das \textit{Column}-Objekt wird ebenfalls von \textit{SQLAlchemy} zur Verfügung gestellt und erhält Informationen wie den Datentyp und Constraints (primary key / foreign key).
+Das Vorgehen wird exemplarisch in \autoref{lst:gis-orm-model} dargestellt.
+
+\begin{lstlisting}[language=bash, frame=single, caption={GIS Beispiel eines ORM Models}, captionpos=b, label={lst:gis-orm-model}]
+class Backup(db.Model):
+  __tablename__ = 'backups'
+  
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  created_at = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
+  data = db.Column(db.JSON, nullable=False)
+\end{lstlisting}
+
+Auch implementieren die ORM-Modelle eine Klassenmethode über die Objekte anhand von bestimmten Informationen aus der Datenbank abgerufen werden können. Alternativ könnte anstatt der Verwendung der \textit{get}-Methode auch die \textit{query}-Methode aus der Basis-Klasse \textit{Model} verwendet werden. Dies wurde aus Konsistenzgründen und der häufigen nutzen im Quellcode nicht verwendet.
+
+\begin{lstlisting}[language=bash, frame=single, caption={GIS Beispiel einer Get-Methode des ORM Models}, captionpos=b, label={lst:gis-orm-model}]
+class Backup(db.Model):
+@classmethod
+def get(cls, id: int = None, select_all: bool = False):
+  if id is not None:
+    return cls.query.get(id)
+  elif select_all:
+    return cls.query.all()
+  else:
+    return None
+\end{lstlisting}
+
+\subsubsection{Hash des Nutzer Passwortes}
+Das Nutzermodell speichert das Passwort im privaten Attribute \textit{\_password}. In der Datenbank ist das Passwort aber in der Spalte \textit{password} abgelegt. Über die \textit{setter}-Methode kann das Passwort im Programmcode manipuliert werden.
+
+Durch die Nutzung von \textit{getter}- und \textit{setter}-Methoden wird sichergestellt, dass alle Passwörter auf die gleiche Art und Weise gehasht werden und niemals im Klartext vorliegen.
+
+Für das Passworthashing wird der Algorithmus \textit{bcrypt} verwendet, da dieser sequentiell abgearbeitet wird und daher langsamer als beispielsweise  \textit{sha} berechnet werden kann. Für die Erstellung eines Hashwertes wird zwingend, was aus IT-Sicherheitssicht eine gute Eigenschaft ist, ein Salt benötigt. Außerdem ist \textit{bcrypt} zukunftssicher, da der Algorithmus durch die verwendeten Rounds langsamer gemacht werden kann. Je mehr Rounds verwendet werden, desto länger dauert die Erzeugung eines Passwort-Hash. Diese Eigenschaften sollen Brute-Force-Angriff verlangsamen beziehungsweise teurer machen.
+
+Die verwendeten Rounds bei der Erstellung des bcrypt-Passworthash mussten von 15 auf 10 gesetzt werden, da andernfalls ein Import der Hackit-Zugangsdaten mindestens 5 Minuten gedauert hätte.
+
+\begin{lstlisting}[language=bash, frame=single, caption={GIS Nutzerpasswort}, captionpos=b, label={lst:gis-orm-model}]
+class User(db.Model):
+...
+_password = db.Column('password', db.String, nullable=False)
+...
+def get_password(self) -> str:
+return self._password
+
+def set_password(self, password):
+custom_bcrypt = bcrypt.using(rounds=10)
+self._password = custom_bcrypt.hash(password)
+
+password = db.synonym('_password', descriptor=property(get_password, set_password))
+
+def check_password(self, password: str) -> bool:
+return bcrypt.verify(password, self.password)
+\end{lstlisting}
+
+\subsubsection{Flaggenerierung}
+Für die Flaggenerierung muss derselbe Algorithmus und seed wie auf dem GameClient verwendet werden, damit dieselben Flags auf dem Server und dem Client generiert werden. Dazu wird ein seed (näheres zum seed ist in der Flaggenerierung in \autoref{sub:realisierung-gis-routen} beschrieben) mithilfe des Hash-Algorithmus \textit{md5} gehasht. Damit alle Flags als md5-Hash in der Datenbank abgelegt werden, wird auch hier eine \textit{getter}- und eine \textit{setter}-Methoden sowie ein privates Attribut genutzt. Die \textit{setter}-Methode erzeugt einen md5-Hash und speichert diesen im privaten Attribute. Sollte die Hashfunktion geändert werden, kann diese wie im Kommentar in \autoref{lst:gis-orm-model} erkennbar geändert werden.
+
+\begin{lstlisting}[language=bash, frame=single, caption={GIS Nutzerpasswort}, captionpos=b, label={lst:gis-orm-model}]
+class Flag(db.Model):
+  ...
+  _value = db.Column('flag_value', db.String, primary_key=True)
+  ...
+  def get_value(self) -> str:
+    return self._value
+
+  def set_value(self, value: str) -> None:
+    # self._value = sha512(value.encode('utf-8')).hexdigest()
+    self._value = md5(value.encode('utf-8')).hexdigest()
+
+  value = property(get_value, set_value)
+\end{lstlisting}
+
+\subsection{Migrationen}\label{sub:realisierung-migration}
+
+Die Datenbank Migrationen werden aus den vorhanden ORM Modellen automatisch mit dem Datenbank-Migrationswerkzeug \textit{Alembic} und der Erweiterung \textit{Flask-Migrate} erzeugt. Einzig für die in \autoref{sec:Realisierung-Datenbank} eingeführten Views mussten manuell eigene Migrationsskripts angelegt werden.
+
+Ein solches Skript kann nach Änderungen an einem oder mehreren ORM Models durch den in \ref{lst:gis-create-migration} gezeigten Befehl erzeugt werden.
+
+\begin{lstlisting}[language=bash, frame=single, caption={GIS Erzeugung eines Migrationsskripts}, captionpos=b, label={lst:gis-create-migration}]
+flask db migrate
+\end{lstlisting}
+
+Mit den Skripts ist es möglich, die Datenbank auf ältere Iterationen zurückzusetzen, da bei Erstellung eines Iterationsschrittes auch der Weg zurück festgehalten wird.
+
+Um die vorliegenden Migrationsskripts auf die Datenbank anzuwenden, werden die in \autoref{lst:gis-use-migration} gezeigten Befehle genutzt.
+
+\begin{lstlisting}[language=bash, frame=single, caption={GIS Nutzung eines Migrationsskripts}, captionpos=b, label={lst:gis-use-migration}]
+flask db upgrade
+flask db downgrade <Version>
+\end{lstlisting}
+
+Die realisierten Tabellen und Views wurden in \autoref{sec:Realisierung-Datenbank} erläutert und werden deshalb hier nicht weiter aufgegriffen.
+
+\subsection{Authentifizierung}
+
+Für die Authentifizierung werden wie im Entwurf angedacht Tokens, spezieller JSON Web Tokens, verwendet. Es werden ein Access- und ein Refresh-Token nach einem erfolgreichen Login für die Nutzer erzeugt. Diese Tokens werden in der Redis-Datenbank für die Dauer ihrer Gültigkeit abgespeichert, um sie bei Bedarf ungültig zu machen. Bei der Authentifizierung wird zuerst geprüft, ob der vom Client gesendete Token als gültig in der Redis-Datenbank hinterlegt ist. Danach wird geprüft, ob der Token innerhalb seiner Lebensspanne verwendet wird.
+
+Der Refresh-Token hat eine Gültigkeit von 8 Stunden und kann verwendet werden, um weitere Access-Tokens ohne Angabe der Nutzerdaten zu erstellen. Die Lebensdauer des Refresh-Tokens wurde auf 8 Stunden gesetzt, da es vorkommen kann, dass der Versuch zweimal hintereinander durch geführt wird. Das betreuende Personal muss sich dann nicht erneut anmelden.
+
+Der Access-Token besitzt eine Gültigkeit von 15 Minuten und wird zur Authentifizierung und Autorisierung verwendet. Die Gültigkeit ist auf 15 Minuten begrenzt, da bei einem Verlust des Tokens an einen Angreifer maximal 15 Minuten Schaden angerichtet werden kann. Um Anfragen an die SQL-Datenbank zu minimieren werden Informationen, wie Rolle oder Gruppenzugehörigkeit, eines Nutzers mit in den Access-Token übernommen. Änderungen an den Berechtigung eines Nutzers werden so aber erst nach einem erneuten Ausstellen des Access-Tokens gültig.
+
+\subsubsection{Decorator für Routen}
+Um die Routen mit Berechtigungen zu versehen und redundanten Code zu verhindern wird bei der Absicherung auf Decorator zurückgegriffen. Sollte eine Route mit einem Decorator abgesichert werden, wird vor dem Aufruf der implementierten Funktion geprüft, ob der JWT die benötigten Berechtigungen besitzt.
+
+In \autoref{table:gis-permission} sind die Routen mit ihren benötigten Berechtigungen dargestellt.
+
+Es werden zwei Decorator zur Verfügung gestellt, beide prüfen, ob der Token im Feld \textit{role} die benötigte Rolle gesetzt hat. Der Unterschied zwischen \textit{role\_required} und \textit{roles\_required} ist, dass bei \textit{roles\_required} eine Liste von erlaubten Rollen angegeben werden kann. Dies wird auch im Code deutlich, da anstatt eines Variablen Vergleiches geprüft wird, ob die Rolle, die im JWT codiert ist, in der Liste der erlaubten Rollen vorhanden ist.
+
+\begin{lstlisting}[language=Python, frame=single, caption={GIS Berechtigungsprüfung}, captionpos=b, label={lst:gis-permission-wrapper}]
+def roles_required(roles: list):
+  def _roles_required(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+    ...
+    if get_jwt_claims()['role'] not in roles:
+      raise Forbidden(f"You don't have any role of {roles}")
+    else:
+      return fn(*args, **kwargs)
+  return wrapper
+return _roles_required
+\end{lstlisting}
+
+Der Decorator \textit{flagshop\_route} wird für die Routen verwendet, welche einen gültigen Flagshop-Nutzer benötigen. Er nutzt den Implementierten \textit{role\_required} Decorator mit der Flagshop-Nutzer Rolle.
+
+
+\subsection{Routen} \label{sub:realisierung-gis-routen}
+Flask Restful, Liste der implementieren Routen mit den Methoden
+
+\subsubsection{/ and /secure}
+/ -> hello world 
+/secure -> Testen von Access-Tokens
+\subsubsection{Login}
+Abrufen von Access-Token und Refresh-Token nach erfolgreichen Login
+-> Dauer der Gültigkeit
+
+Abmelden / Revokaition der Tokens
+
+Access-Token refresh
+
+Abruf Access-Token -> Flagshop
+
+\subsubsection{Scanner-Steuerung}
+Verwalten des Scanners mithilfe von Docker -> Name des Containers in der Einstellung gespeichert, Status des Scanners auch in Einstellungen
+
+\subsubsection{Nutzer}
+Verwalten von Nutzern
+
+Supervisor dürfen nur sich selber verwalten
+
+Hackit Zugang import
+
+\subsubsection{GameClient}
+
+\subsubsection{Gruppen Mitglieder}
+
+\subsubsection{Flag}
+Abgabe von Flags -> Rate Limiter
+
+\subsubsection{Strafe}
+
+\subsubsection{Einstellungen}
+
+\subsubsection{Notizen}
+
+\subsubsection{Spielstände}
+
+\subsubsection{Log}
+
+\subsubsection{Spielsteuerung}
+
+\subsubsection{Flagshop}
+
+\subsubsection{Challenge}
+	
+\subsection{CLI Befehle}
+Die Erweiterungen \textit{Flask-Migrate} und \textit{Flask-RESTful} stellen CLI-Befehle zur Verfügung.
+
+\textit{Flask-Migrate} stellt die in \autoref{sub:realisierung-migration} vorgestellten Befehle zur Verfügung. Über den Befehl \textit{flask routes} zeigt \textit{Flask-RESTful} alle registrierten Ressourcen mit den entsprechenden Methoden und Routen an.
+
+Außerdem ermöglicht ein selbst programmierte Befehl es, ohne Angabe von Login-Informationen, Nutzer zu verwalten. Dies wird zum Einem benötigt, um den ersten Benutzer anzulegen. Auch kann so bei Verlust aller Adminkennungen eine bestehende Kennung geändert oder eine neue angelegt werden. Sollte bei einem Befehl nicht alle benötigten Informationen angegeben werden, erfragt die Anwendung diese über die Befehlszeile.
+
+\begin{lstlisting}[language=bash, frame=single, caption={GIS CLI}, captionpos=b, label={lst:gis-cli}]
+flask user create username --role admin/supervisor/player --password secure_pw
+flask user delete username
+flask user create username --role admin/supervisor/player --password secure_pw
+\end{lstlisting}
