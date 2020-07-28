@@ -26,7 +26,7 @@ REDIS_URL = "redis://localhost:6379"
 SQLALCHEMY_DATABASE_URI = "postgresql://postgres:password@localhost:5432/postgres"
 \end{lstlisting}
 
-\subsubsection{Einstellungen}
+\subsubsection{Einstellungen} \label{subsub:realisierung-settings}
 Über die Einstellungen lässt sich das Spiel leicht durch die betreuenden Personen verändern.
 Dazu gehört beispielsweise, ob der Login für die Studierenden mit validen Hackit-Zugangsdaten geschehen muss oder ob ein sogenannter anonymer Login erlaubt ist. Aber auch kann eingestellt werden, ob das Spiel am Ende der Angriffszeit automatisch beendet und aufgeräumt werden soll. 
 
@@ -145,7 +145,7 @@ flask db downgrade <Version>
 
 Die realisierten Tabellen und Views wurden in \autoref{sec:Realisierung-Datenbank} erläutert und werden deshalb hier nicht weiter aufgegriffen.
 
-\subsection{Authentifizierung}
+\subsection{Authentifizierung}\label{sub:realisierung-authentifizierung}
 
 Für die Authentifizierung werden wie im Entwurf angedacht Tokens, spezieller JSON Web Tokens, verwendet. Es werden ein Access- und ein Refresh-Token nach einem erfolgreichen Login für die Nutzer erzeugt. Diese Tokens werden in der Redis-Datenbank für die Dauer ihrer Gültigkeit abgespeichert, um sie bei Bedarf ungültig zu machen. Bei der Authentifizierung wird zuerst geprüft, ob der vom Client gesendete Token als gültig in der Redis-Datenbank hinterlegt ist. Danach wird geprüft, ob der Token innerhalb seiner Lebensspanne verwendet wird.
 
@@ -176,55 +176,148 @@ return _roles_required
 
 Der Decorator \textit{flagshop\_route} wird für die Routen verwendet, welche einen gültigen Flagshop-Nutzer benötigen. Er nutzt den Implementierten \textit{role\_required} Decorator mit der Flagshop-Nutzer Rolle.
 
-
 \subsection{Routen} \label{sub:realisierung-gis-routen}
-Flask Restful, Liste der implementieren Routen mit den Methoden
+Im Folgenden werden die implementierten Routen aufgegriffen. Eine Übersicht mit den implementierten Routen und den dazugehörigen Methoden befindet sich im Anhang in \autoref{table:gis-routes}
 
-\subsubsection{/ and /secure}
-/ -> hello world 
-/secure -> Testen von Access-Tokens
+todo: Flask-RESTful erwähnen 
+
+Wie bereits im Entwurf erwähnt erhalten alle Routen für die Versionierung den Präfix \textit{/v1}.
+
+\subsubsection{Index}
+Der Endpoint \textit{/} stellt über die \textit{GET}-Methode Hello-World im JSON-Format bereit. Dies kann beispielsweise genutzt werden, um zu testen, ob die Anwendung erreichbar ist. Denkbar aber nicht implementiert ist eine Liste der verfügbaren Endpoints und deren Methoden.
+
+Um die Gültigkeit von Access-Tokens zu prüfen kann der Endpoint \textit{/secure} mit der \textit{GET}-Methode aufgerufen werden. Sollte der Token valide sein wird eine kurze Erfolgsnachricht, andernfalls eine Fehlernachricht, zurück gegeben.
+
 \subsubsection{Login}
-Abrufen von Access-Token und Refresh-Token nach erfolgreichen Login
--> Dauer der Gültigkeit
+Für die Authentifizierung werden mehrere Endpoints benötigt.
 
-Abmelden / Revokaition der Tokens
+Über den Endpoint \textit{/auth/login} werden mit einer validen Kombination aus Nutzernamen und Passwort der Access- und der Refresh-Token ausgestellt. Dazu müssen die Nutzerdaten mit der \textit{POST}-Methode an den Server übermittelt werden. Die Tokens werden dann im JSON-Format zurück gesendet.
 
-Access-Token refresh
+\begin{lstlisting}[frame=single, caption={GIS Access- und Refresh-Token}, captionpos=b, label={lst:gis-login-tokens}]
+{
+  'access_token': base64-Access-Token,
+  'refresh_token': base64-Refresh-Token
+}
 
-Abruf Access-Token -> Flagshop
+\end{lstlisting}
+
+Die Gültigkeit kann wie bereits in \autoref{sub:realisierung-authentifizierung} erwähnt in der Konfiguration geändert werden und ist derzeitig auf 8 Stunden für den Refresh- und auf 15 Minuten für den Access-Token begrenzt.
+
+Über den Endpoint \textit{/auth/refresh} kann ein valider Refresh-Token genutzt werden um ohne Angabe der Nutzerdaten einen neuen Access-Token zu erhalten.
+
+Da die Access- und Refresh-Tokens anderes validiert werden, muss für das Zurückrufen der Tokens zwei Endpoints zur Verfügung stehen. Access-Tokens können an den Endpoint \textit{/auth/revoke/access} und Refresh-Tokens an den Endpoint \textit{/auth/revoke/refresh} gesendet werden. Sollten die angekommenen Tokens gültig sein, werden sie dann in der Redis-Datenbank als Zurückgerufen markiert.
+
+Da der Access-Token für den Flagshop anders als der normale Access-Token aufgebaut ist, wird der Enpoint \textit{/auth/flagshop} benötigt. Dieser ist nur mit einem gültigen \textquote{normalen} Access-Token nutzbar. Für den Flagshop wird nur ein Access-Token mit einer Gültigkeit von 15 Minuten ausgestellt.
+
+Ein Login ist für eine spielende Person nur dann möglich, wenn die eigene IP-Adresse in der Liste der GameClients oder deren Mitglieder vorhanden ist. Andernfalls scheitert der Login-In mit einer entsprechenden Fehlermeldung. Dies ist notwendig, damit das System bestimmen kann, für welche Gruppe eine Aktion ausgeführt worden ist.
+
+\subsubsection{Nutzer}
+Für die Verwaltung der Nutzer werden zwei Endpoints bereitgestellt. 
+
+Der Endpoint (\textit{/user}) stellt über die Methode \textit{GET} für die betreuenden und administrierenden Personen eine Liste der im System vorliegen Log-In-Informationen bereit. Über die Methode \textit{POST} können besagte Personen neue Accounts anlegen. Accounts mit den Rollen \textit{supervisor} und \textit{admin} können nur durch administrierende Personen angelegt werden. Sollten alle Accounts mit der Rolle \textit{player} gelöscht werden, kann die Methode POST genutzt werden. Theoretisch könnte mit dieser Methode auch Accounts anderer Rollen gelöscht werden, dieses wurde limitiert, um ein unabsichtliches Löschen der Accounts des Hochschulpersonals zu verhindern.
+
+\begin{lstlisting}[language=Python, frame=single, caption={GIS Löschen auf player-Accounts begrenzen}, captionpos=b, label={lst:gis-delete-all-players}]
+if args['role'] != 'player':
+  raise Conflict('Currently only mass deletions of players are supported.')
+\end{lstlisting}
+
+Die Funktion wurde geschaffen, um die Hackit-Zugangsdaten nach Ende des Semesters aus der Datenbank zu entfernen.
+
+Über die Methoden \textit{GET}, \textit{PUT} und \textit{DELETE} des Endpoints \textit{/user/<int:user\_id>} wird eine Verwaltung einzelner Accounts ermöglicht. Hierzu muss bei der Anfrage die Account-ID übergeben werden. Die Methode \textit{GET} zeigt alle Informationen zu dem bestimmten Account an. Über die Methode \textit{PUT} können einzelne Informationen verändert und über die Methode \textit{DELETE} kann der Account gelöscht werden.
+
+Die betreuende Personen dürfen auch hier nur Accounts der Rolle \textit{player} sowie ihre eigenen verwalten. Die eigenen Rolle kann nur auf die Rolle \textit{player} geändert werden. Dies soll unerlaubte Rechteausweitung verhinder. Des Weiteren ist es nicht möglich den aktuellen Account zu löschen. Sollte dieses benötigt werden, muss dafür ein weitere Account genutzt werden.
+
+Außerdem ist ein dritter Endpoint, erreichbar unter \textit{/user/import}, implementiert, der das Importieren von Hackit-Zugangsdaten ermöglicht. Hierfür wird eine Datei per HTTP-Request \textit{POST} an den Server gesendet. Die Login-In-Informationen werden zeilenweise ausgelesen und mit der Rolle \textit{Player} angelegt. Ein Import von beispielsweise Administratoren kann auf ähnliche Art realisiert werden, wurde jedoch nicht implementiert, da dieses zum jetzigen Zeitpunkt nicht benötigt wird.
+
+\subsubsection{GameClient}
+
+GameClientList
+-> Liste der teilnehmenden Gruppen, anlegen neuer Gruppen
+ -> Flag generierung
+ 
+GameClient
+-> Anzeigen inkl. Gruppen Mitglieder
+Löschen
+
+\subsubsection{Gruppen Mitglieder}
+AssociateList
+-> Erstellen von Gruppen Mitgliedern
+-> Anzeigen aller Gruppen Mitgliedern
+
+Associate
+-> Löschen von Gruppen Mitgliedern
+
+\subsubsection{Einstellungen}
+Über den Endpoint \textit{/setting} ist es den betreuenden und administrierenden Personen möglich, die im Spiel genutzten Einstellungen zu ändern. Dazu können alle Einstellungen (siehe \autoref{subsub:realisierung-settings}) über die \textit{GET}-Methode angefragt und mithilfe der \textit{PUT}-Methode verändert werden.
+
+\subsubsection{Flag}
+Über den Endpoint \textit{/flag} können die Studierenden die gefundenen und erhaltenden Flags abgeben. Für die Punkteverrechnung wird die im Access-Token codierte Gruppe benötigt. Eine Abgabe von Flags wird verhindert, falls das Spiel nicht aktiv ist (noch nicht gestartet, beendet oder pausiert).
+
+Die Validierung der Flag wird mithilfe der \textit{flags}-Tabelle durchgeführt, indem geprüft wird ob die abgegebene Flag vorhanden ist.
+
+Im Anschluss wird geprüft, ob es sich bei der abgegebenen Flag um eine Flag handelt, die nicht auf den GameClients verteilt ist und durch eine andere Gruppe als der Besitzenden abgegeben wird. Dieses wird nur geprüft, wenn die abgebende und gleich der besitzenden Gruppe ist und verhindert die Abgabe von bspw. Flagshop-Flags durch andere Gruppen. 
+
+\begin{lstlisting}[language=Python, frame=single, caption={GIS Abgabe privater Flags verhindern}, captionpos=b, label={lst:gis-prevent-submitting-private-flags}]
+if flag.group_id != group_id and flag.usage != "on_client":
+  raise BadRequest("Private flags cannot be submitted")
+\end{lstlisting}
+
+Sollten fremde Flags während der Discover-Zeit abgegeben werden, bestraft das System die abgebende Gruppe für ihr regelverletzendes Verhalten automatisch. Die Flag muss von der Gruppe nach Start der Attack-Time erneut abgegeben werden, um Punkte für diese zu erhalten.
+
+\begin{lstlisting}[language=Python, frame=single, caption={GIS Strafe für abgeben fremder Flags}, captionpos=b, label={lst:gis-delete-all-players}]
+if game_status_setting.value == "discover" and flag.group_id != group_id:
+  penalty = Penalty(reason="Submitted an alien flag during discovery", points=penalty_points,
+  group_id=group.id)
+  raise Conflict("You submitted an alien flag during discovery. The flag is not accepted. You'll be punished.")
+\end{lstlisting}
+
+Sollten alle Überprüfungen ohne Probleme durchlaufen sein, wird die Flag inklusive der abgebenden Gruppe in der \textit{flags\_submitted}-Tabelle abgespeichert. Die Berechnung der Punkte erfolgt wie in \autoref{sec:Realisierung-Datenbank} beschrieben über die Views.
+
+Der Endpoint ist mit einem Rate Limiter versehen, welcher eine Brute-Force Abgabe von Flags verhindern soll. Pro Gruppe werden in der Minute nicht mehr als 60 Flags akzeptiert. Dieser Wert kann nach Bedarf verändert werden.
+
+\subsubsection{Spielsteuerung}
+
+Flask APScheduler erwähnen -> automatisches beenden etc.
 
 \subsubsection{Scanner-Steuerung}
 Verwalten des Scanners mithilfe von Docker -> Name des Containers in der Einstellung gespeichert, Status des Scanners auch in Einstellungen
 
-\subsubsection{Nutzer}
-Verwalten von Nutzern
+\subsubsection{Spielstände}
+Der aktuellen Spielstand kann über den Endpoint \textit{/match/score} abgerufen werden. Dazu werden die Informationen aus der Datenbank aufbereitet. Neben den Gruppenpunkten aus der \textit{total\_points}-View werden auch die aktiven Services inklusive ihrer respektiven Namen sowie die Überschriften für die Punktetabelle übermittelt.
 
-Supervisor dürfen nur sich selber verwalten
+Über den Endpoint \textit{/match/info} können die aktuellen Spielinformationen abgerufen werden. Zu den Spielinformationen zählt der aktuelle Status des Spiels und des Scanners sowie der Endzeitpunkt der Discover- und Attack-Zeit.
 
-Hackit Zugang import
+Alte Spielstände können über die Endpoints \textit{/backup} und \textit{/backup/<int:backup\_id>} abgerufen werden.
+Der Endpoint \textit{/backup} gibt nur eine Liste der vorhanden Spielstände inklusive des Zeitpunkt der Speicherung zurück. Mithilfe der Liste kann eine Spielstand ID ausgesucht werden und der Spielstand über den Endpoint \textit{/backup/<int:backup\_id>} abgerufen werden.
 
-\subsubsection{GameClient}
-
-\subsubsection{Gruppen Mitglieder}
-
-\subsubsection{Flag}
-Abgabe von Flags -> Rate Limiter
+Bei alten Spielstände werden die Daten im JSON-Format in der Variable \textit{data} abgelegt.
 
 \subsubsection{Strafe}
+Über den Endpoint \textit{/penalty} können alle ausgesprochenden Strafen über die \textit{GET}-Methode angesehen werden. Administrierende und betreuende Personen können über die \textit{POST}-Methode neue Strafen erstellen. Hierzu sind Angaben zu Grund, Anzahl der Strafpunkte sowie die zu bestrafende Gruppe notwendig.
 
-\subsubsection{Einstellungen}
-
-\subsubsection{Notizen}
-
-\subsubsection{Spielstände}
-
-\subsubsection{Log}
-
-\subsubsection{Spielsteuerung}
+Der Endpoint \textit{/penalty/<int:penalty\_id>} kann von den administrierende und betreuende Personen genutzt werden um einzelne Strafen anzusehen (\textit{GET}), zu bearbeiten (\textit{PUT}) und zu löschen (\textit{DELETE}).
 
 \subsubsection{Flagshop}
 
+Nutzer
+Pakete
+Kaufe
+
 \subsubsection{Challenge}
+
+Liste der Challenges
+Challenges
+Abgabe von Challenges
+
+\subsubsection{Notizen}
+Über die \textit{POST}-Methode des Endpoints \textit{/note} sind administrierende oder betreuende Personen in der Lage neue Notizen zu erstellen. Notizen können über den Endpoint \textit{/note/<int:note\_id>} verändert (\textit{PUT}) oder gelöscht (\textit{DELETE}) werden.
+
+Die hinterlegten Notizen können als Liste über die \textit{/v1/note}-Methode des Endpoints \textit{/note/<int:note\_id>} oder einzeln über die \textit{GET}-Methode des Endpoints \textit{text} abgerufen werden
+
+\subsubsection{Log}
+Um die Aktionen des Scanners nachvollziehen zu können, werden Log-Einträge abgespeichert. Diese können durch betreuende und administrierende Personen über den Endpoint \textit{/log} eingesehen werden. Außerdem ist es diesen Personen möglich, eigene Log-Einträge mithilfe der \textit{POST}-Methode zu erstellen.
+
+Log Informationen des letzten Spiels können über den Endpoint \textit{/log/old} abgerufen werden.
 	
 \subsection{CLI Befehle}
 Die Erweiterungen \textit{Flask-Migrate} und \textit{Flask-RESTful} stellen CLI-Befehle zur Verfügung.
