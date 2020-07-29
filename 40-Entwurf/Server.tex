@@ -13,7 +13,7 @@ Der Webserver beinhaltet sowohl die Logik als auch die Darstellung. Bei einer An
 
 Während der Implementierung des Prototyps und des weiteren Entwurfs hat sich ein Problem mit dem Flagshop Login herausgestellt.
 
-Für die Nutzung des Flagshops ist ein Multi-Login notwendig, da nur am Webserver eingeloggte Nutzer sich mit einem extra angelegten Account am Flagshop anmelden und diesen verwenden dürfen. Dieser Multi-Login ließ sich mit dem im Prototypen implementierten Session basierten Login nicht einfach umsetzen. 
+Für die Nutzung des Flagshops ist ein Multi-Login notwendig, da nur am Webserver eingeloggte Nutzende sich mit einem extra angelegten Account am Flagshop anmelden und diesen verwenden dürfen. Dieser Multi-Login ließ sich mit dem im Prototypen implementierten Session basierten Login nicht einfach umsetzen. 
 
 So ist für diesen Anwendungsfall ein Stateless Login besser geeignet, da hier die benötigten Informationen vom Client, je nach Anliegen, gesendet werden können. 
 
@@ -37,7 +37,7 @@ In der Komponente Datenbank Migrationen sind Migrationsskripts hinterlegt, die d
 
 Die letzte Komponente beinhaltet Unit-Tests. Mithilfe der implementierten Unit-Tests kann die Funktionalität der Anwendung bei späteren Änderungen überprüft werden.
 
-Da der Thin Server nur eine Brücke zwischen Nutzer und Scanner oder Datenbank darstellt, kann von einer API (Application Programming Interface) gesprochen werden. Mithilfe dieser API können beispielsweise der aktuelle Spielstand aus der Datenbank ausgelesen und Strafen eingetragen werden.
+Da der Thin Server nur eine Brücke zwischen Nutzenden und Scanner oder Datenbank darstellt, kann von einer API (Application Programming Interface) gesprochen werden. Mithilfe dieser API können beispielsweise der aktuelle Spielstand aus der Datenbank ausgelesen und Strafen eingetragen werden.
 
 \subsubsection{API}
 Um bei der Implementierung der API einem Standard zu folgen, wird der de facto Standard für HTTP-APIs Representational State Transfer (REST) verwendet.
@@ -89,7 +89,7 @@ Die Authentifizierung des Benutzers wird über die in \autoref{subsub:login} erw
 
 Dies reduziert die Anfragen an die Datenbank. Nachteil hierbei sind langsame Änderungen der Berechtigungen, da die neuen Berechtigungen erst mit dem Erstellen eines neuen Tokens übernommen werden. Da Änderungen an der Berechtigung selten vorkommen, kann dieser Nachteil relativiert werden.
 
-Mit den im Token codierten Berechtigungen kann der Server die Autorisierung der vom Nutzer angefragten Aktion durchführen.
+Mit den im Token codierten Berechtigungen kann der Server die Autorisierung der vom Nutzenden angefragten Aktion durchführen.
 
 \paragraph{Tokenvalidierung}
 \mbox{}\\ % Damit die Grafik in der neuen Zeile angezeigt wird
@@ -100,7 +100,7 @@ Mit den im Token codierten Berechtigungen kann der Server die Autorisierung der 
 \end{center}
 
 Für die Authentifizierung und Autorisierung müssen die mitgesendeten Token validiert werden.
-Dazu erhalten diese einen Zeitstempel der Ausstellung und des Ablaufs und eine Signatur, die eine Manipulation verhindern soll. Führt der Nutzer einen Logout durch, wird der Token in der Datenbank als widerrufen markiert. 
+Dazu erhalten diese einen Zeitstempel der Ausstellung und des Ablaufs und eine Signatur, die eine Manipulation verhindern soll. Führt der Nutzende einen Logout durch, wird der Token in der Datenbank als widerrufen markiert. 
 
 \subsubsection{Registierung von GameClients}
 \begin{center}
@@ -110,7 +110,7 @@ Dazu erhalten diese einen Zeitstempel der Ausstellung und des Ablaufs und eine S
 
 Die teilnehmenden GameClients sollen aufgrund der Anforderung nicht länger fest in der Anwendung vorliegen, sondern dynamisch hinterlegt werden. Deshalb müssen die GameClients sich vor Spielstart registrieren.
 
-\paragraph{Flaggengenerierung}
+\paragraph{Flaggenerierung}
 Durch die benötigte Registrierung ist es möglich, dass der Algorithmus zur Flaggenerierung verändert wird. Dies soll geschehen, damit die Flags nicht länger pro Semester, sondern im besten Fall für immer, einzigartig sind.
 
 Damit die Flags einzigartig sind, überträgt der GameClient einen Token bei der Registrierung. Dieser wird sowohl vom GameClient als auch vom Server genutzt, um die benötigten Flags zu generieren.
@@ -134,11 +134,11 @@ Die Betreuenden sollen über das GIS das Spiel steuern können. Dabei müssen si
 
 Des Weiteren sollen die betreuenden Personen die Möglichkeit besitzen, Strafen an Gruppen, welche die Regeln gebrochen haben, verteilen zu können. Hier muss die Gruppe, der Grund der Bestrafung sowie die Anzahl der Strafpunkte übermittelt werden.
 
-\subsubsection{Nutzerverwaltung}
+\subsubsection{Accountverwaltung}
 
-Administrierende und Betreuungspersonal sollen die Möglichkeit erhalten, neue Nutzer anzulegen, zu bearbeiten und zu löschen. Wichtig hierbei ist, dass das Betreuungspersonal nur Nutzer der Rolle Player verwalten kann.
+Administrierende und Betreuungspersonal sollen die Möglichkeit erhalten, neue Accounts anzulegen, zu bearbeiten und zu löschen. Wichtig hierbei ist, dass das Betreuungspersonal nur Accounts der Rolle Player verwalten kann.
 
-Außerdem ist ein Import der Spielerzugänge zu realisieren, damit die generierten Zugänge einfach übernommen werden können.
+Außerdem ist ein Import der Studierendenzugänge zu realisieren, damit die generierten Zugänge einfach übernommen werden können.
 
 \subsubsection{Spielstände}
 
@@ -166,10 +166,9 @@ Studierende können die verfassten Notizen einsehen, um Hinweise oder Anweisunge
 	\captionof{figure}{Datenfluss im Flagshop (Datenflussdiagramm)}
 \end{center}
 
+Der Flagshop muss die Verwaltung von Flagshop-Usern und Flagshop-Paketen sowie einen Kauf der Flagshop-Pakete ermöglichen.
 
-Der Flagshop muss die Verwaltung von Flagshop-Nutzern und Flagshop-Paketen sowie einen Kauf der Flagshop-Pakete ermöglichen.
-
-Flagshop-Nutzer können durch die teilnehmenden Teams erstellt werden. Für die Erstellung werden Flags an die Gruppe verteilt. Betreuende Personen können ebenfalls für Gruppen Flagshop-Nutzer erstellen. Des Weiteren ist es ihnen möglich, bestehende Flagshop-Nutzer zu ändern und zu löschen.
+Flagshop-User können durch die teilnehmenden Teams erstellt werden. Für die Erstellung werden Flags an die Gruppe verteilt. Betreuende Personen können ebenfalls für Gruppen Flagshop-User erstellen. Des Weiteren ist es ihnen möglich, bestehende Flagshop-User zu ändern und zu löschen.
 
 Außerdem müssen Flagshop-Pakete durch die Betreuenden verwaltet werden. Die Erstellung von Flagshop-Paketen soll nur vor einem Spielstart möglich sein, damit die richtige Anzahl an Flags bei der Registrierung eines GameClients erzeugt werden kann. Die Flagshop-Pakete sollen neben den Kosten und dem Namen auch die Anzahl der erwerbbaren Flags enthalten.
 

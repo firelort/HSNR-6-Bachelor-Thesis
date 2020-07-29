@@ -4,11 +4,11 @@ Im Folgenden wird die Implementierung des Scanners namens Big Brother beschriebe
 
 Für die Realisierung wurde die Programmiersprache Python gewählt, da diese bereits im Game Information System eingesetzt wird und zum anderen in der Lehre der Hochschule Niederrhein vorkommt. Eine Programmierung in beispielsweise C oder C++ wäre auch denkbar gewesen, wurde aber aufgrund der unterschiedlichen Konventionen zwischen C und Python nicht gewählt.
 
-Big Brother baut zu Beginn eine Verbindung mithilfe der in der Konfiguration (\autoref{lst:anhang-bigbrother-config-example}) hinterlegen Informationen zur Datenbank auf. In dieser befinden sich die Daten, welche von Big Brother und dem GIS gemeinsam genutzt werden. Aus dieser Datenbank erhält Big Brother seine Aufgabe und die zu überwachenden GameClients und das GIS das Ergebnis der Scans.
+Big Brother baut zu Beginn eine Verbindung mithilfe der in der Konfiguration (\autoref{lst:anhang-bigbrother-config-example}) hinterlegten Informationen zur Datenbank auf. In der Datenbank befinden sich die Daten, welche von Big Brother und dem GIS gemeinsam genutzt werden. Diese sind beispielsweise für Big Brother die auszuführende Aufgabe und die zu überwachenden GameClients und für das GIS das Ergebnis der Scans.
 
-Um die Verbindung zur Postgresql Datenbank aufzubauen, wird das Python-Paket \textit{psycopg2} verwendet. Dieses dient als Adapter zwischen PostgreSQL Datenbanken und Python Programmen. 
+Um die Verbindung zur PostgreSQL Datenbank aufzubauen, wird das Python-Paket \textit{psycopg2} verwendet. Dieses dient als Adapter zwischen PostgreSQL Datenbanken und Python Programmen. 
 
-Nach dem erfolgreichen Aufbau der Verbindung zur Datenbank wird die Aufgabe des Scanners bestimmt. Sollte in der Datenbank nicht explizit die Aufgabe der Initialisierung spezifiziert werden, wird angenommen, dass die GameClients gescannt werden sollen. (\ref{lst:bigbrother-startup})
+Nach dem erfolgreichen Aufbau der Verbindung zur Datenbank wird die Aufgabe des Scanners bestimmt. Sollte in der Datenbank nicht explizit die Aufgabe der Initialisierung spezifiziert werden, wird angenommen, dass die GameClients überwacht werden sollen. (siehe \ref{lst:bigbrother-startup})
 
 \begin{lstlisting}[language=Python, frame=single, caption={Aufgabe des Scanners}, captionpos=b, label={lst:bigbrother-startup}]
 cursor.execute(f"SELECT value FROM {SETTING_TABLE_NAME} WHERE key = 'scanner.task'")
@@ -28,8 +28,8 @@ else:
 
 \subsection{Implementierung der Initialisierung}
 
-Bei der Initialisierung wird zuerst die bestehende Datenbank Tabelle mit den vorhanden Services zurückgesetzt.
-Im Anschluss werden alle im Big Brother implementierten Services in die Datenbank Tabelle geschrieben. Dazu wird ein Dummy-Scanner angelegt und die Scan-Operationen ausgelesen.
+Bei der Initialisierung wird zuerst die bestehende Datenbanktabelle mit den vorhanden Services zurückgesetzt.
+Im Anschluss werden alle im Big Brother implementierten Services in die Datenbanktabelle geschrieben. Dazu wird ein Dummy-Scanner angelegt und die Scan-Operationen ausgelesen.
 
 Durch diese Vorgehensweise können alte Datenbestände keine Fehler verursachen.
 
@@ -45,7 +45,7 @@ cursor.execute(f"INSERT INTO {SERVICE_TABLE_NAME}(name, public_name,  weight,  a
 
 Die Standardwerte können pro Service über das GIS überschrieben werden.
 
-Des Weiteren werden auch Standardwerte für Einstellungen in die Datenbank Tabelle (\textit{settings}) geschrieben, sofern diese nicht bereits vorhanden sind.
+Des Weiteren werden auch Standardwerte für Einstellungen in die Datenbanktabelle (\textit{settings}) geschrieben, sofern diese nicht bereits vorhanden sind.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Einfügen einer Einstellung}, captionpos=b, label={lst:bigbrother-create-settings}]
 cursor.execute(f"INSERT INTO {SETTING_TABLE_NAME}(key, value) VALUES ('{default_value[0]}', '{default_value[1]}') ON CONFLICT (key) DO NOTHING;")
@@ -55,13 +55,13 @@ cursor.execute(f"INSERT INTO {SETTING_TABLE_NAME}(key, value) VALUES ('{default_
 \subsection{Implementierung der Scan-Operations}
 Die im alten System vorhandene Überwachung ist in der Programmiersprache PHP implementiert und wurden im Rahmen dieser Arbeit in das Python-Programm überführt.
 
-Die verschiedenen Aufgaben der Überwachung wurden wie im Entwurf ausgearbeitet in einzelne sogenannte Scan-Operationen getrennt. Diese soll das Verständnis fördern und den Aufwand der Wartbarkeit reduzieren. Durch diesen Ansatz können einzelne Scan-Operationen leichter ersetzt oder verändert werden. Außerdem ist es so möglich neue Scan-Operationen zu integrieren.
+Die verschiedenen Aufgaben der Überwachung wurden, wie im Entwurf ausgearbeitet, in einzelne sogenannte Scan-Operationen getrennt. Diese soll das Verständnis fördern und den Aufwand einer Wartung reduzieren. Durch diesen Ansatz können einzelne Scan-Operationen leichter ersetzt oder verändert werden. Außerdem ist es so möglich neue Scan-Operationen zu integrieren.
 
 \subsubsection{Basisklasse der Scan-Operationen}
 
 Alle implementierten Klassen werden von der Basisklasse \textit{AbstractScanOperation} abgeleitet. Diese wird selbst von der in Python implementierten abstrakten Basisklassen \textit{ABC} abgeleitet.
 
-In der Basisklasse \textit{AbstractScanOperation} wird die Funktion \textit{\_is\_port\_open} implementiert. Mithilfe dieser kann geprüft werden, ob ein bestimmter Port auf einem Rechner geöffnet ist. Hierzu wird eine Socketverbindung mit der Bibliothek \textit{socket} zu dem Rechner gestartet. Schlägt die Verbindung fehl, ist der Port auf dem Rechner geschlossen.
+In der Basisklasse \textit{AbstractScanOperation} wird die Funktion \textit{\_is\_port\_open} implementiert. Mithilfe dieser kann geprüft werden, ob ein bestimmter Port auf einem Rechner geöffnet ist. Hierzu wird eine Socket-Verbindung mit der Bibliothek \textit{socket} zu dem Rechner gestartet. Schlägt die Verbindung fehl, ist der Port auf dem Rechner geschlossen.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother Funktion is\_port\_open}, captionpos=b, label={lst:bigbrother-port-open}]
 try:
@@ -78,11 +78,11 @@ finally:
 
 Die Funktion wird in der Basisklasse zur Verfügung gestellt, da verschiedene Scan-Operationen diese benötigen und nutzen.
 
-Des Weiteren definiert die Basisklasse die abstrakte Funktion \textit{start}. Diese Funktion wird von allen abgeleiteten Scan-Operationen implementiert. Dadurch ist es möglich, die Scan-Operationen einheitlich zu starten.
+Des Weiteren definiert die Basisklasse die abstrakte Funktion \textit{start}, welche von allen abgeleiteten Scan-Operationen implementiert wird. Dadurch ist es möglich, die Scan-Operationen einheitlich zu starten.
 
-Die Ergebnisse der Scan-Operationen werden ebenfalls einheitlich in der privaten Variable \textit{\_result} abgespeichert. Das Ergebnis kann über das getter-Property \textit{result} abgerufen werden. Zum Abruf des Internen- und des Anzeigenamens werden ebenfalls getter-Properties eingesetzt. 
+Die Ergebnisse der Scan-Operationen werden ebenfalls einheitlich im privaten Attribut \textit{\_result} abgespeichert. Das Ergebnis kann über das getter-Property \textit{result} abgerufen werden. Zum Abruf des Internen- und des Anzeigenamens werden ebenfalls getter-Properties eingesetzt. 
 
-Durch die Nutzung einer Art getter-Methode wird sichergestellt, dass keine Änderungen an der privaten Variablen durchgeführt werden können. Mithilfe des in Python vorhanden Property Decoratores kann die getter Methode als Variable und nicht als Funktion verwendet werden.
+Durch die Nutzung einer Art getter-Methode wird sichergestellt, dass keine Änderungen an dem privaten Attribut durchgeführt werden können. Mithilfe des in Python vorhandenen Property Decoratores kann die getter Methode als Variable und nicht als Funktion verwendet werden.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother Ergebniss getter-Property}, captionpos=b, label={lst:bigbrother-getter-result}]
 @property
@@ -124,7 +124,7 @@ def _is_bubble_port_up(self) -> bool:
           return False
 \end{lstlisting} 
 
-Auch implementiert diese Klasse die \textit{start}-Funktion, indem nur die \textit{text}-Funktion aufgerufen und des Ergebnis zwischengespeichert wird.
+Auch implementiert diese Klasse die \textit{start}-Funktion, indem nur die \textit{\_is\_bubble\_port\_up()}-Funktion aufgerufen und des Ergebnis zwischengespeichert wird.
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother Bubble Scan-Operation}, captionpos=b, label={lst:bigbrother-host-up}]
 def start(self) -> None:
 	self._result = self._is_bubble_port_up()
@@ -166,18 +166,18 @@ def start(self) -> None:
 
 \subsubsection{SQL-Injection}
 
-Bei dieser Scan-Operationen müssen zwei Dinge geprüft werden. Erstens muss sichergestellt werden, dass die Seite mit der SQL-Injection erreichbar ist. Zweitens muss geprüft werden, ob die SQL-Injection behoben worden ist. 
+Bei dieser Scan-Operation müssen zwei Dinge geprüft werden. Erstens muss sichergestellt werden, dass die Seite mit der SQL-Injection erreichbar ist. Zweitens muss geprüft werden, ob die SQL-Injection behoben worden ist. 
 
 Die Erreichbarkeit muss geprüft werden, da ansonsten bei der Prüfung der SQL-Injection fehlerhafte Ergebnisse produziert werden, wenn die Seite nicht erreichbar ist.
 
-Die Erreichbarkeit wird mithilfe einer validen Kombination aus Nutzername und Passwort geprüft. Sollte der Server nicht oder mit einer nicht erwarteten Nachricht antworten, wird die SQL-Injection als nicht nutzbar angesehen. Die Anfrage wird unter zur Hilfenahme der \textit{request}-Bibliothek erstellt und gesendet. 
+Die Erreichbarkeit wird mithilfe einer validen Kombination aus Nutzername und Passwort geprüft. Sollte der Server nicht oder mit einer nicht erwarteten Nachricht antworten, wird die SQL-Injection als nicht nutzbar angesehen. Die Anfrage wird unter zu Hilfenahme der \textit{request}-Bibliothek erstellt und gesendet. 
 
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother SQL-Injection UP}, captionpos=b, label={lst:bigbrother-sql-injection-up}]
 def _is_sql_injection_up(self) -> bool:
  try:
   request_data = {
-   "user": Config.operations['sql_injection']['admin']['username'],
-   "pass": Config.operations['sql_injection']['admin']['password']
+   "user": Config.operations['sql_injec']['admin']['username'],
+   "pass": Config.operations['sql_injec']['admin']['password']
   }
 
   response = requests.post(f"http://{self._ip}/{URL_PATH}", data=request_data)
@@ -217,7 +217,7 @@ def start(self) -> None:
 \subsubsection{XSS}
 Bei der XSS Scan-Operation wird geprüft, ob das Bewertungsformular auf den GameClients weiterhin für XSS-Angriffe offen ist.
 
-Hierzu werden anstatt einer realer Bewertung der Name und die Bewertung mit JavaScript ersetzt und an den Server gesendet. Sollte das gesendete JavaScript ungefiltert auf der Webseite auftauchen, wurde die XSS-Schwachstelle nicht behoben.
+Hierzu werden anstatt einer realer Bewertung der Name und die Bewertung mit JavaScript ersetzt und an den Server gesendet. Sollte das gesendete JavaScript ungefiltert in das HTML-Dokument übernommen werden, wurde die XSS-Schwachstelle nicht behoben.
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother XSS Save}, captionpos=b, label={lst:bigbrother-xss-save}]
 def start(self) -> None:
   try:
@@ -254,7 +254,7 @@ def start(self) -> None:
 
 \subsubsection{Htaccess}
 
-Bei dieser Scan-Operation wird geprüft, ob die auf allen Systemen voreingestellten Nutzerdaten für den Htaccess-Schutz geändert worden sind. Zur Überprüfung wird die geschützte Seite mit den Standardnutzerdaten aufgerufen, sollte der Statuscode ungleich 401 (Unauthorized) sein, waren die Nutzerdaten korrekt oder der Webserver war nicht erreichbar.
+Bei dieser Scan-Operation wird geprüft, ob die auf allen Systemen voreingestellten Nutzerdaten für den Htaccess-Schutz geändert worden sind. Zur Überprüfung wird die geschützte Seite mit den Standardnutzerdaten aufgerufen. Sollte der Statuscode ungleich 401 (Unauthorized) sein, waren die Nutzerdaten korrekt oder der Webserver war nicht erreichbar.
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother Htaccess}, captionpos=b, label={lst:bigbrother-htaccess}]
 def start(self) -> None:
   try:
@@ -271,7 +271,7 @@ def start(self) -> None:
 \subsubsection{SQL-Passwort}
 
 Im Gegensatz zum alten System wird das SQL-Passwort auf dem entfernten Rechner selbst geprüft.
-Dazu wird eine SSH Verbindung mit den Nutzerdaten, die in der \textit{settings}-Tabelle in der Datenbank hinterlegt sind, aufgebaut. Sollte die Verbindung fehlschlagen, wird angenommen, dass das SQL-Passwort nicht geändert ist.
+Dazu wird eine SSH Verbindung mit den Nutzerdaten, die in der \textit{settings}-Tabelle in der Datenbank hinterlegt sind, aufgebaut. Sollte die Verbindung fehlschlagen, wird angenommen, dass das SQL-Passwort nicht geändert worden ist.
 
 Über die SSH Verbindung kann die lokale Datenbank angesprochen werden. Sollte die Authentifizierung mit der Standardkennung aufgrund falscher Nutzerdaten fehlschlagen, wurde das SQL-Passwort geändert.
 
@@ -308,7 +308,7 @@ def start(self) -> None:
 
 In der Datei \textit{modules/helper/constant.py} sind Variablen abgelegt, welche sich selten bis gar nicht ändern. Diese sind deshalb auch nicht in die Einstellungen übernommen worden.
 
-Zu diesen Variablen zählen die Namen der benutzen Datenbank Tabellen und Standardeinstellungen.
+Zu diesen Variablen zählen die Namen der benutzen Datenbanktabellen und Standardeinstellungen.
 Sollte beispielsweise in der Datenbank eine Tabelle umbenannt worden sein, kann diese Änderung in der Datei vollzogen werden. Durch diese Vorgehensweise muss die Änderung nicht manuell im Code geschehen.
 
 \subsubsection{Konfiguration}
@@ -317,7 +317,7 @@ Die Konfiguration in der Datei (\textit{modules/config/config.py}) beinhaltet di
 
 Die Standardkonfiguration ist sowohl im Anhang (\ref{lst:anhang-bigbrother-config-example}) als auch im Big Brother Repository vorhanden.
 
-Einstellungen, die sich meiner Meinung nach häufiger änderen, sind in der Datenbank Tabelle \textit{settings} abgelegt, damit diese durch das Hochschulpersonal leichter verändert werden kann.
+Einstellungen, die sich meiner Meinung nach häufiger änderen, sind in der Datenbanktabelle \textit{settings} abgelegt, damit diese durch das Hochschulpersonal leichter verändert werden können.
 
 \subsection{Implementierung der Scan-Funktion}
 
@@ -325,7 +325,7 @@ Die eigentliche Scan-Funktion wird mithilfe der Klasse \textit{ScanGuard} implem
 
 Der ScanGuard legt für jede Gruppe ein Objekt der Klasse \textit{Scanner} mit den benötigten Informationen wie IP, aktive Scan-Operationen und Einstellungen an.
 
-Danach wird in einer Endlosschleife der nächste Scan-Zeitpunkt errechnet und im folgenden alle Scanner nebenläufig mit der Bibliothek \textit{concurrent} gestartet. Im Anschluss wird auf die Beendigung der Scanner sowie das Erreichen des nächsten Scan-Zeitpunkt gewartet.
+Danach wird in einer Endlosschleife der nächste Scan-Zeitpunkt errechnet und im folgenden alle Scanner nebenläufig mit der Bibliothek \textit{concurrent} gestartet. Im Anschluss wird auf die Beendigung der Scanner sowie das Erreichen des nächsten Scan-Zeitpunktes gewartet.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother ScanGaurd}, captionpos=b, label={lst:bigbrother-scanguard}]
 while not self._stop_scanning:
@@ -344,9 +344,9 @@ while not self._stop_scanning:
 Das Signal für die Beendigung des Programms wird abgefangen, damit die Endlosschleife und so das Programm gracefull beendet wird.
 
 \subsection{Implementierung eines Scanners}
-Bei der Erzeugung eines Objektes der Klassse \textit{Scanner} werden alle von allen benötigten Scan-Operationen Objekte angelegt.
+Bei der Erzeugung eines Objektes der Klassse \textit{Scanner} werden von allen benötigten Scan-Operationen Objekte angelegt.
 
-Wie im Quellcode \autoref{lst:bigbrother-scanner} wird beim Starten eines Scanners anfangs geprüft, ob der entfernter Rechner erreichbar ist. Sollte der entfernte Rechner nicht erreichbar sein, werden keine weiteren Scan-Operationen durchgeführt. Im Anschluss wird noch sequentiell geprüft, ob der HTTP-Dienst erreichbar ist. Ist der HTTP-Dienst erreichbar, werden die Scan-Operationen, die einen funktionieren HTTP-Dienst voraussetzen, der Liste der durchzuführenden Scans  hinzugefügt.
+Wie im Quellcode \autoref{lst:bigbrother-scanner} wird beim Starten eines Scanners anfangs geprüft, ob der entfernter Rechner erreichbar ist. Sollte der entfernte Rechner nicht erreichbar sein, werden keine weiteren Scan-Operationen durchgeführt. Im Anschluss wird noch sequentiell geprüft, ob der HTTP-Dienst erreichbar ist. Ist er erreichbar, werden die Scan-Operationen, die einen funktionieren HTTP-Dienst voraussetzen, der Liste der durchzuführenden Scan-Operationen hinzugefügt.
 
-Im Anschluss werden die restlichen Scan-Operationen nebenläufig gestartet. Nachdem alle Scan-Operationen abgeschlossen sind, wird das Ergebnis ausgewertet und in der Datenbank gespeichert. Hierzu wird die Anzahl der durchgeführten Scans und bei Erfolg auch die Anzahl der erfolgreichen Scans um eins inkrementiert. Außerdem wird der Zeitpunkt des Scans sowie der Erfolg vermerkt.
+Danach werden die restlichen Scan-Operationen nebenläufig gestartet. Nachdem alle Scan-Operationen abgeschlossen sind, wird das Ergebnis ausgewertet und in der Datenbank festgehalten. Hierzu wird die Anzahl der durchgeführten Scans und bei Erfolg auch die Anzahl der erfolgreichen Scans um eins inkrementiert. Außerdem wird der Zeitpunkt des Scans sowie der Erfolg vermerkt.
 

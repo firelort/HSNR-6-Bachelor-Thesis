@@ -4,7 +4,7 @@
 \paragraph{Multi  Page Applications} \label{para:Multi_Page_Applications}
 Multi Page Application, kurz MPA, ist die klassische Architektur für Webanwendungen. Bei dieser Architektur wird für jeden Request (Anfrage) an den Webserver eine neue Seite inklusive Ressourcen wie Cascading Style Sheets (CSS)\footnote{Beinhalten Regeln für die Darstellung von unter anderem HTML-Dokumenten}, JavaScript und Bildern geladen. Dieses kann an einem Beispiel verdeutlicht werden.
 
-Auf einer Shop-Seite befinden sich 10 Produkte inkl. Bild und Kurzbeschreibung. Wird ein Produkt ausgewählt, sendet der Client einen Request / eine Anfrage an den Webserver. Der Webserver antwortet mit allen Ressourcen (siehe oben), welche für das Produkt benötigt werden. Der Client stellt dann aus den Ressourcen die Ansicht dar und das Produkt inklusive der Details ist für den Nutzer zu sehen.
+Auf einer Shop-Seite befinden sich 10 Produkte inkl. Bild und Kurzbeschreibung. Wird ein Produkt ausgewählt, sendet der Client einen Request / eine Anfrage an den Webserver. Der Webserver antwortet mit allen Ressourcen (siehe oben), welche für das Produkt benötigt werden. Der Client stellt dann aus den Ressourcen die Ansicht dar und das Produkt inklusive der Details ist für den Nutzenden zu sehen.
 
 Der Vorteil von MPAs ist die einfacherer Optimierbarkeit für Suchmaschinen, das sogenannte SEO (Search Engine Optimization). Ein gutes SEO Rating sorgt dafür, dass die Webseite bei Suchmaschinen weit oben zu finden ist. Dies ist besonders für Webseiten wichtig, die um Kunden konkurrieren. Anzuführen sind hier diverse Online-Shops und Zeitungen.
 
@@ -90,7 +90,7 @@ Der Rest der Seite ist der Content Bereich. Dieser wird dynamisch mit dem anzuze
 	\label{fig:mockup-base-extended}
 \end{center}
 
-Damit die Navigation verständlich wird, gibt es wie in \autoref{fig:mockup-base-extended} zu erkennen neben den Icons auch beschreibenden Text. Dieser Text wird angezeigt, wenn der Nutzer mit der Maus über die Sidebar fährt. Die Sidebar wird über den Content ausgefahren und überdeckt diesen.
+Damit die Navigation verständlich wird, gibt es wie in \autoref{fig:mockup-base-extended} zu erkennen neben den Icons auch beschreibenden Text. Dieser Text wird angezeigt, wenn der Nutzende mit der Maus über die Sidebar fährt. Die Sidebar wird über den Content ausgefahren und überdeckt diesen.
 
 \begin{center}
 	\includegraphics[width=\linewidth]{entwurf/webclient/base-with-error}
@@ -98,11 +98,11 @@ Damit die Navigation verständlich wird, gibt es wie in \autoref{fig:mockup-base
 	\label{fig:mockup-base-with-error}
 \end{center}
 
-Sollte der Nutzer über Ereignisse informiert werden, stehen zwei Möglichkeiten zur Verfügung.
+Sollte der Nutzende über Ereignisse informiert werden, stehen zwei Möglichkeiten zur Verfügung.
 
-Wenn das Ereignis wichtig ist, wird ein Banner verwendet. Dieser Banner besteht aus drei Elementen, einem Element für die Nachricht und zwei Buttons. Der linke der beiden ermöglicht es dem Nutzer eine Aktion direkt auszuführen. Dies kann unter anderem eine Weiterleitung zu einer bestimmten Seite sein, über die der Nutzer weitere Informationen erhält. Über den anderen Button kann der Banner ausgeblendet werden. Es wird maximal ein Banner zeitgleich angezeigt.
+Wenn das Ereignis wichtig ist, wird ein Banner verwendet. Dieser Banner besteht aus drei Elementen, einem Element für die Nachricht und zwei Buttons. Der linke der beiden ermöglicht es dem Nutzenden eine Aktion direkt auszuführen. Dies kann unter anderem eine Weiterleitung zu einer bestimmten Seite sein, über die der Nutzende weitere Informationen erhält. Über den anderen Button kann der Banner ausgeblendet werden. Es wird maximal ein Banner zeitgleich angezeigt.
 
-Die andere Möglichkeit den Nutzer zu informieren, ist die sogenannte Snackbar. Diese wird verwendet, wenn die Benutzererfahrung nicht unterbrochen werden soll und keine Benutzereingabe benötigt wird.
+Die andere Möglichkeit den Nutzenden zu informieren, ist die sogenannte Snackbar. Diese wird verwendet, wenn die Benutzererfahrung nicht unterbrochen werden soll und keine Benutzereingabe benötigt wird.
 Die Snackbar wird am  unteren rechten Rand platziert und verschwindet im Gegensatz zum Banner nach einer definierten Zeit automatisch. Wenn möglich wird auch hier maximal eine Snackbar gleichzeitig verwendet.
 
 \begin{center}
