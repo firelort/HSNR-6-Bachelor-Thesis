@@ -1,5 +1,54 @@
 \begin{table}
 	\centering
+	\begin{tabular}{l l}
+		Route									 & Methods \\ [0.5ex]
+		\hline
+		/										 & GET \\
+		/associate								 & GET, POST \\
+		/associate/<int:associate\_id>			 & DELETE \\
+		/auth/flagshop/login					 & POST \\
+		/auth/login								 & POST \\
+		/auth/refresh							 & POST \\
+		/auth/revoke/access						 & DELETE \\
+		/auth/revoke/refresh					 & DELETE \\
+		/backup									 & GET \\
+		/backup/<int:backup\_id>				 & GET \\
+		/challenge								 & GET, POST \\
+		/challenge/<int:challenge\_id>			 & DELETE, GET, PUT \\
+		/challenge/solve						 & GET \\
+		/challenge/solve/<int:challenge\_id>	 & DELETE, POST \\
+		/client									 & GET, POST \\
+		/client/<int:group\_id>					 & DELETE, GET \\
+		/flag									 & POST \\
+		/flagshop/package						 & GET, POST \\
+		/flagshop/package/<int:package\_id>		 & DELETE, PUT \\
+		/flagshop/transaction					 & DELETE, GET, POST \\
+		/flagshop/user							 & GET, POST \\
+		/flagshop/user/<user\_name>				 & DELETE, PUT \\
+		/log									 & GET, POST \\
+		/log/old								 & GET \\
+		/match/control							 & DELETE, POST, PUT \\
+		/match/info								 & GET \\
+		/match/score							 & GET \\
+		/note									 & GET, POST \\
+		/note/<int:note\_id>					 & DELETE, GET, PUT \\
+		/penalty								 & GET, POST \\
+		/penalty/<int:penalty\_id>				 & DELETE, GET, PUT \\
+		/scanner								 & DELETE, GET, POST \\
+		/scanner/notify							 & POST \\
+		/secure									 & GET \\
+		/service								 & GET \\
+		/service/<int:service\_id>				 & DELETE, GET, PUT \\
+		/setting								 & GET, PUT \\
+		/user									 & DELETE, GET, POST \\
+		/user/<int:user\_id>					 & DELETE, GET, PUT \\
+		/user/import							 & POST \\
+	\end{tabular}
+	\caption{Übersicht über die implementierten Routen}
+	\label{table:gis-routes}
+\end{table}
+\begin{table}
+	\centering
 	\begin{tabular}{l l c c c c}
 		Methode & Route	& Admin & Supervisor & Player  & Flagshop \\ [0.5ex]
 		\hline &&&&&\\
@@ -99,12 +148,10 @@ class Config(object):
     "host": "HOST",
     "port": 5432
   }
-  
   webserver = {
     "url": "webserver notify url",
     "auth": "Authentication Header"
   }
-  
   operations = {
     "base": {
       "ping_timeout": 4,
@@ -134,10 +181,8 @@ class Config(object):
     }
   }
 \end{lstlisting}
-
 \begin{lstlisting}[frame=single, language=sql, caption={SQL View Gesamtpunkte}, captionpos=b, label={lst:databas-total-points-sql}]
 CREATE VIEW public.total_points AS 
-
 SELECT grp.id, grp.name, 
 (COALESCE(cha.total_points, ((0)::smallint)::bigint))::smallint AS challenge_points,
 (COALESCE(dis.points, ((0)::smallint)::bigint))::smallint AS discover_points,
@@ -158,10 +203,9 @@ JOIN (SELECT grp_1.id, sum(gsp.service_points) AS service_points
 FROM (groups grp_1 LEFT JOIN group_service_points gsp ON ((grp_1.id = gsp.group_id))) 
 GROUP BY grp_1.id) tmp ON ((grp.id = tmp.id)));
 \end{lstlisting}
-
+\newpage
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother Scanner}, captionpos=b, label={lst:bigbrother-scanner}]
 self._host_up.start()
-
 results['host_up'] = self._host_up.result
 results['http_up'] = False
 for scan_operation in self._scanner_list:
@@ -169,7 +213,6 @@ for scan_operation in self._scanner_list:
 
 for scan_operation in self._scanner_list_http_up:
   results[scan_operation.name] = False
-
 if results['host_up']:
   self._http_up.start()
   results['http_up'] = self._http_up.result
@@ -181,9 +224,8 @@ if results['host_up']:
   if results['http_up']:
     for scan_operation in self._scanner_list_http_up:
       future_list.append(pool.submit(scan_operation.start))
-
+      
   wait(future_list)
-
   for scan_operation in self._scanner_list:
     results[scan_operation.name] = scan_operation.result
 
@@ -200,53 +242,3 @@ for key in results:
   try:
     self._cursor.execute( f"UPDATE {GROUP_SERVICE_TABLE_NAME} SET online_count =  online_count + {online_count_add}, scan_count =  scan_count + 1, was_online = {results[key]}, last_scan = CURRENT_TIMESTAMP WHERE group_id = {self._id} AND service_id = {self._get_id_of_scan_operation(key)}")
 \end{lstlisting}
-
-\begin{table}
-	\centering
-	\begin{tabular}{l l}
-		Route									 & Methods \\ [0.5ex]
-		\hline
-		/										 & GET \\
-		/associate								 & GET, POST \\
-		/associate/<int:associate\_id>			 & DELETE \\
-		/auth/flagshop/login					 & POST \\
-		/auth/login								 & POST \\
-		/auth/refresh							 & POST \\
-		/auth/revoke/access						 & DELETE \\
-		/auth/revoke/refresh					 & DELETE \\
-		/backup									 & GET \\
-		/backup/<int:backup\_id>				 & GET \\
-		/challenge								 & GET, POST \\
-		/challenge/<int:challenge\_id>			 & DELETE, GET, PUT \\
-		/challenge/solve						 & GET \\
-		/challenge/solve/<int:challenge\_id>	 & DELETE, POST \\
-		/client									 & GET, POST \\
-		/client/<int:group\_id>					 & DELETE, GET \\
-		/flag									 & POST \\
-		/flagshop/package						 & GET, POST \\
-		/flagshop/package/<int:package\_id>		 & DELETE, PUT \\
-		/flagshop/transaction					 & DELETE, GET, POST \\
-		/flagshop/user							 & GET, POST \\
-		/flagshop/user/<user\_name>				 & DELETE, PUT \\
-		/log									 & GET, POST \\
-		/log/old								 & GET \\
-		/match/control							 & DELETE, POST, PUT \\
-		/match/info								 & GET \\
-		/match/score							 & GET \\
-		/note									 & GET, POST \\
-		/note/<int:note\_id>					 & DELETE, GET, PUT \\
-		/penalty								 & GET, POST \\
-		/penalty/<int:penalty\_id>				 & DELETE, GET, PUT \\
-		/scanner								 & DELETE, GET, POST \\
-		/scanner/notify							 & POST \\
-		/secure									 & GET \\
-		/service								 & GET \\
-		/service/<int:service\_id>				 & DELETE, GET, PUT \\
-		/setting								 & GET, PUT \\
-		/user									 & DELETE, GET, POST \\
-		/user/<int:user\_id>					 & DELETE, GET, PUT \\
-		/user/import							 & POST \\
-	\end{tabular}
-	\caption{Übersicht über die implementierten Routen}
-	\label{table:gis-routes}
-\end{table}
