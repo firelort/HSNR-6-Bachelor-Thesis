@@ -1,10 +1,10 @@
 \section{Installationsanleitung}
-Beide Programme sind unter Zuhilfenahme des Versionsverwaltungssystems \textit{git} entwickelt worden und liegen derzeit auf der GitLab Instanz des Gemeinschaftslabors Informatik (GLI) des Fachbereiches Elektrotechnik und Informatik der Hochschule Niederrhein. Sie sind im zugangsbeschränkten Repository \textit{Its2}, erreichbar über\\ \textit{https://gl.kr.hsnr.de/ezslabor/abschlussarbeiten/its2}, abgelegt.
+Beide Programme sind unter Zuhilfenahme des Versionsverwaltungssystems \textit{git} entwickelt worden und liegen derzeit auf der GitLab Instanz des Gemeinschaftslabors Informatik (GLI) des Fachbereiches Elektrotechnik und Informatik der Hochschule Niederrhein. Sie sind im zugangsbeschränkten Repository \textit{Its2}, erreichbar über\\ \textit{\url{https://gl.kr.hsnr.de/ezslabor/abschlussarbeiten/its2}}, abgelegt.
 
 Um die Anwendung nutzen zu können, muss das Repository heruntergeladen werden.
 Dazu kann dieses als ZIP- oder TAR-Archiv mithilfe der Weboberfläche oder unter Verwendung von \textit{git clone} heruntergeladen werden. Die Methode \textit{git clone} ist zu bevorzugen, da so Änderungen leichter herunter- oder hochgeladen werden können.
 
-\begin{lstlisting}[language=bash, caption={git clone (bash)}, captionpos=b, label={lst:git-clone}]
+\begin{lstlisting}[caption={git clone (bash)}, captionpos=b, label={lst:git-clone}]
 $ git clone https://gl.kr.hsnr.de/ezslabor/abschlussarbeiten/its2.git
 \end{lstlisting}
 
@@ -20,8 +20,7 @@ Dieser sorgt dafür, dass die Datenbank durch die hinterlegten Migrationen auf d
 \begin{lstlisting}[language=bash, caption={Initalisierung REST-Interface (bash)}, captionpos=b, label={lst:rest-init}]
 $ pipenv run flask db downgrade base && 
   pipenv run flask db upgrade && 
-  pipenv run flask user create admin --role admin \
-  --password admin
+  pipenv run flask user create admin --role admin --password admin
 \end{lstlisting}
 
 Danach wird der Scanner gestartet und die Initialisierung der Service-Datenbank wird ausgeführt. Nachdem alle Services eingetragen worden sind, beendet sich der Container und der letzte \textit{docker-compose} Befehl (\ref{lst:docker-compose-down}) wird ausgeführt. Dieser sorgt dafür, dass alle Container und Netzwerke, welche durch \textit{docker-compose} angelegt worden sind, entfernt werden.

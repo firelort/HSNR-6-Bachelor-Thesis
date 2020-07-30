@@ -26,12 +26,6 @@ GROUP BY flags_submitted.group_id;
 \end{lstlisting}
 
 \subsubsection{Defensivpunkte}
-\begin{center}
-	\includegraphics[width=\linewidth]{realisierung/database/view-defence}
-	\captionof{figure}{View Defensivpunkte (ER-Diagramm)}
-	\label{fig:realisierung-view-defence}
-\end{center}
-
 Ähnlich den Angriffspunkten (\ref{subsubsec:Angriffspunkte}) werden die Defensivpunkte (Strafe für verlorene Flags) berechnet.
 Anders als bei den Angriffspunkten werden alle vorhanden Flags mit den abgegebenen Flags für jede Gruppe gejoint, wenn die besitzende Gruppe ungleich der abgebenden Gruppe ist. In dieser Liste können Flags mehrfach auftreten, wenn mehrere Gruppen einer Gruppe Flags gestohlen haben. Da im alten System ein Verlust einer Flag an mehrere Gruppen nur einmal mit Minuspunkten bestraft worden ist, werden in der Liste der Flags mit der SQL Klausel \textit{DISTINCT} Duplikate entfernt. Im Anschluss werden dann die verlorenen Flags pro Gruppe gezählt und so die Defensivpunkte bestimmt.
 
@@ -43,12 +37,6 @@ GROUP BY flags.group_id;
 \end{lstlisting}
 
 \subsubsection{Erkundungspunkte}
-\begin{center}
-	\includegraphics[width=\linewidth]{realisierung/database/view-discover}
-	\captionof{figure}{View Erkundungspunkte (ER-Diagramm)}
-	\label{fig:realisierung-view-discover}
-\end{center}
-
 Die Erkundungspunkte werden nach dem gleichen Vorgehen wie die Angriffspunkte (\ref{subsubsec:Angriffspunkte}) bestimmt. Einziger Unterschied ist, dass nur Flags beachtet werden, bei denen die besitzende Gruppe gleicher der abgebenden Gruppe ist.
 
 \begin{lstlisting}[frame=single, language=sql, caption={SQL View Erkundungspunkte}, captionpos=b, label={lst:database-discover-points}]
@@ -59,21 +47,9 @@ GROUP BY flags_submitted.group_id;
 \end{lstlisting}
 
 \subsubsection{Strafpunkte}
-\begin{center}
-	\includegraphics[width=\linewidth]{realisierung/database/view-penalty}
-	\captionof{figure}{View Strafpunkte (ER-Diagramm)}
-	\label{fig:realisierung-view-penalty}
-\end{center}
-
 Die View der Strafpunkte (\textit{penalty\_points}) summiert die in der \textit{penalties}-Tabelle vorhandenen Strafpunkte pro Gruppe. Andere Informationen wie Grund der Strafe bleiben hierbei unberücksichtigt. Jede Gruppe (\textit{group\_id}) hat entsprechende Strafpunkte (\textit{total\_penalty}). Sollte eine Gruppe bisher noch keine Strafpunkte erhalten haben, wird diese in der View nicht aufgeführt.
 
 \subsubsection{Servicepunkte}
-\begin{center}
-	\includegraphics[width=\linewidth]{realisierung/database/view-service-points}
-	\captionof{figure}{View Servicepunkte (ER-Diagramm)}
-	\label{fig:realisierung-view-service-points}
-\end{center}
-
 In der View \textit{group\_service\_points} werden pro Gruppe pro Service die Servicepunkte sowie die Serviceprozentzahl berechnet. Dazu werden Daten aus den Tabellen \textit{services} und \textit{group\_service\_status} benötigt. Aus der Tabelle \textit{services} wird einzig die Gewichtung der einzelnen Services abgefragt. In der Tabelle \textit{group\_service\_status} werden die Anzahl der durchgeführten sowie der erfolgreichen Scans pro Gruppe abgerufen.
 
 Die Servicepunkte diene als Leistungsindikator der Absicherung und der Instandhaltung des Systems durch die Studierenden. Dazu wird von der Anzahl der erfolgreichen Scans die Anzahl aller Scans abgezogen und das Ergebnis der Subtraktion gewichtet, um einen geringeren Einfluss auf die Gesamtpunkte zu ermöglichen.
@@ -98,23 +74,11 @@ COALESCE(((100 / group_service_status.scan_count) * group_service_status.online_
 \end{lstlisting}
 
 \subsubsection{Flagshoppunkte}
-\begin{center}
-	\includegraphics[width=\linewidth]{realisierung/database/view-flagshop}
-	\captionof{figure}{View Flagshoppunkte (ER-Diagramm)}
-	\label{fig:realisierung-view-flagshop}
-\end{center}
-
 Bei den Flagshoppunkten handelt es sich, um die für Käufe ausgegebenen Punkte einer Gruppe.
 Für die Berechnung wird die Summe der Kosten aller gekauften Pakete pro Gruppe gebildet.
 Wenn eine Gruppe keine Ausgaben getätigt hat, wird diese auch nicht in die View aufgenommen.
 
 \subsubsection{Challengepunkte}
-\begin{center}
-	\includegraphics[width=\linewidth]{realisierung/database/view-challenge}
-	\captionof{figure}{View Challengepunkte (ER-Diagramm)}
-	\label{fig:realisierung-view-challenge}
-\end{center}
-
 Im Gegensatz zum alten Überwachungs- und Auswertungssystems wird der Start einer Challenge nicht länger mit Minuspunkten bestraft. Diese Minuspunkte bewirken meiner Meinung nach eine Abschreckung der Studierenden, sodass diese die Challenges nicht versuchen. Im Rahmen einer Lehrveranstaltung sollten die Studierenden ermutigt werden, verschiedene themenbezogene Aufgaben zu lösen.
 
 Die Challengepunkte werden mithilfe der Tabellen \textit{challenges} und \textit{group\_has\_challenges} in der View \textit{challenge\_points} bestimmt. Für jede Gruppe werden die Punkte der gelösten Challenges summiert.
@@ -143,12 +107,6 @@ COALESCE(challenge.points, ((0)::smallint))
 \end{lstlisting}
 
 \subsection{Servicestatus}
-\begin{center}
-	\includegraphics[width=\linewidth]{realisierung/database/view-service-status}
-	\captionof{figure}{View Servicestatus (ER-Diagramm)}
-	\label{fig:realisierung-view-service-status}
-\end{center}
-
 Der aktuelle Servicestatus wird auch innerhalb einer View (\textit{group\_service\_online\_status}) ermöglicht. Diese View blendet nur Informationen der Tabelle \textit{group\_service\_status} aus, deshalb hätte auch die Tabelle selber genutzt werden können.
 
 Die View stellt pro Gruppe und pro Service die Informationen zur Verfügung, ob der Scan im letzten Versuch erfolgreich war.

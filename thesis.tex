@@ -166,15 +166,7 @@
 	\input{90-Anhang/Bedienung}
 	\input{90-Anhang/Anhang}
 	
-	% Tabellenverzeichnis
-	\listoffigures
+	% Tabellenverzeichnis Codeverzeichnis Abbildungsverzeichnis Quellenverzeichnis
+	{\listoffigures \let\cleardoublepage\newpage \lstlistoflistings \let\cleardoublepage\\\ \listoftables \let\cleardoublepage\newpage \printbibliography}
 	
-	% Abbildungsverzeichnis
-	\listoftables
-	
-	% Codeverzeichnis
-	\lstlistoflistings
-	
-	% Quellenverzeichnis
-	\printbibliography
 \end{document}
