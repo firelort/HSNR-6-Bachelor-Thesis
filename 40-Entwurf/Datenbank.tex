@@ -6,12 +6,12 @@ Des Weiteren ist es möglich, die Punkteberechnung in der Datenbank unter Zuhilf
 
 \subsection{Basis-Tabellen}
 \begin{center}
-	\includegraphics[width=\linewidth, keepaspectratio]{entwurf/datenbank/asdf-tabellen}
+	\includegraphics[width=\linewidth, keepaspectratio]{entwurf/datenbank/basis-tabellen}
 	\captionof{figure}{Ansicht der Basis-Tabellen (ER-Diagramm)}
-	\label{fig:db-asdf-table}
+	\label{fig:db-basis-table}
 \end{center}
 
-In der \autoref{fig:db-asdf-table} ist neben der alleinstehenden Tabelle \textbf{\textit{settings}} die Tabelle \textbf{\textit{users}} sowie die n:m-Beziehung  zwischen \textbf{\textit{users}} und \textbf{\textit{groups}} dargestellt. Die  n:m-Beziehung wird über eine Referenztabelle (\textbf{\textit{penalties}}) mit einer 1:n-Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{penalties}} und einer 0,1:n-Beziehung zwischen \textbf{\textit{users}} und \textbf{\textit{penalties}} modelliert. In der n:m-Beziehung werden die ausgesprochenen Strafen gespeichert. Jede Gruppe kann von mehreren betreuenden Personen oder dem System mehrmals verwarnt werden.
+In der \autoref{fig:db-basis-table} ist neben der alleinstehenden Tabelle \textbf{\textit{settings}} die Tabelle \textbf{\textit{users}} sowie die n:m-Beziehung  zwischen \textbf{\textit{users}} und \textbf{\textit{groups}} dargestellt. Die  n:m-Beziehung wird über eine Referenztabelle (\textbf{\textit{penalties}}) mit einer 1:n-Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{penalties}} und einer 0,1:n-Beziehung zwischen \textbf{\textit{users}} und \textbf{\textit{penalties}} modelliert. In der n:m-Beziehung werden die ausgesprochenen Strafen gespeichert. Jede Gruppe kann von mehreren betreuenden Personen oder dem System mehrmals verwarnt werden.
 
 \subsubsection{Einstellungen}
 Die \textbf{\textit{settings}}-Tabelle beinhaltet Einstellungen des Spiels als key-value Paar. Hierbei sind beide Spalten Strings und der Key einzigartig. Zu den Einstellungen gehören beispielsweise das Scan-Intervall, die Anzahl der Flags pro Team sowie das Ende der Discover- und Attackzeit.
@@ -53,9 +53,10 @@ Die während eines Spiels generierten und benötigten Flags werden in der Tabell
 \subsubsection{Abgegebene Flags}
 Die durch die Studierenden abgegeben Flags werden in der Tabelle \textbf{\textit{flags\_submitted}} eingetragen. Auch wird der Zeitpunkt der Abgabe mitgespeichert, um eventuelle Betrugsversuche aufzudecken. Die Spalten \textit{group\_id} und \textit{flag\_value} bilden zusammen den Primärschlüssel. Dieses ermöglicht, dass jede Gruppe jede Flag abgeben kann. Die Mehrfachabgabe einer Flag durch eine Gruppe wird so auch unterbunden.
 
+\clearpage
 \subsection{Service-Tabellen}
 \begin{center}
-	\includegraphics[width=\linewidth, keepaspectratio]{entwurf/datenbank/service-tabellen}
+	\includegraphics[width=150mm, keepaspectratio]{entwurf/datenbank/service-tabellen}
 	\captionof{figure}{Ansicht der Service-Tabellen (ER-Diagramm)}
 	\label{fig:db-service-table}
 \end{center}
@@ -86,6 +87,7 @@ Die betreuenden Personen und Administrierende können Flagshop-Pakete anlegen, d
 \subsubsection{Gekaufte Flagshop-Pakete}
 Die von den Gruppen gekauften Flagshop Pakete werden in der Tabelle\\ \textbf{\textit{groups\_bought\_flagshop\_packages}} abgespeichert. Auch wird im Feld \textit{price\_paid} der beim Kauf gezahlte Preis festgehalten, da die Studierenden den Preis eines Flagshop-Paketes beim Kauf reduzieren können. Jedes Paket kann genau einmal von jeder Gruppe gekauft werden, da sich der Primärschlüssel aus Gruppe (\textit{group\_id}) und Paket (\textit{flagshop\_packages\_id}) zusammensetzt.
 
+\clearpage
 \subsection{Challenge-Tabellen}
 \begin{center}
 	\includegraphics[width=\linewidth, keepaspectratio]{entwurf/datenbank/challenge-tabellen}

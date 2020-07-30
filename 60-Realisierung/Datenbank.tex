@@ -35,7 +35,7 @@ GROUP BY flags_submitted.group_id;
 Ähnlich den Angriffspunkten (\ref{subsubsec:Angriffspunkte}) werden die Defensivpunkte (Strafe für verlorene Flags) berechnet.
 Anders als bei den Angriffspunkten werden alle vorhanden Flags mit den abgegebenen Flags für jede Gruppe gejoint, wenn die besitzende Gruppe ungleich der abgebenden Gruppe ist. In dieser Liste können Flags mehrfach auftreten, wenn mehrere Gruppen einer Gruppe Flags gestohlen haben. Da im alten System ein Verlust einer Flag an mehrere Gruppen nur einmal mit Minuspunkten bestraft worden ist, werden in der Liste der Flags mit der SQL Klausel \textit{DISTINCT} Duplikate entfernt. Im Anschluss werden dann die verlorenen Flags pro Gruppe gezählt und so die Defensivpunkte bestimmt.
 
-\begin{lstlisting}[frame=single, language=sql, caption={SQL View Denfensivpunkte}, captionpos=b, label={lst:database-offence-points}]
+\begin{lstlisting}[frame=single, language=sql, caption={SQL View Denfensivpunkte}, captionpos=b, label={lst:database-defence-points}]
 SELECT flags.group_id, count(DISTINCT flags.flag_value) AS points
 FROM (flags JOIN flags_submitted ON (((flags.flag_value)::text = (flags_submitted.flag_value)::text)))
 WHERE (flags.group_id <> flags_submitted.group_id)
@@ -51,7 +51,7 @@ GROUP BY flags.group_id;
 
 Die Erkundungspunkte werden nach dem gleichen Vorgehen wie die Angriffspunkte (\ref{subsubsec:Angriffspunkte}) bestimmt. Einziger Unterschied ist, dass nur Flags beachtet werden, bei denen die besitzende Gruppe gleicher der abgebenden Gruppe ist.
 
-\begin{lstlisting}[frame=single, language=sql, caption={SQL View Erkundungspunkte}, captionpos=b, label={lst:database-offence-points}]
+\begin{lstlisting}[frame=single, language=sql, caption={SQL View Erkundungspunkte}, captionpos=b, label={lst:database-discover-points}]
 SELECT flags_submitted.group_id, count(flags_submitted.flag_value) AS points
 FROM (flags_submitted JOIN flags ON (((flags_submitted.flag_value)::text = (flags.flag_value)::text)))
 WHERE (flags_submitted.group_id = flags.group_id)

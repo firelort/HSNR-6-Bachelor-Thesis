@@ -23,7 +23,7 @@ Wie in Bild \ref{fig:scanner-class} erkennbar besteht die Komponente Big Brother
 
 Die Klasse \textit{ScanOperation} definiert die abstrakte Methode \textit{start()}. Diese wird von den abgeleiteten Klassen implementiert und ermöglicht das Starten der einzelnen Scan-Operationen. Ebenfalls speichern alle Scan-Operationen ihr Ergebnis im privaten Attribute \textit{result} ab. Mithilfe der von der abstrakten Klasse implementierten Methode \textit{get\_results()} kann der Scanner das Ergebnis der Scan-Operation auslesen. Jedes Objekt der Klasse Scanner startet 0 bis n Scan-Operationen abhängig von der Konfiguration beziehungsweise den aktiven Diensten. Des Weiteren stellt die abstrakte Klasse die Methode \textit{is\_port\_open()} bereit, welche von den Scan-Operationen genutzt werden kann, um den Status eines Ports auf dem fremden System zu prüfen. Ein Objekt der Klasse Scanner kann pro Typ maximal eine Scan-Operation starten und beinhaltet bzw. verwaltet alle Scan-Operationen für ein GameClient. 
 
-Um mehrere GameClients zu überwachen, werden mehrere Objekte der Klasse Scanner benötigt.
+Pro GameClient wird ein Objekt der Klasse Scanner für die Überwachung benötigt.
 
 \begin{center}
 	\includegraphics[width=\linewidth]{entwurf/scanner/state_scanner}
@@ -45,10 +45,10 @@ Falls die Aufgabe des Scanners \textquote{SCAN} ist, wird der Scan der GameClien
 
 Nach dem Anlegen aller Scanner wird die Methode \textit{start()} parallel gestartet. Im Anschluss wird auf das Beenden der gestarteten Methoden gewartet. Sollten alle abgeschlossen sein, wird geprüft, ob das Durchführen einer Scan-Runde an den Webserver gemeldet werden soll. Ist dies der Fall, wird der Server darüber in Kenntnis gesetzt, dass neue Daten in der Datenbank vorhanden sind. Danach schläft der Scanner bis zum nächsten Durchlauf.
 
-\begin{center}
-	\includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{entwurf/scanner/state_scanner_start}
+\begin{minipage}{\textwidth}
+	\includegraphics[height=\textheight]{entwurf/scanner/state_scanner_start}
 	\captionof{figure}{Starten eines Scanners (Zustandsdiagramm)}
-\end{center}
+\end{minipage}
 
 Beim Ausführen der Methode \textit{start()} des Scanners wird zunächst geprüft, ob das entfernte System erreichbar ist. Sollte dies nicht der Fall sein, werden alle nachfolgenden Scan-Operationen nicht durchgeführt, da diese fehlschlagen würden. Im Anschluss wird getestet, ob der HTTP Dienst des entfernten Systems erreichbar ist, da dieser für einige weitere Tests benötigt wird. Ist der HTTP Dienst erreichbar, werden die Scan-Operationen, welche auf dem HTTP Dienst basieren, mit in die Liste der abzuarbeitenden Scan-Operationen aufgenommen. Danach werden alle verbleibenden Scan-Operationen parallel gestartet. Nachdem die Scan-Operationen ihre Aufgabe abgeschlossen haben, sammelt der Scanner alle Ergebnisse ein. Falls die \textit{Host UP Scan-Operation} oder die \textit{HTTP UP Scan-Operation} deaktiviert ist, werden diese aus dem Ergebnis entfernt. Danach übermittelt der Scanner die gesammelten Ergebnisse an die Datenbank und beendet seine Scan-Runde.
 

@@ -40,7 +40,7 @@ cursor.execute(f"DELETE FROM {SERVICE_TABLE_NAME}")
 Bei dem Einfügen der Services werden pro Service der interne und der angezeigte Name sowie die Gewichtung und die Aktivierung in die Tabelle (\textit{services}) geschrieben. Bei der Gewichtung und der Aktivierung werden Standardwerte verwendet, damit dieser Vorgang automatisch durchgeführt werden kann. Standardmäßig wird jeder Service mit eins gewichtet und ist deaktiviert.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Einfügen eines Services}, captionpos=b, label={lst:bigbrother-create-service}]
-cursor.execute(f"INSERT INTO {SERVICE_TABLE_NAME}(name, public_name,  weight,  active) VALUES ('{name}', '{public_name}', 1, FALSE);")
+cursor.execute(f"INSERT INTO {SERVICE_TABLE_NAME}(name, public_name, weight, active) VALUES ('{name}', '{public_name}', 1, FALSE);")
 \end{lstlisting}
 
 Die Standardwerte können pro Service über das GIS überschrieben werden.
@@ -111,7 +111,7 @@ Für die beiden Bubble Scan-Operationen wurde eine extra Klasse geschaffen, die 
 
 Die Funktion öffnet eine Telnet-Verbindung zum Bubble-Server und ruft eine Funktion des Bubble-Servers auf. Sollte die Antwort das erwartete Ergebnis nicht beinhalten oder sollte keine Verbindung aufgebaut werden, wird der Bubble-Server  als nicht erreichbar oder benutzbar angesehen.
 
-\begin{lstlisting}[language=Python, frame=single, caption={Big Brother Buble Port Prüfung}, captionpos=b, label={lst:bigbrother-host-up}]
+\begin{lstlisting}[language=Python, frame=single, caption={Big Brother Buble Port Prüfung}, captionpos=b, label={lst:bigbrother-bubble-up}]
 def _is_bubble_port_up(self) -> bool:
   try:
     with Telnet(self._ip, self._port) as connection:
@@ -125,7 +125,7 @@ def _is_bubble_port_up(self) -> bool:
 \end{lstlisting} 
 
 Auch implementiert diese Klasse die \textit{start}-Funktion, indem nur die \textit{\_is\_bubble\_port\_up()}-Funktion aufgerufen und des Ergebnis zwischengespeichert wird.
-\begin{lstlisting}[language=Python, frame=single, caption={Big Brother Bubble Scan-Operation}, captionpos=b, label={lst:bigbrother-host-up}]
+\begin{lstlisting}[language=Python, frame=single, caption={Big Brother Bubble Scan-Operation}, captionpos=b, label={lst:bigbrother-bubble-up-start}]
 def start(self) -> None:
 	self._result = self._is_bubble_port_up()
 \end{lstlisting} 
@@ -246,7 +246,7 @@ def _is_telnet_up(self) -> bool:
 
 Die eigentliche Scan-Operation ruft nur die Hilfsfunktion auf und speichert das invertierte Ergebnis ab, da die Studierenden den Telnet Server abstellen sollen.
 
-\begin{lstlisting}[language=Python, frame=single, caption={Big Brother Telnet}, captionpos=b, label={lst:bigbrother-telnet}]
+\begin{lstlisting}[language=Python, frame=single, caption={Big Brother Telnet}, captionpos=b, label={lst:bigbrother-telnet-start}]
 def start(self) -> None:
 	result = self._is_telnet_up()
 	self._result = not result

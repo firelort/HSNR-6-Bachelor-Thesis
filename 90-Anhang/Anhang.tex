@@ -41,9 +41,6 @@
 		GET 	& /log								& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 		POST 	& /log								& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 		GET		& /log/old							& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
-		POST	& /match/control					& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
-		PUT		& /match/control					& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
-		DELETE	& /match/control					& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 	\end{tabular}
 \caption{Berechtigungsmatrix der Routen 1/2}
 \label{table:gis-permission-1}
@@ -54,6 +51,9 @@
 	\begin{tabular}{l l c c c c}
 		Methode & Route	& Admin & Supervisor & Player  & Flagshop \\ [0.5ex]
 		\hline &&&&&\\
+		POST	& /match/control					& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		PUT		& /match/control					& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		DELETE	& /match/control					& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 		GET		& /match/info						& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
 		GET		& /match/score						& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
 		GET		& /note								& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\

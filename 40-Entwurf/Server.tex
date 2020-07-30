@@ -17,7 +17,7 @@ Für die Nutzung des Flagshops ist ein Multi-Login notwendig, da nur am Webserve
 
 So ist für diesen Anwendungsfall ein Stateless Login besser geeignet, da hier die benötigten Informationen vom Client, je nach Anliegen, gesendet werden können. 
 
-Die Nutzung des Stateless Logins bietet die Perspektive der Verwendung eines Stateless Webservers sowie eines Thin Webservers. Bei einem Thin Webserver werden nur Daten und keine Repräsentation an dem Client zurückgesendet. So wird die Aufgabe der Darstellung der Daten an den Client übertragen.
+Die Nutzung des Stateless Logins bietet die Perspektive der Verwendung eines Stateless \\ Webservers sowie eines Thin Webservers. Bei einem Thin Webserver werden nur Daten und keine Repräsentation an dem Client zurückgesendet. So wird die Aufgabe der Darstellung der Daten an den Client übertragen.
 
 Durch die Nutzung eines Thin Servers werden zwei Dinge ermöglicht. 
 
@@ -66,24 +66,29 @@ Neben den in \autoref{table:http-methods} aufgezeigten Methoden gibt es noch wei
 
 \subsection{Funktionale Eigenschaften}
 \subsubsection{Login}\label{subsub:login}
-\includegraphics[width=\linewidth]{entwurf/gis/dfd-gis-login}
-\captionof{figure}{Datenfluss während eines Logins (Datenflussdiagramm)}
+\begin{center}
+	\includegraphics[width=100mm]{entwurf/gis/dfd-gis-login}
+	\captionof{figure}{Datenfluss während eines Logins (Datenflussdiagramm)}
+\end{center}
 
 Bei einem Login sendet der Nutzende die Kombination aus Nutzernamen und Passwort in seiner Anfrage an den Webserver. Sollte der Nutzername und das Passwort mit den in der Datenbank gespeicherten Informationen übereinstimmen, wird ein Access- und ein Refresh-Token ausgestellt. Wichtig hierbei ist, dass das Passwort in der Datenbank \textbf{nur} im gehashten Format vorliegt.
 
 Sollte kein Hackitzugang benötigt werden, muss für die Ausstellung der Tokens kein Nutzername und Passwort angegeben werden.
 
-\includegraphics{entwurf/gis/dfd-gis-token-refresh}
-\captionof{figure}{Datenfluss während eines Logins (Datenflussdiagramm)}
+\begin{center}
+	\includegraphics[width=100mm]{entwurf/gis/dfd-gis-token-refresh}
+	\captionof{figure}{Datenfluss während eines Logins mit Refresh Token (Datenflussdiagramm)}
+\end{center}
 
-Ein Refresh-Token wird ausgestellt, da beide Token eine begrenzte Lebenszeit haben. Der Refresh-Token hat eine längere Lebenszeit und ermöglicht die erneute Ausstellung eines Access-Tokens ohne Angabe eines Nutzernamens und Passwortes.
+Ein Refresh-Token wird ausgestellt, da beide Token eine begrenzte Lebenszeit haben. Der Refresh-Token hat eine längere Lebenszeit und ermöglicht die erneute Ausstellung eines \\ Access-Tokens ohne Angabe eines Nutzernamens und Passwortes.
 
 Des Weiteren werden alle ausgestellten Token für die Dauer der Gültigkeit in der Redis-Datenbank gespeichert, um diese bei späteren Anfragen zu validieren. 
 
 \subsubsection{Authentifizierung}
-
-\includegraphics[width=\linewidth]{entwurf/gis/dfd-gis-role-token}
-\captionof{figure}{Datenfluss der Authentifizierung und Autorisierung (Datenflussdiagramm)}
+\begin{center}
+	\includegraphics[width=100mm]{entwurf/gis/dfd-gis-role-token}
+	\captionof{figure}{Datenfluss der Authentifizierung und Autorisierung (Datenflussdiagramm)}
+\end{center}
 
 Die Authentifizierung des Benutzers wird über die in \autoref{subsub:login} erwähnten Tokens realisiert. Die Tokens müssen vom Client bei jeder Anfrage mitgesendet werden und enthalten neben der Nutzerkennung weitere Informationen zu Berechtigungen. 
 
@@ -92,10 +97,8 @@ Dies reduziert die Anfragen an die Datenbank. Nachteil hierbei sind langsame Än
 Mit den im Token codierten Berechtigungen kann der Server die Autorisierung der vom Nutzenden angefragten Aktion durchführen.
 
 \paragraph{Tokenvalidierung}
-\mbox{}\\ % Damit die Grafik in der neuen Zeile angezeigt wird
-
 \begin{center}
-	\includegraphics{entwurf/gis/dfd-gis-token-validation}
+	\includegraphics[width=55mm]{entwurf/gis/dfd-gis-token-validation}
 	\captionof{figure}{Datenfluss während der Tokenvalidierung (Datenflussdiagramm)}
 \end{center}
 
@@ -104,8 +107,8 @@ Dazu erhalten diese einen Zeitstempel der Ausstellung und des Ablaufs und eine S
 
 \subsubsection{Registierung von GameClients}
 \begin{center}
-	\includegraphics{entwurf/gis/dfd-gis-registierung}
-	\captionof{figure}{Datenfluss der Authentifizierung und Autorisierung (Datenflussdiagramm)}
+	\includegraphics[width=100mm]{entwurf/gis/dfd-gis-registierung}
+	\captionof{figure}{Datenfluss der Registrierung (Datenflussdiagramm)}
 \end{center}
 
 Die teilnehmenden GameClients sollen aufgrund der Anforderung nicht länger fest in der Anwendung vorliegen, sondern dynamisch hinterlegt werden. Deshalb müssen die GameClients sich vor Spielstart registrieren.
@@ -117,11 +120,12 @@ Damit die Flags einzigartig sind, überträgt der GameClient einen Token bei der
 
 Die Idee, dass die Flaggenerierung nur auf dem Server stattfindet, wurde verworfen, da die nutzende Person auf dem Client die Möglichkeit hat die Flags bei der Übertragung abzufangen und abzugeben. Eine Verschlüsselung oder andere Verfahren würden keinen Mehrwert in puncto Sicherheit liefern, da die nutzende Person Root-Rechte auf ihrem System hat. Eine Verschlüsselung der Flags mit dem PGP-Verfahren bringt keinen wirklichen Mehrwert, daauf den vorhandene PGP-Key zugreifen werden kann. 
 
-\subsubsection{Flag-Abgabe}
+\subsubsection{Flagabgabe}
 
 Da die Flag Abgabe einen Hauptteil des Versuchs darstellt, müssen authentifizierte Spielende die auf dem eigenen oder gegnerischen System gefundene Flags abgeben können.
 
-Das GIS muss die abgegebene Flag auf Gültigkeit prüfen und entweder Offensiv- und Defensiv- oder Discoverpunkte verrechnen. Auch muss sichergestellt werden, dass eine Gruppe eine Flag nur einmal abgeben kann.
+Das GIS muss die abgegebene Flag auf Gültigkeit prüfen und entweder Offensiv- und \\
+Defensiv- oder Discoverpunkte verrechnen. Auch muss sichergestellt werden, dass eine Gruppe eine Flag nur einmal abgeben kann.
 
 Gruppen können alle eigenen Flags sowie gegnerische Flags, welche auf den GameClients verteilt sind, abgeben. Gegnerische Flagshop Flags können nicht abgegeben werden, da diese als nicht schützenswert betrachtet werden.
 
@@ -148,7 +152,8 @@ Dieser detaillierte Spielstand beinhaltet die Punkte aller teilnehmenden Gruppen
 
 \subsubsection{Steuerung der Services}
 
-Die betreuenden Personen des Versuchs, sollen die Möglichkeit erhalten einzelne Scan-Operationen zu (de-)aktivieren ohne, dass eine Änderung an der Software vorgenommen werden muss. Die Gewichtung der einzelnen Services soll jederzeit änderbar sein.
+Die betreuenden Personen des Versuchs, sollen die Möglichkeit erhalten einzelne \\
+Scan-Operationen zu (de-)aktivieren ohne, dass eine Änderung an der Software vorgenommen werden muss. Die Gewichtung der einzelnen Services soll jederzeit änderbar sein.
 
 \subsubsection{Einstellungen}
 
@@ -162,7 +167,7 @@ Studierende können die verfassten Notizen einsehen, um Hinweise oder Anweisunge
 
 \subsubsection{Flagshop}
 \begin{center}
-	\includegraphics[width=\linewidth]{entwurf/gis/dfd-gis-flagshop}
+	\includegraphics[width=120mm]{entwurf/gis/dfd-gis-flagshop}
 	\captionof{figure}{Datenfluss im Flagshop (Datenflussdiagramm)}
 \end{center}
 
@@ -176,7 +181,7 @@ Studierende können Flagshop-Pakete erwerben. Die Besonderheit hierbei soll sein
 
 \subsubsection{Challenges}
 \begin{center}
-	\includegraphics[width=\linewidth]{entwurf/gis/dfd-gis-challenge}
+	\includegraphics[width=110mm]{entwurf/gis/dfd-gis-challenge}
 	\captionof{figure}{Datenfluss der Challenges (Datenflussdiagramm)}
 \end{center}
 

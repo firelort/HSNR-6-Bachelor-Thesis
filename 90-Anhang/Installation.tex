@@ -2,13 +2,14 @@
 Beide Programme sind unter Zuhilfenahme des Versionsverwaltungssystems \textit{git} entwickelt worden und liegen derzeit auf der GitLab Instanz des Gemeinschaftslabors Informatik (GLI) des Fachbereiches Elektrotechnik und Informatik der Hochschule Niederrhein. Sie sind im zugangsbeschränkten Repository \textit{Its2}, erreichbar über\\ \textit{https://gl.kr.hsnr.de/ezslabor/abschlussarbeiten/its2}, abgelegt.
 
 Um die Anwendung nutzen zu können, muss das Repository heruntergeladen werden.
-Dazu kann dieses als zip- oder tar-Archiv mithilfe der Weboberfläche oder unter Verwendung von \textit{git clone} heruntergeladen werden. Die Methode \textit{git clone} ist zu bevorzugen, da so Änderungen leichter herunter- oder hochgeladen werden können.
+Dazu kann dieses als ZIP- oder TAR-Archiv mithilfe der Weboberfläche oder unter Verwendung von \textit{git clone} heruntergeladen werden. Die Methode \textit{git clone} ist zu bevorzugen, da so Änderungen leichter herunter- oder hochgeladen werden können.
 
 \begin{lstlisting}[language=bash, caption={git clone (bash)}, captionpos=b, label={lst:git-clone}]
 $ git clone https://gl.kr.hsnr.de/ezslabor/abschlussarbeiten/its2.git
 \end{lstlisting}
 
-Zur einfachen Nutzung der Anwendung ist im Repository neben einer \textit{docker-compose.yaml} Datei auch ein \textit{Makefile} angelegt. Die \textit{docker-compose.yaml} Datei sorgt sich um das Zusammenspiel sowie die Konfiguration der einzelnen Container. Falls die Dockerimages für Big Brother oder GIS nicht vorhanden sein sollten, werden diese automatisch erzeugt. Dieses funktioniert nur, wenn die Ordner- und Dateistruktur nicht verändert wird.
+Zur einfachen Nutzung der Anwendung ist im Repository neben einer \\
+\textit{docker-compose.yaml} Datei auch ein \textit{Makefile} angelegt. Die \textit{docker-compose.yaml} Datei sorgt sich um das Zusammenspiel sowie die Konfiguration der einzelnen Container. Falls die Dockerimages für Big Brother oder GIS nicht vorhanden sein sollten, werden diese automatisch erzeugt. Dieses funktioniert nur, wenn die Ordner- und Dateistruktur nicht verändert wird.
 
 In der \textit{docker-compose.yaml} Datei ist darauf zu achten, dass Docker Socket in die Anwendung übergeben wird, da ansonsten die Steuerung des Scanners fehlschlägt.
 

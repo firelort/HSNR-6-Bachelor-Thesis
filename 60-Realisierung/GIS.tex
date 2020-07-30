@@ -66,7 +66,7 @@ class Backup(db.Model):
 
 Auch implementieren die ORM-Modelle eine Klassenmethode über die Objekte anhand von bestimmten Informationen aus der Datenbank abgerufen werden können. Alternativ könnte anstatt der Verwendung der \textit{get}-Methode auch die \textit{query}-Methode aus der Basis-Klasse \textit{Model} verwendet werden. Dies wurde aus Konsistenzgründen und der häufigen Nutzung im Quellcode nicht verwendet.
 
-\begin{lstlisting}[language=bash, frame=single, caption={GIS Beispiel einer Get-Methode des ORM Models}, captionpos=b, label={lst:gis-orm-model}]
+\begin{lstlisting}[language=bash, frame=single, caption={GIS Beispiel einer Get-Methode des ORM Models}, captionpos=b, label={lst:gis-orm-model-get}]
 class Backup(db.Model):
 @classmethod
 def get(cls, id: int = None, select_all: bool = False):
@@ -87,7 +87,7 @@ Für das Passworthashing wird der Algorithmus \textit{bcrypt} verwendet, da dies
 
 Die verwendeten Rounds bei der Erstellung des bcrypt-Passworthash mussten von 15 auf 10 gesetzt werden, da andernfalls ein Import der Hackit-Zugangsdaten mindestens 5 Minuten gedauert hätte.
 
-\begin{lstlisting}[language=bash, frame=single, caption={GIS Nutzerpasswort}, captionpos=b, label={lst:gis-orm-model}]
+\begin{lstlisting}[language=bash, frame=single, caption={GIS Nutzerpasswort}, captionpos=b, label={lst:gis-orm-user-pw-hash}]
 class User(db.Model):
 ...
 _password = db.Column('password', db.String, nullable=False)
@@ -292,7 +292,7 @@ if flag.group_id != group_id and flag.usage != "on_client":
 
 Sollten fremde Flags während der Discover-Zeit abgegeben werden, bestraft das System die abgebende Gruppe für ihr regelverletzendes Verhalten automatisch. Die Flag muss von der Gruppe nach Start der Attack-Time erneut abgegeben werden, um Punkte für diese zu erhalten.
 
-\begin{lstlisting}[language=Python, frame=single, caption={GIS Strafe für abgeben fremder Flags}, captionpos=b, label={lst:gis-delete-all-players}]
+\begin{lstlisting}[language=Python, frame=single, caption={GIS Strafe für abgeben fremder Flags}, captionpos=b, label={lst:gis-flag-penatly}]
 if game_status_setting.value == "discover" and flag.group_id != group_id:
   penalty = Penalty(reason="Submitted an alien flag during discovery", points=penalty_points,
   group_id=group.id)
