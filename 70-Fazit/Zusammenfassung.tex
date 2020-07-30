@@ -1,7 +1,7 @@
 \section{Zusammenfassung}
-Diese Arbeit hat sich mit dem Entwurf und der Realisierung eines Capture the Flag Core Systems beschäftigt. Ziel dieser Arbeit war ein System zu erschaffen, das im Rahmen des zweiten Praktikumsversuchs der Lehrveranstaltung IT-Sicherheit an der Hochschule Niederrhein eingesetzt werden kann. Es soll das bestehende Überwachungs- und Auswertungssystem ersetzen. Das CTF Core Sytem soll die gleichen Basisfunktionalitäten wie das alte System besitzen und ein Spiel für mehr als 8 Gruppen ermöglichen.
+Diese Arbeit hat sich mit dem Entwurf und der Realisierung eines Capture the Flag Core Systems beschäftigt. Ziel dieser Arbeit war es ein System zu erschaffen, das im Rahmen des zweiten Praktikumsversuchs der Lehrveranstaltung IT-Sicherheit an der Hochschule Niederrhein eingesetzt werden kann. Es soll das bestehende Überwachungs- und Auswertungssystem ersetzen. Das CTF Core Sytem soll die gleichen Basisfunktionalitäten wie das vorherige System besitzen und ein Spiel für mehr als 8 Gruppen ermöglichen.
 
-Durch die Lehrveranstaltung und die Ausstattung des EZS-Labors -- da der Versuch eben in diesem durchgeführt wird -- wurde ein Rahmen für das zu konzipierende System gegeben.
+Durch die Lehrveranstaltung und die Ausstattung des EZS-Labors -- in dem der Versuch durchgeführt wird -- wurde ein Rahmen für das zu konzipierende System gegeben.
 Die funktionalen Anforderungen, die mindestens implementiert werden sollten, wurden vom bestehenden System vorgegeben.
 
 Zu diesen gehörten:
@@ -15,9 +15,9 @@ Zu diesen gehörten:
 	\item Challegnes
 \end{itemize}
 
-Die Scans der GameClients wurde übernommen und in atomare Scan-Operationen \\ geteilt. Jede Scan-Operation prüft genau eine Schwachstelle oder einen Dienst.
+Die Scans der GameClients wurden übernommen und in Scan-Operationen untergliedert. Jede Scan-Operation prüft genau eine Schwachstelle oder einen Dienst.
 
-Die Scan-Operationen bestehen auszugsweise aus den Prüfung von:
+Die Scan-Operationen bestehen auszugsweise aus den Prüfungen von:
 \begin{itemize}
 	\item GameClient erreichbar
 	\item HTTP-Dienst erreichbar
@@ -28,25 +28,25 @@ Die Scan-Operationen bestehen auszugsweise aus den Prüfung von:
 	\item Telnet deaktiviert
 \end{itemize}
 
-Die Scan-Operationen werden von einem Scanner parallel abgearbeitet. Jede Gruppe wird genau von einem parallel laufenden Scanner überwacht. Nach einer Scan-Runde wird eine durch die betreuenden Personen festgelegte Zeit gewartet, bevor eine neue Runde gestartet wird.
+Die einzelnen Scan-Operationen werden von einem Scanner parallel abgearbeitet. Pro Gruppe wird ein parallel laufender Scanner zur Überwachung gestartet. Nach einer Scan-Runde wird eine durch die betreuenden Personen festgelegte Zeit gewartet, bevor eine neue Runde gestartet wird.
 
-Die Ergebnisse werden in der Datenbank für die Auswertung festgehalten und durch eine Reihe von Views werden die Punkte berechnet. Die Gewichtung der einzelnen Scan-Operation kann durch die betreuenden Personen individuell eingestellt werden.
+Die Ergebnisse werden in der Datenbank für die Auswertung festgehalten und durch eine Reihe von Views als Punkte berechnet. Die Gewichtung der einzelnen Scan-Operationen kann durch die betreuenden Personen individuell eingestellt werden.
 
 Neben den Diensten sollen die Studierenden eigene Flags schützen und fremde abgreifen.
-Flags stellen geheime Informationen dar und sind eindeutige Strings, welche durch ein hashing eines Seeds mit einem Hash-Algorithmus entstehen. Sie werden bei der Registrierung eines GameClients am GIS erstellt.
+Flags stellen geheime Informationen dar und sind eindeutige Strings, welche durch das Hashing eines Seeds mit einem Hash-Algorithmus entstehen. Sie werden bei der Registrierung eines GameClients am GIS erstellt.
 Derzeitig wird der \textit{md5}-Algorithmus verwendet und der Seed setzt sich aus Token + IP-Adresse der Gruppe + Geheimnis + Zähler zusammen.
 
-Eine Abgabe von Flags ist über die in der Komponente Game Information System implementierte REST-Schnittstelle für angemeldete Studierende möglich. Die Gültigkeit der abgegebenen Flags wird mithilfe der vorliegenden Flags validiert. Eine Abgabe wird nur innerhalb der vorgesehen Zeiten akzeptiert. Eventuelle Regelverstöße werden mit Strafpunkten geahndet.
+Eine Abgabe von Flags ist über die in der Komponente Game Information System implementierte REST-Schnittstelle für angemeldete Studierende möglich. Die Gültigkeit der abgegebenen Flags wird mithilfe der vorliegenden Flags validiert. Eine Abgabe wird nur innerhalb der vorgesehenen Zeiten akzeptiert. Eventuelle Regelverstöße werden mit Strafpunkten geahndet.
 
 Neben der Abgabe ermöglicht die REST-Schnittstelle den betreuenden Personen das Spiel zu verwalten und zu steuern. Es unterstützt spielende und betreuende Personen, indem es den durch die Datenbank berechneten Spielstand inklusive der einfließenden Punkte anzeigt.
 
-Die Schnittstelle stellt aber auch eine Flagshop, indem mit einem Flagshop-Account weitere Flags gekauft werden können, und Challenges zur Verfügung.
+Die Schnittstelle stellt auch einen Flagshop, in dem mit einem Flagshop-Account weitere Flags gekauft werden können, und Challenges zur Verfügung.
 
-Die Komponenten werden containerisiert um die Verwaltung zu erleichtern und eine Portierbarkeit zu ermöglichen.
+Die Komponenten werden containerisiert, um die Verwaltung zu erleichtern und eine Portierbarkeit des Core Systems auf andere Computer zu ermöglichen.
 
 Nach Aufschlüsselung verfügbarer Technologien, wurde für das Backend \textit{Flask}, für die Datenbank \textit{PostgreSQL} und für das Frontend \textit{React} gewählt.
 
-Die Komponente der Weboberfläche (Frontend) konnte aus Zeitgründen nicht fertig gestellt werden und liegt deshalb nur im Entwurf vor.
+Die Komponente der Weboberfläche (Frontend) konnte aus Zeitgründen nicht umgesetzt werden und liegt deshalb nur im Entwurf vor.
 
 
 

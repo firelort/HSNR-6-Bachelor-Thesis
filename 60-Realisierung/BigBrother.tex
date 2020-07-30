@@ -2,9 +2,9 @@
 
 Im Folgenden wird die Implementierung des Scanners namens Big Brother beschrieben.
 
-Für die Realisierung wurde die Programmiersprache Python gewählt, da diese bereits im Game Information System eingesetzt wird und zum anderen in der Lehre der Hochschule Niederrhein vorkommt. Eine Programmierung in beispielsweise C oder C++ wäre auch denkbar gewesen, wurde aber aufgrund der unterschiedlichen Konventionen zwischen C und Python nicht gewählt.
+Für die Realisierung wurde die Programmiersprache Python gewählt, da diese bereits im Game Information System eingesetzt wird und zum anderen in der Lehre der Hochschule Niederrhein vorkommt. Eine Programmierung in beispielsweise C oder C++ wäre auch denkbar gewesen, wurde aber aufgrund der unterschiedlichen Syntaxen zwischen C und Python nicht gewählt.
 
-Big Brother baut zu Beginn eine Verbindung mithilfe der in der Konfiguration (\autoref{lst:anhang-bigbrother-config-example}) hinterlegten Informationen zur Datenbank auf. In der Datenbank befinden sich die Daten, welche von Big Brother und dem GIS gemeinsam genutzt werden. Diese sind beispielsweise für Big Brother die auszuführende Aufgabe und die zu überwachenden GameClients und für das GIS das Ergebnis der Scans.
+Big Brother baut zu Beginn eine Verbindung mithilfe der in der Konfiguration (\autoref{lst:anhang-bigbrother-config-example}) hinterlegten Informationen zur Datenbank auf. In der Datenbank befinden sich die Daten, welche von Big Brother und dem GIS gemeinsam genutzt werden. Diese sind beispielsweise für Big Brother die auszuführende Aufgabe und die zu überwachenden GameClients und für das GIS die Ergebnisse der Scans.
 
 Um die Verbindung zur PostgreSQL Datenbank aufzubauen, wird das Python-Paket \textit{psycopg2} verwendet. Dieses dient als Adapter zwischen PostgreSQL Datenbanken und Python Programmen. 
 
@@ -53,15 +53,15 @@ cursor.execute(f"INSERT INTO {SETTING_TABLE_NAME}(key, value) VALUES ('{default_
 
 
 \subsection{Implementierung der Scan-Operations}
-Die im alten System vorhandene Überwachung ist in der Programmiersprache PHP implementiert und wurden im Rahmen dieser Arbeit in das Python-Programm überführt.
+Die im alten System vorhandene Überwachung ist in der Programmiersprache PHP implementiert und wurde im Rahmen dieser Arbeit in das Python-Programm überführt.
 
-Die verschiedenen Aufgaben der Überwachung wurden, wie im Entwurf ausgearbeitet, in einzelne sogenannte Scan-Operationen getrennt. Diese soll das Verständnis fördern und den Aufwand einer Wartung reduzieren. Durch diesen Ansatz können einzelne Scan-Operationen leichter ersetzt oder verändert werden. Außerdem ist es so möglich neue Scan-Operationen zu integrieren.
+Die verschiedenen Aufgaben der Überwachung wurden, wie im Entwurf ausgearbeitet, in einzelne sogenannte Scan-Operationen getrennt. Dies soll das Verständnis fördern und den Aufwand einer Wartung reduzieren. Durch diesen Ansatz können einzelne Scan-Operationen leichter ersetzt oder verändert werden. Außerdem ist es so möglich, leichter neue Scan-Operationen zu integrieren.
 
 \subsubsection{Basisklasse der Scan-Operationen}
 
-Alle implementierten Klassen werden von der Basisklasse \textit{AbstractScanOperation} abgeleitet. Diese wird selbst von der in Python implementierten abstrakten Basisklassen \textit{ABC} abgeleitet.
+Alle implementierten Klassen werden von der Basisklasse \textit{AbstractScanOperation} abgeleitet. Diese wird selbst von der in Python implementierten abstrakten Basisklasse \textit{ABC} abgeleitet.
 
-In der Basisklasse \textit{AbstractScanOperation} wird die Funktion \textit{\_is\_port\_open} implementiert. Mithilfe dieser kann geprüft werden, ob ein bestimmter Port auf einem Rechner geöffnet ist. Hierzu wird eine Socket-Verbindung mit der Bibliothek \textit{socket} zu dem Rechner gestartet. Schlägt die Verbindung fehl, ist der Port auf dem Rechner geschlossen.
+In der Basisklasse \textit{AbstractScanOperation} wird die Funktion \textit{\_is\_port\_open} implementiert. Mithilfe dieser kann geprüft werden, ob ein bestimmter Port auf einem Rechner geöffnet ist. Hierzu wird eine Socket-Verbindung mit der Bibliothek \textit{socket} zu dem Rechner gestartet. Schlägt die Verbindung fehl, wird angenommen das der Port auf dem Rechner geschlossen ist.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother Funktion is\_port\_open}, captionpos=b, label={lst:bigbrother-port-open}]
 try:
@@ -82,9 +82,9 @@ Des Weiteren definiert die Basisklasse die abstrakte Funktion \textit{start}, we
 
 Die Ergebnisse der Scan-Operationen werden ebenfalls einheitlich im privaten Attribut \textit{\_result} abgespeichert. Das Ergebnis kann über das getter-Property \textit{result} abgerufen werden. Zum Abruf des Internen- und des Anzeigenamens werden ebenfalls getter-Properties eingesetzt. 
 
-Durch die Nutzung einer Art getter-Methode wird sichergestellt, dass keine Änderungen an dem privaten Attribut durchgeführt werden können. Mithilfe des in Python vorhandenen Property Decoratores kann die getter Methode als Variable und nicht als Funktion verwendet werden.
+Durch die Nutzung einer Art getter-Methode wird anderen Entwickelnden mitgeteilt, dass keine Änderungen an dem privaten Attribut durchgeführt werden sollen. Mithilfe des in Python vorhandenen Property Decoratores kann die getter Methode als Variable und nicht als Funktion verwendet werden.
 
-\begin{lstlisting}[language=Python, frame=single, caption={Big Brother Ergebniss getter-Property}, captionpos=b, label={lst:bigbrother-getter-result}]
+\begin{lstlisting}[language=Python, frame=single, caption={Big Brother Ergebnis Getter-Property}, captionpos=b, label={lst:bigbrother-getter-result}]
 @property
 def result(self) -> bool:
 	return self._result
@@ -93,7 +93,7 @@ def result(self) -> bool:
 \subsubsection{Host}
 In der HostUp-Operation wird geprüft, ob der entfernte Rechner erreichbar ist. Hierfür wird ein einfaches ICMP-Paket (Ping) gesendet. Wird eine Antwort auf das ICMP-Paket empfangen, ist der entfernte Rechner erreichbar.
 
-Hierfür wird die Python Bibliothek \textit{ping3} genutzt. Diese stellt ähnlich der \textit{\_is\_port\_open} ein Socketverbindung her. Die Besonderheit ist, dass statt einem TCP-Paket ein ICMP-Paket versendet wird. Da die Erstellung eines ICMP-Paketes nicht ohne Root-Rechte funktioniert, benötigt das Programm eben diese.
+Hierfür wird die Python Bibliothek \textit{ping3} genutzt. Diese stellt ähnlich der \textit{\_is\_port\_open} eine Socketverbindung her. Die Besonderheit ist, dass statt einem TCP-Paket ein ICMP-Paket versendet wird. Da die Erstellung eines ICMP-Paketes nicht ohne Root-Rechte funktioniert, benötigt das Programm eben diese.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother HostUp Ping}, captionpos=b, label={lst:bigbrother-host-up}]
 def start(self) -> None:
@@ -104,7 +104,7 @@ else:
 	self._result = True
 \end{lstlisting}
 
-Für das Versenden eines ICMP-Paketes hätte auch  die in Linux implementierte ping-Funktion per syscall verwendet werden können. Diese Alternative wurde nicht gewählt, da das Programm unabhängig vom unterliegenden Betriebssystem sein soll.
+Für das Versenden eines ICMP-Paketes hätte auch  die in Linux implementierte ping-Funktion per Syscall verwendet werden können. Diese Alternative wurde nicht gewählt, da das Programm unabhängig vom unterliegenden Betriebssystem sein soll.
  
 \subsubsection{Bubble und Bubble-Ng}
 Für die beiden Bubble Scan-Operationen wurde eine extra Klasse geschaffen, die eine Funktion bereitstellt, um die Erreichbarkeit des Bubble-Servers zu prüfen. Diese Klasse wurde geschaffen, da sich die beiden Scan-Operationen nur minimal voneinander unterscheiden.
@@ -130,7 +130,7 @@ def start(self) -> None:
 	self._result = self._is_bubble_port_up()
 \end{lstlisting} 
 
-Die eigentlichen Scan-Operation \textit{BubbleUp} und \textit{BubbleNgUp} setzen in der Konfiguration der abstrakten Klasse jeweils den zu prüfenden Port. Derzeitig läuft auf den GameClients auf Port \textit{12321} der Bubble- und auf Port \textit{12322} der BubbleNg-Server.
+Die eigentlichen Scan-Operationen \textit{BubbleUp} und \textit{BubbleNgUp} setzen in der Konfiguration der abstrakten Klasse jeweils den zu prüfenden Port. Derzeitig läuft auf den GameClients auf Port \textit{12321} der Bubble- und auf Port \textit{12322} der BubbleNg-Server.
 \subsubsection{Web}
 
 Die Scan-Operationen \textit{ScanHttpUpOperation} und \textit{ScanHttpsUpOperation} unterscheiden sich nur im zu prüfenden Port. Beide nutzen zur Überprüfung des überwachten Dienstes die von der Basisklasse bereitgestellten Funktion \textit{\_is\_port\_open(PORT)}.
@@ -142,7 +142,7 @@ def start(self) -> None:
 	self._result = result
 \end{lstlisting} 
 
-Die gegenwärtig Implementierung könnte ähnlich der Bubble Implementierung verändert werden, sodass für die HTTP-Dienste ebenfalls eine abstrakte Klasse definiert wird. Da im Gegensatz aber keine extra Funktion wie \textit{\_is\_bubble\_port\_up()} benötigt wird, ist von der Realisierung einer allgemeinen HTTP-Klasse abgesehen worden.
+Die gegenwärtige Implementierung könnte ähnlich der Bubble Implementierung verändert werden, sodass für die HTTP-Dienste ebenfalls eine abstrakte Klasse definiert wird. Da im Gegensatz aber keine extra Funktion wie \textit{\_is\_bubble\_port\_up()} benötigt wird, ist von der Realisierung einer allgemeinen HTTP-Klasse abgesehen worden.
 
 \subsubsection{FTP}
 In der FTP Scan-Operation soll gepürft werden, ob der FTP-Server nutzbar und nicht mit anoymen Login verwendbar ist. Dazu wird mit der Python Bibliothek \textit{ftplib} eine Verbindung zum FTP-Server ohne Angabe von Nutzerdaten aufgebaut. Ist die Verbindung erfolgreich, wurde der Dienst durch die Studierenden nicht abgesichert. Sollte die Verbindung fehlerhaft sein, wird angenommen, dass der Dienst nicht zur Verfügung steht. 
@@ -166,7 +166,7 @@ def start(self) -> None:
 
 \subsubsection{SQL-Injection}
 
-Bei dieser Scan-Operation müssen zwei Dinge geprüft werden. Erstens muss sichergestellt werden, dass die Seite mit der SQL-Injection erreichbar ist. Zweitens muss geprüft werden, ob die SQL-Injection behoben worden ist. 
+Bei dieser Scan-Operation müssen zwei Dinge geprüft werden. Erstens muss sichergestellt werden, dass die Webseite mit der SQL-Injection erreichbar ist. Zweitens muss geprüft werden, ob die SQL-Injection behoben worden ist. 
 
 Die Erreichbarkeit muss geprüft werden, da ansonsten bei der Prüfung der SQL-Injection fehlerhafte Ergebnisse produziert werden, wenn die Seite nicht erreichbar ist.
 
@@ -217,7 +217,7 @@ def start(self) -> None:
 \subsubsection{XSS}
 Bei der XSS Scan-Operation wird geprüft, ob das Bewertungsformular auf den GameClients weiterhin für XSS-Angriffe offen ist.
 
-Hierzu werden anstatt einer realer Bewertung der Name und die Bewertung mit JavaScript ersetzt und an den Server gesendet. Sollte das gesendete JavaScript ungefiltert in das HTML-Dokument übernommen werden, wurde die XSS-Schwachstelle nicht behoben.
+Hierzu werden anstatt einer realen Bewertung der Name und die Bewertung mit JavaScript ersetzt und an den Server gesendet. Sollte das gesendete JavaScript ungefiltert in das HTML-Dokument übernommen werden, wurde die XSS-Schwachstelle nicht behoben.
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother XSS Save}, captionpos=b, label={lst:bigbrother-xss-save}]
 def start(self) -> None:
   try:
@@ -244,7 +244,7 @@ def _is_telnet_up(self) -> bool:
 	return self._is_port_open(23)
 \end{lstlisting}
 
-Die eigentliche Scan-Operation ruft nur die Hilfsfunktion auf und speichert das invertierte Ergebnis ab, da die Studierenden den Telnet Server abstellen sollen.
+Die eigentliche Scan-Operation ruft nur die Hilfsfunktion auf und speichert das invertierte Ergebnis ab, da die Studierenden den Telnet-Server abschalten sollen.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother Telnet}, captionpos=b, label={lst:bigbrother-telnet-start}]
 def start(self) -> None:
@@ -309,15 +309,15 @@ def start(self) -> None:
 In der Datei \textit{modules/helper/constant.py} sind Variablen abgelegt, welche sich selten bis gar nicht ändern. Diese sind deshalb auch nicht in die Einstellungen übernommen worden.
 
 Zu diesen Variablen zählen die Namen der benutzen Datenbanktabellen und Standardeinstellungen.
-Sollte beispielsweise in der Datenbank eine Tabelle umbenannt worden sein, kann diese Änderung in der Datei vollzogen werden. Durch diese Vorgehensweise muss die Änderung nicht manuell im Code geschehen.
+Sollte beispielsweise in der Datenbank eine Tabelle umbenannt worden sein, kann diese Änderung in der Datei vollzogen werden. Durch diese Vorgehensweise muss die Änderung nicht manuell im nutzenden Code geschehen.
 
 \subsubsection{Konfiguration}
 
-Die Konfiguration in der Datei (\textit{modules/config/config.py}) beinhaltet die Verbindungsdaten zur Datenbank, die Meldeadresse des GIS sowie Einstellungen und Daten für die verschiedenen Scan-Operationen.
+Die Konfiguration in der Datei (\textit{modules/config/config.py}) beinhaltet die Verbindungsdaten zur Datenbank, die URL des GIS an die erfolgreiche Scans gemeldet werden sollen sowie Einstellungen und Daten für die verschiedenen Scan-Operationen.
 
 Die Standardkonfiguration ist sowohl im Anhang (\ref{lst:anhang-bigbrother-config-example}) als auch im Big Brother Repository vorhanden.
 
-Einstellungen, die sich meiner Meinung nach häufiger änderen, sind in der Datenbanktabelle \textit{settings} abgelegt, damit diese durch das Hochschulpersonal leichter verändert werden können.
+Einstellungen, die sich meiner Meinung nach häufiger ändern, sind in der Datenbanktabelle \textit{settings} abgelegt, damit diese durch das Hochschulpersonal leichter verändert werden können.
 
 \subsection{Implementierung der Scan-Funktion}
 
@@ -325,7 +325,7 @@ Die eigentliche Scan-Funktion wird mithilfe der Klasse \textit{ScanGuard} implem
 
 Der ScanGuard legt für jede Gruppe ein Objekt der Klasse \textit{Scanner} mit den benötigten Informationen wie IP, aktive Scan-Operationen und Einstellungen an.
 
-Danach wird in einer Endlosschleife der nächste Scan-Zeitpunkt errechnet und im folgenden alle Scanner nebenläufig mit der Bibliothek \textit{concurrent} gestartet. Im Anschluss wird auf die Beendigung der Scanner sowie das Erreichen des nächsten Scan-Zeitpunktes gewartet.
+Danach wird in einer Endlosschleife der nächste Scan-Zeitpunkt errechnet und im folgenden alle Scanner parallel mit der Bibliothek \textit{concurrent} gestartet. Im Anschluss wird auf die Beendigung der Scanner sowie das Erreichen des nächsten Scan-Zeitpunktes gewartet.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother ScanGaurd}, captionpos=b, label={lst:bigbrother-scanguard}]
 while not self._stop_scanning:
@@ -346,7 +346,7 @@ Das Signal für die Beendigung des Programms wird abgefangen, damit die Endlossc
 \subsection{Implementierung eines Scanners}
 Bei der Erzeugung eines Objektes der Klassse \textit{Scanner} werden von allen benötigten Scan-Operationen Objekte angelegt.
 
-Wie im Quellcode \autoref{lst:bigbrother-scanner} wird beim Starten eines Scanners anfangs geprüft, ob der entfernter Rechner erreichbar ist. Sollte der entfernte Rechner nicht erreichbar sein, werden keine weiteren Scan-Operationen durchgeführt. Im Anschluss wird noch sequentiell geprüft, ob der HTTP-Dienst erreichbar ist. Ist er erreichbar, werden die Scan-Operationen, die einen funktionieren HTTP-Dienst voraussetzen, der Liste der durchzuführenden Scan-Operationen hinzugefügt.
+Wie im Quellcode \autoref{lst:bigbrother-scanner} wird beim Starten eines Scanners anfangs geprüft, ob der entfernte Rechner erreichbar ist. Sollte der entfernte Rechner nicht erreichbar sein, werden keine weiteren Scan-Operationen durchgeführt. Im Anschluss wird noch sequentiell geprüft, ob der HTTP-Dienst erreichbar ist. Ist er erreichbar, werden die Scan-Operationen, die einen funktionierenden HTTP-Dienst voraussetzen, der Liste der durchzuführenden Scan-Operationen hinzugefügt.
 
-Danach werden die restlichen Scan-Operationen nebenläufig gestartet. Nachdem alle Scan-Operationen abgeschlossen sind, wird das Ergebnis ausgewertet und in der Datenbank festgehalten. Hierzu wird die Anzahl der durchgeführten Scans und bei Erfolg auch die Anzahl der erfolgreichen Scans um eins inkrementiert. Außerdem wird der Zeitpunkt des Scans sowie der Erfolg vermerkt.
+Danach werden die restlichen Scan-Operationen parallel gestartet. Nachdem alle Scan-Operationen abgeschlossen sind, wird das Ergebnis ausgewertet und in der Datenbank festgehalten. Hierzu wird die Anzahl der durchgeführten Scans und bei Erfolg auch die Anzahl der erfolgreichen Scans um eins inkrementiert. Außerdem wird der Zeitpunkt des Scans sowie der Erfolg/Misserfolg vermerkt.
 
