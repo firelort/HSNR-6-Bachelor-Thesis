@@ -1,32 +1,53 @@
 \section{Zusammenfassung}
-todo:
+Diese Arbeit hat sich mit dem Entwurf und der Realisierung eines Capture the Flag Core Systems beschäftigt. Ziel dieser Arbeit war ein System zu erschaffen, das im Rahmen des zweiten Praktikumsversuchs der Lehrveranstaltung IT-Sicherheit an der Hochschule Niederrhein eingesetzt werden kann. Es soll das bestehende Überwachungs- und Auswertungssystem ersetzen. Das CTF Core Sytem soll die gleichen Basisfunktionalitäten wie das alte System besitzen und ein Spiel für mehr als 8 Gruppen ermöglichen.
 
-Diese Arbeit hat sich mit dem Entwurf und der Realisierung eines Capture the Flag Core Systems beschäftigt. Das System soll im Rahmen des zweiten Praktikumsversuchs der Lehrveranstaltung IT-Sicherheit an der Hochschule Niederrhein eingesetzt werden. Es ersetzt das bestehende Überwachungs- und Auswertungssystem.
+Durch die Lehrveranstaltung und die Ausstattung des EZS-Labors -- da der Versuch eben in diesem durchgeführt wird -- wurde ein Rahmen für das zu konzipierende System gegeben.
+Die funktionalen Anforderungen, die mindestens implementiert werden sollten, wurden vom bestehenden System vorgegeben.
 
-Das Capture the Flag Core System besteht aus zwei Komponenten: Big Brother und Game Information System. Die Komponente Big Brother implementiert einen Scanner, der zur Überwachung der GameClients benötigt wird. In der Komponente Game Information System befindet sich die Implementierung einer REST-Schnittstelle, die zur Verwaltung und Durchführung des Spieles verwendet wird.
+Zu diesen gehörten:
+\begin{itemize}
+	\item Scan der GameClients
+	\item Flaggenerierung zur Prüfung der Flags
+	\item Flagabgabe inklusive der Verrechnung
+	\item Verwaltung des Spiels
+	\item Ansicht des Spielstatus
+	\item Flagshop
+	\item Challegnes
+\end{itemize}
 
-In \autoref{chap:Einleitung} wurde zuerst die Bedeutung und Herausforderungen des Themas IT Sicherheit herausgestellt. Folgend wurde der Versuch \textquote{Catch me, if you can} skizziert.
+Die Scans der GameClients wurde übernommen und in atomare Scan-Operationen geteilt. Jede Scan-Operation prüft genau eine Schwachstelle oder einen Dienst.
 
-Des Weiteren wurde die Aufgabenstellung dieser Arbeit erläutert.
+Die Scan-Operationen bestehen auszugsweise aus den Prüfung von:
+\begin{itemize}
+	\item GameClient erreichbar
+	\item HTTP-Dienst erreichbar
+	\item Bubble(-NG)-Server beantwortet definierten Befehl
+	\item XSS im Bewertungsformular behoben
+	\item Login nutzbar und SQL-Injection behoben
+	\item Anonymer Login des FTP-Servers abgeschaltet
+	\item Telnet deaktiviert
+\end{itemize}
 
-Im \autoref{chap:Analyse} werden die Voraussetzungen für die CTF-Software herausgearbeitet. Zu diesen zählen die Begebenheiten im Labor, der Aufbau der Lehrveranstaltung und die aus dem alten System zu übernehmenden Funktionen.
+Die Scan-Operationen werden von einem Scanner parallel abgearbeitet. Jede Gruppe wird genau von einem parallel laufenden Scanner überwacht. Nach einer Scan-Runde wird eine durch die betreuenden Personen festgelegte Zeit gewartet, bevor eine neue Runde gestartet wird.
 
-Am Ende des Kapitels wurden Anforderungen abgeleitet, welche bei dem Entwurf und der Realisierung des neuen Systems beachtet werden mussten.
+Die Ergebnisse werden in der Datenbank für die Auswertung festgehalten und durch eine Reihe von Views werden die Punkte berechnet. Die Gewichtung der einzelnen Scan-Operation kann durch die betreuenden Personen individuell eingestellt werden.
 
-In \autoref{chap:Entwurf} wurden die beiden Softwarekomponenten sowie eine Datenbank anhand der Anforderungen und der gesetzten Ziele entworfen. Auch wurden Gründe für die Nutzung der Containieriserung dargestellt. 
+Neben den Diensten sollen die Studierenden eigene Flags schützen und fremde abgreifen.
+Flags stellen geheime Informationen dar und sind eindeutige Strings, welche durch ein hashing eines Seeds mit einem Hash-Algorithmus entstehen. Sie werden bei der Registrierung eines GameClients am GIS erstellt.
+Derzeitig wird der \textit{md5}-Algorithmus verwendet und der Seed setzt sich aus Token + IP-Adresse der Gruppe + Geheimnis + Zähler zusammen.
 
-Der Entwurf macht keine Einschränkungen in puncto verwendeter Softwares, da diese im nächsten Kapitel (\ref{chap:Technologien}) dargestellt und verglichen werden.
+Eine Abgabe von Flags ist über die in der Komponente Game Information System implementierte REST-Schnittstelle für angemeldete Studierende möglich. Die Gültigkeit der abgegebenen Flags wird mithilfe der vorliegenden Flags validiert. Eine Abgabe wird nur innerhalb der vorgesehen Zeiten akzeptiert. Eventuelle Regelverstöße werden mit Strafpunkten geahndet.
 
-In \autoref{chap:Technologien} wurden verschiedene Technologien für die Realisierung des Backends, der Datenbank und des Frontends vorgestellt. Anhand der vorliegen Informationen wurde eine Technologie für die Realisierung gewählt.
+Neben der Abgabe ermöglicht die REST-Schnittstelle den betreuenden Personen das Spiel zu verwalten und zu steuern. Es unterstützt spielende und betreuende Personen, indem es den durch die Datenbank berechneten Spielstand inklusive der einfließenden Punkte anzeigt.
 
-In \autoref{chap:Realisierung} werden das Game Information System, Big Brother und die Datenbank auf Grundlage des Entwurfs sowie der ausgesuchten Technologien implementiert. Hierbei wurde auf verschieden Features und Besonderheiten eingegangen. Das Kapitel wurde untergliedert, um die unabhängigen Komponenten einzelnen zu erläutern.
+Die Schnittstelle stellt aber auch eine Flagshop, indem mit einem Flagshop-Account weitere Flags gekauft werden können, und Challenges zur Verfügung.
 
-Im \autoref{sec:Ausblick} wird auf mögliche Änderungen und Erweiterungen der im Rahmen des Versuches eingesetzten Softwares eingegangen.
+Die Komponenten werden containerisiert um die Verwaltung zu erleichtern und eine Portierbarkeit zu ermöglichen.
 
-Eine Installations- und Bedingungsanleitung befindet sich im Anhang.
+Nach Aufschlüsselung verfügbarer Technologien, wurde für das Backend \textit{Flask}, für die Datenbank \textit{PostgreSQL} und für das Frontend \textit{React} gewählt.
 
-Inhalte der Arbeit.
+Die Komponente der Weboberfläche (Frontend) konnte aus Zeitgründen nicht fertig gestellt werden und liegt deshalb nur im Entwurf vor.
 
-Was ist jetzt das Ergebnis? Was existiert? Welche Probleme gab es/gibt es?
- 
-Im Zeitraum der 
+
+
+

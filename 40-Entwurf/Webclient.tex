@@ -1,7 +1,9 @@
 \section{Webclient} \label{sec:Webclient}
+In diesem Abschnitt wird zuerst auf den Unterschied zwischen Multi Page Applications uind Single Page Applications eingegangen, um eine Architektur für die neue Weboberfläche zu wählen. Im Anschluss wird das Design unter Zuhilfenahme von Mockups erläutert´
+
 \subsection{SPA vs MPA} \label{subsec:SPA_vs_MPA}
 
-\paragraph{Multi  Page Applications} \label{para:Multi_Page_Applications}
+\paragraph{Multi Page Applications} \label{para:Multi_Page_Applications}
 Multi Page Application, kurz MPA, ist die klassische Architektur für Webanwendungen. Bei dieser Architektur wird für jeden Request (Anfrage) an den Webserver eine neue Seite inklusive Ressourcen wie Cascading Style Sheets (CSS)\footnote{Beinhalten Regeln für die Darstellung von unter anderem HTML-Dokumenten}, JavaScript und Bildern geladen. Dieses kann an einem Beispiel verdeutlicht werden.
 
 Auf einer Shop-Seite befinden sich 10 Produkte inkl. Bild und Kurzbeschreibung. Wird ein Produkt ausgewählt, sendet der Client einen Request / eine Anfrage an den Webserver. Der Webserver antwortet mit allen Ressourcen (siehe oben), welche für das Produkt benötigt werden. Der Client stellt dann aus den Ressourcen die Ansicht dar und das Produkt inklusive der Details ist für den Nutzenden zu sehen.
@@ -76,7 +78,7 @@ Damit die Icons zum Design der Seite passen und Einheitlich sind, werden Materia
 	\label{fig:mockup-base}
 \end{center}
 
-Das Grundlayout ist wie in \autoref{fig:mockup-base} abgebildet in drei Bereiche, Header, Navigation und Content, eingeteilt. 
+Das Grundlayout ist wie in \autoref{fig:mockup-base} abgebildet in drei Bereiche, Header (1), Navigation (2) und Content (3), eingeteilt. 
 
 Der Bereich des Headers ist im oberen Teil erkennbar. Dort ist ein Logo, derzeitig noch das Logo aus der alten Anwendung, eine Überschrift sowie ein Untertitel platziert. Über die Überschrift und den Untertitel können die verschieden Seiten (Admin-, Spieler-, Flagshop- und Challengeseite) unterscheidbar gemacht werden.
 

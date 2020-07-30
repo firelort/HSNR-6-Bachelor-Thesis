@@ -43,6 +43,12 @@ Dazu wird die Flag mithilfe der Streuwertfunktion (Hashfunktion) MD5 und der Ein
 
 Der in der Anwendung genutzte seed setzt sich aus der Verkettung von \textit{Salt}, \textit{IP-Adresse}, dem String \textquote{\textit{Aufgabe}} und einem \textit{Zähler} zusammen.
 
+\begin{lstlisting}[, frame=single, caption={Beispiel eines Seed und seines Hashs}, captionpos=b, label={lst:analyse-hash-algo}]
+seed = "WS2019192.168.87.11Aufgabe1"
+hash = md5(seed)
+hash = 7072D70B3D47E8516056A8B777655174
+\end{lstlisting}
+
 Ein Salt wird benötigt, um den Flags eine Lebenszeit zu geben. In der derzeitigen Implementierung enthält der Salt das aktuelle Jahr sowie das jeweilige Semester. So sind nur Flags des aktuellen Semesters gültig und werden vom Auswertungs- und Überwachungssystem akzeptiert. Einer Verwendung von Flags aus vorherigen Semestern wird somit effektiv vorgebeugt.
 
 Die IP-Adresse stellt hierbei den Bezug zum jeweiligen Team dar.
