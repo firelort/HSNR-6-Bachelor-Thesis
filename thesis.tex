@@ -1,4 +1,4 @@
-\documentclass[a4paper, 12pt, parskip=half, listof=totoc]{scrbook} %oneside
+\documentclass[a4paper, 12pt, parskip=half, listof=totoc, bibtotocnumbered]{scrbook} %oneside
 
 % Einfaches Copy and Paste ermöglichen
 \usepackage{cmap}
@@ -165,6 +165,11 @@
 	\input{90-Anhang/Installation}
 	\input{90-Anhang/Bedienung}
 	\input{90-Anhang/Anhang}
+	
+	% Zeilenumbrüche für Links erzwingen
+	\setcounter{biburlnumpenalty}{100}
+	\setcounter{biburlucpenalty}{100}
+	\setcounter{biburllcpenalty}{100}
 	
 	% Tabellenverzeichnis Codeverzeichnis Abbildungsverzeichnis Quellenverzeichnis
 	{\listoffigures \let\cleardoublepage\newpage \lstlistoflistings \let\cleardoublepage\\\ \listoftables \let\cleardoublepage\newpage \printbibliography}

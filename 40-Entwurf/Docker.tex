@@ -1,12 +1,10 @@
 \section{Containerisierung} \label{sec:Containerisierung}
 Bei der Containerisierung wird jeder Container als eine eigene logische Maschine betrachtet. Es können mehrere Container gleichzeitig auf einer physischen Maschine betrieben werden. 
-Die verschiedenen Container laufen unabhängig voneinander und wissen nicht über die Existenz weitere Container Bescheid. Sollte eine Kommunikation zwischen zwei Container benötigt werden, erfolgt diese über die Netzwerkschnittstelle ähnlich der Kommunikation zwischen Anwendungen, die auf verschiedener physischer Geräte. Damit die Container kommunizieren können, muss vorher ein Netzwerk konfiguriert werden, in dem sich die Container gemeinsam befinden.
+Die verschiedenen Container laufen unabhängig voneinander und wissen nicht über die Existenz weitere Container Bescheid. Sollte eine Kommunikation zwischen zwei Container benötigt werden, erfolgt diese über die Netzwerkschnittstelle ähnlich der Kommunikation zwischen Anwendungen, die auf verschiedener physischer Geräte. \cite{boersmaContainerizationDefinitionBest2019} Damit die Container kommunizieren können, muss vorher ein Netzwerk konfiguriert werden, in dem sich die Container gemeinsam befinden.
 
 Im Gegensatz zur Virtualisierung teilen sich die Container das zugrunde liegende Betriebssystem nicht. Dieses reduziert den Verbrauch von Ressourcen wie CPU und Arbeitsspeicher, da diese nur für die Anwendung und nicht das Betriebssystem benötigt werden.
 
-Containerisierung wird verwendet, um Anwendungen getrennt betreiben zu können. So können verschiedene Versionen einer Software gleichzeitig auf der gleichen physischen Maschine betrieben werden, ohne dass es zu Interferenzen kommt oder das veränderte Konfigurationen notwendig sind.
-
-Des Weiteren läuft ein Container auf die gleiche Art und Weise unabhängig von der darunter liegenden Hardwarearchitektur. So läuft ein Container auf dem Rechner des Entwickelnden genauso wie ein Container in einem Rechenzentrum. Durch diese Eigenschaft sind die Anwendungen in Containeren portabel.
+Containerisierung wird verwendet, um Anwendungen getrennt betreiben zu können. So können verschiedene Versionen einer Software gleichzeitig auf der gleichen physischen Maschine betrieben werden, ohne dass es zu Interferenzen kommt oder das veränderte Konfigurationen notwendig sind. Des Weiteren läuft ein Container auf die gleiche Art und Weise unabhängig von der darunter liegenden Hardwarearchitektur. So läuft ein Container auf dem Rechner des Entwickelnden genauso wie ein Container in einem Rechenzentrum. Durch diese Eigenschaft sind die Anwendungen in Containeren portabel. \cite{boersmaContainerizationDefinitionBest2019}
 
 Durch die Isolierungen können Anwendungen keinen negativen Einfluss auf weitere Container nehmen.
 
