@@ -76,7 +76,7 @@ In der Referenztabelle \textbf{\textit{group\_service\_status}} wird das Ergebni
 	\label{fig:db-flagshop-table}
 \end{center}
 
-Die \autoref{fig:db-flagshop-table} stellt die 1:n-Beziehung zwischen den Tabellen \textbf{\textit{groups}} und \textbf{\textit{flagshop\_user}} dar. Das heißt, dass jeder Gruppe mehrere Flagshop Benutzer zugehörig sein können, jeder Benutzer aber genau einer Gruppe angehört. Des Weiteren wird die n:m-Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{flagshop\_packages}} als Referenztabelle\\ (\textbf{\textit{groups\_bought\_flagshop\_packages}}) mit zwei 1:n-Beziehung dargestellt. Diese beinhaltet die gekauften Flagshop-Pakete pro Team.
+Die \autoref{fig:db-flagshop-table} stellt die 1:n-Beziehung zwischen den Tabellen \textbf{\textit{groups}} und \textbf{\textit{flagshop\_user}} dar. Das heißt, dass jeder Gruppe mehrere Flagshop Benutzer zugehörig sein können, jeder Benutzer aber genau einer Gruppe angehört. Des Weiteren wird die n:m-Beziehung zwischen \textbf{\textit{groups}} und \textbf{\textit{flagshop\_packages}} als Referenztabelle\linebreak (\textbf{\textit{groups\_bought\_flagshop\_packages}}) mit zwei 1:n-Beziehung dargestellt. Diese beinhaltet die gekauften Flagshop-Pakete pro Team.
 
 \subsubsection{Flagshop-User}
 Für die Nutzung des Flagshops müssen die Gruppen einen oder mehrere Flagshop-User anlegen. Diese werden in der Tabelle \textbf{\textit{flagshop\_user}} abgelegt. Hierfür werden neben der erstellenden Gruppe (\textit{group\_id}) auch das Passwort (\textit{password}) und der Name (\textit{name}) abgespeichert. Der Primärschlüssel wird aus der Gruppe und dem Namen gebildet. So ist der Nutzername für die Gruppe eindeutig. Mehrere Gruppen können somit Flagshop-Useraccounts mit demselben Namen anlegen.
@@ -85,7 +85,7 @@ Für die Nutzung des Flagshops müssen die Gruppen einen oder mehrere Flagshop-U
 Die betreuenden Personen und Administrierende können Flagshop-Pakete anlegen, die von den Studierenden gekauft werden können. Diese werden in der Tabelle \textbf{\textit{flagshop\_packages}} abgelegt und enthalten Informationen zum Preis (\textit{price}) und der Anzahl der erhaltenen Flags (\textit{flag\_count}). Auch muss ein Name für das Paket über das Feld \textit{name} angegeben werden.
 
 \subsubsection{Gekaufte Flagshop-Pakete}
-Die von den Gruppen gekauften Flagshop Pakete werden in der Tabelle\\ \textbf{\textit{groups\_bought\_flagshop\_packages}} abgespeichert. Auch wird im Feld \textit{price\_paid} der beim Kauf gezahlte Preis festgehalten, da die Studierenden den Preis eines Flagshop-Paketes beim Kauf reduzieren können. Jedes Paket kann genau einmal von jeder Gruppe gekauft werden, da sich der Primärschlüssel aus Gruppe (\textit{group\_id}) und Paket (\textit{flagshop\_packages\_id}) zusammensetzt.
+Die von den Gruppen gekauften Flagshop Pakete werden in der Tabelle\linebreak \textbf{\textit{groups\_bought\_flagshop\_packages}} abgespeichert. Auch wird im Feld \textit{price\_paid} der beim Kauf gezahlte Preis festgehalten, da die Studierenden den Preis eines Flagshop-Paketes beim Kauf reduzieren können. Jedes Paket kann genau einmal von jeder Gruppe gekauft werden, da sich der Primärschlüssel aus Gruppe (\textit{group\_id}) und Paket (\textit{flagshop\_packages\_id}) zusammensetzt.
 
 \clearpage
 \subsection{Challenge-Tabellen}
@@ -94,13 +94,13 @@ Die von den Gruppen gekauften Flagshop Pakete werden in der Tabelle\\ \textbf{\t
 	\captionof{figure}{Ansicht der Service-Tabellen (ER-Diagramm)}
 	\label{fig:db-challenge-table}
 \end{center}
-In der \autoref{fig:db-challenge-table} ist die \textbf{\textit{Challenge}} Tabelle und die n:m-Beziehung zwischen den Tabellen \textbf{\textit{groups}} und \textbf{\textit{challenges}} zu sehen. Diese Beziehung ist als Verknüpfungstabelle\\ (\textbf{\textit{group\_has\_challenges}}) mit zwei 1:n-Beziehung realisiert.
+In der \autoref{fig:db-challenge-table} ist die \textbf{\textit{Challenge}} Tabelle und die n:m-Beziehung zwischen den Tabellen \textbf{\textit{groups}} und \textbf{\textit{challenges}} zu sehen. Diese Beziehung ist als Verknüpfungstabelle\linebreak (\textbf{\textit{group\_has\_challenges}}) mit zwei 1:n-Beziehung realisiert.
 
 \subsubsection{Challenges}
 Die \textbf{\textit{challenges}} Tabelle beinhaltet alle Challenges, welche von den Studierenden gelöst werden können. Jede Challenge besitzt eine eindeutige ID. Neben dieser werden für jede Challenge ein Titel in \textit{name}, ein Hinweis in \textit{hint}, das zum Lösen benötigte Passwort in \textit{password}, die Anzahl der Punkte in \textit{points} und der URL-Pfad, über den die Challenge abgerufen werden kann, gespeichert.
 
 \subsubsection{Gestartete / Abgeschlossene Challenges}
-Alle angefangenen und abgeschlossenen Challenges werden in der Tabelle \\
+Alle angefangenen und abgeschlossenen Challenges werden in der Tabelle \linebreak
 \textbf{\textit{group\_has\_challenges}} abgespeichert. Es werden das Startdatum (\textit{started\_at}) der Challenge, der Status des Abschlusses (\textit{solved}) und bei erfolgreicher Absolvierung der Challenge das Enddatum (\textit{solved\_at}) gespeichert. Durch die Zusammensetzung des Primärschlüssels aus Challenge und Gruppe kann jede Gruppe jede Challenge genau einmal starten und absolvieren.
 
 \subsection{Weitere Tabellen}

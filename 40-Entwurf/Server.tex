@@ -17,7 +17,7 @@ Für die Nutzung des Flagshops ist ein Multi-Login notwendig, da nur am Webserve
 
 So ist für diesen Anwendungsfall ein Stateless Login besser geeignet, da hier die benötigten Informationen vom Client, je nach Anliegen, gesendet werden können. 
 
-Die Nutzung des Stateless Logins bietet die Perspektive der Verwendung eines Stateless \\ Webservers sowie eines Thin Webservers. Bei einem Thin Webserver werden nur Daten und keine Repräsentation an dem Client zurückgesendet. So wird die Aufgabe der Darstellung der Daten an den Client übertragen.
+Die Nutzung des Stateless Logins bietet die Perspektive der Verwendung eines Stateless \linebreak Webservers sowie eines Thin Webservers. Bei einem Thin Webserver werden nur Daten und keine Repräsentation an dem Client zurückgesendet. So wird die Aufgabe der Darstellung der Daten an den Client übertragen.
 
 Durch die Nutzung eines Thin Servers werden zwei Dinge ermöglicht. 
 
@@ -80,7 +80,7 @@ Sollte kein Hackitzugang benötigt werden, muss für die Ausstellung der Tokens 
 	\captionof{figure}{Datenfluss während eines Logins mit Refresh Token (Datenflussdiagramm)}
 \end{center}
 
-Ein Refresh-Token wird ausgestellt, da beide Token eine begrenzte Lebenszeit haben. Der Refresh-Token hat eine längere Lebenszeit und ermöglicht die erneute Ausstellung eines \\ Access-Tokens ohne Angabe eines Nutzernamens und Passwortes.
+Ein Refresh-Token wird ausgestellt, da beide Token eine begrenzte Lebenszeit haben. Der Refresh-Token hat eine längere Lebenszeit und ermöglicht die erneute Ausstellung eines \linebreak Access-Tokens ohne Angabe eines Nutzernamens und Passwortes.
 
 Des Weiteren werden alle ausgestellten Token für die Dauer der Gültigkeit in der Redis-Datenbank gespeichert, um diese bei späteren Anfragen zu validieren. 
 
@@ -124,7 +124,7 @@ Die Idee, dass die Flaggenerierung nur auf dem Server stattfindet, wurde verworf
 
 Da die Flag Abgabe einen Hauptteil des Versuchs darstellt, müssen authentifizierte Spielende die auf dem eigenen oder gegnerischen System gefundene Flags abgeben können.
 
-Das GIS muss die abgegebene Flag auf Gültigkeit prüfen und entweder Offensiv- und \\
+Das GIS muss die abgegebene Flag auf Gültigkeit prüfen und entweder Offensiv- und \linebreak
 Defensiv- oder Discoverpunkte verrechnen. Auch muss sichergestellt werden, dass eine Gruppe eine Flag nur einmal abgeben kann.
 
 Gruppen können alle eigenen Flags sowie gegnerische Flags, welche auf den GameClients verteilt sind, abgeben. Gegnerische Flagshop Flags können nicht abgegeben werden, da diese als nicht schützenswert betrachtet werden.
@@ -152,7 +152,7 @@ Dieser detaillierte Spielstand beinhaltet die Punkte aller teilnehmenden Gruppen
 
 \subsubsection{Steuerung der Services}
 
-Die betreuenden Personen des Versuchs, sollen die Möglichkeit erhalten einzelne \\
+Die betreuenden Personen des Versuchs, sollen die Möglichkeit erhalten einzelne \linebreak
 Scan-Operationen zu (de-)aktivieren ohne, dass eine Änderung an der Software vorgenommen werden muss. Die Gewichtung der einzelnen Services soll jederzeit änderbar sein.
 
 \subsubsection{Einstellungen}

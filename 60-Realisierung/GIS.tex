@@ -1,4 +1,4 @@
-\section{Game Information System}
+\textbf{}\section{Game Information System}
 Das Game Information System wurde als REST-Schnittstelle implementiert. Sie kann über einen REST-Client wie cURL, Insomnia oder einen eigenen Webclient angesprochen werden. Für die Realisierung wurde aufgrund der in \autoref{sec:Backend} angeführten Argumenten Flask als Framework gewählt.
 
 Zuerst wird die Flask Anwendung mithilfe der Konfigurationsdatei eingestellt. Danach werden alle verwendeten Erweiterungen mit der Flask Anwendung vertraut gemacht. Im Folgenden werden die Befehle des Command-line Interfaces angelegt. Zum Schluss werden die Routen registriert und nicht vorhandene Einstellungen mit Standardwerten in die \textit{settings}-Tabelle der Datenbank geschrieben.
@@ -367,11 +367,11 @@ Der Flagshop setzt verschiedene Funktionen um und besteht deshalb aus drei getre
 
 Der Endpoint \textit{/flagshop/user} stellt die beiden Methoden \textit{GET} und \textit{POST} bereit. Über die \textit{POST}-Methode können administrierenden, betreuenden und spielende Personen neue Flagshop-User anlegen. Die \textit{GET}-Methode ist für Spielende nicht nutzbar und listet alle angelegten Flagshop-User inklusive der zugehörigen Gruppe auf.
 
-Die administrierenden und betreuenden Personen können über den Endpoint\\ \textit{/flagshop/user/<user\_name>} angelegte Flagshop-User verändern oder löschen.
+Die administrierenden und betreuenden Personen können über den Endpoint\linebreak \textit{/flagshop/user/<user\_name>} angelegte Flagshop-User verändern oder löschen.
 
 Damit Flagshop-User Pakete kaufen können, müssen diese zuerst durch betreuende oder administrierende Personen angelegt werden. Hierfür stellt der Endpoint \textit{/flagshop/package} eine \textit{POST}-Methode zur Verfügung. Auch kann die Liste der verfügbaren Pakete mittels einer \textit{GET}-Methode von angemeldeten Flagshop-Usern sowie den oben genannten Personengruppen abgerufen werden.
 
-Sollten Pakete geändert oder gelöscht werden, muss der Endpoint\\ \textit{/flagshop/package/<int:package\_id>} verwendet werden. Die Methode \textit{PUT} ermöglicht das Verändern und die Methode \textit{DELETE} das Löschen.
+Sollten Pakete geändert oder gelöscht werden, muss der Endpoint\linebreak \textit{/flagshop/package/<int:package\_id>} verwendet werden. Die Methode \textit{PUT} ermöglicht das Verändern und die Methode \textit{DELETE} das Löschen.
 
 Damit die Flagshop-User eine Transaktion durchführen können wird der Endpoint \textit{/flagshop/transaction} benötigt. Über die \textit{POST}-Methode kann eine Bestellung aufgeben werden. Der Preis der Bestellung wird aus den in \autoref{para:Flagshop} erwähnten Gründen in der Anfrage mit übermittelt und nicht auf dem Server anhand des Warenkorbs berechnet.
 
@@ -404,7 +404,7 @@ Die Erweiterungen \textit{Flask-Migrate} und \textit{Flask-RESTful} stellen CLI-
 
 \textit{Flask-Migrate} stellt die in \autoref{sub:realisierung-migration} vorgestellten Befehle bereit. Über den Befehl \textit{flask routes} zeigt \textit{Flask-RESTful} alle registrierten Ressourcen mit den entsprechenden Methoden und Routen an.
 
-Außerdem ermöglicht es ein selbst programmierter Befehl, ohne Angabe von \\
+Außerdem ermöglicht es ein selbst programmierter Befehl, ohne Angabe von \linebreak
 Login-Informationen, Accounts zu verwalten. Dies wird zum Einen benötigt, um den ersten Benutzer anzulegen. Bei Verlust aller Adminkennungen kann eine bestehende Kennung geändert oder eine neue angelegt werden. Werden bei einem Befehl nicht alle benötigten Informationen angegeben, erfragt die Anwendung diese über die Befehlszeile.
 
 \begin{lstlisting}[language=bash, frame=single, caption={GIS CLI}, captionpos=b, label={lst:gis-cli}]
