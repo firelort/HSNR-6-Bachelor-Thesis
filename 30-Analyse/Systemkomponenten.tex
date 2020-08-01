@@ -1,19 +1,19 @@
 \section{Systemkomponenten}\label{sec:Systemkomponenten}
 
 \subsection{Komponenten des Servers}\label{subsec:Komponente_des_Servers}
-Im Folgenden werden die verschiedenen Komponenten des Auswertungs- und Überwachungssystems in der derzeitigen Implementierung untersucht. Dabei werden Rückschlüsse auf Anforderungen gezogen sowie Schwachstellen und Verbesserungsmöglichkeiten herausgearbeitet.
+Im Folgenden werden die verschiedenen Komponenten des Auswertungs- und Überwachungssystems in der derzeitigen Implementierung untersucht. Dabei werden Rückschlüsse auf Anforderungen gezogen sowie Schwachstellen herausgearbeitet.
 
 \subsubsection{Scanner}\label{subsubsec:Scanner}
 Der Scanner prüft in regelmäßigen Abständen die auf den Gastsystemen der Studierenden installierten Dienste und speichert das Ergebnis ab. Die Abstände können beim Starten des Spieles eingestellt werden. Die folgenden Dienste werden pro Team geprüft.
 
 \paragraph{ScanUp}\label{para:ScanUp}
-Die Aufgabe dieses Scans besteht darin zu prüfen, ob das Gastsystem noch für den Server erreichbar ist. Sollte das Gastsystem nicht erreichbar sein, wird hierfür ein Strafpunkt vergeben. Aus technischer Sicht wird das Linux Kommando \textit{ping} verwendet. Anhand des Rückgabewertes kann nachvollzogen werden, ob der Server das Gastsystem erreichen konnte.
+Die Aufgabe dieses Scans besteht darin zu prüfen, ob das Gastsystem noch für den Server erreichbar ist. Sollte das Gastsystem nicht erreichbar sein, wird hierfür ein Strafpunkt vergeben. Aus technischer Sicht wird das Linux-Kommando \textit{ping} verwendet. Anhand des Rückgabewertes kann nachvollzogen werden, ob der Server das Gastsystem erreichen konnte.
 
 \paragraph{ScanBubble}\label{para:ScanBubble}
-Auf dem Gastsystem läuft ein selbst programmierter Bubble Server, welcher Flags unter Nutzung des Telnet Protokolls bereitstellt. Nachdem eine Flag abgeholt worden ist, stellt der Dienst für eine bestimmte Zeit (Timeout) keine weitere Flag bereit. Der Bubble Server nimmt Anfragen über den Port \textit{12321} für unverschlüsselte Flags und Port \textit{12322} für verschlüsselte Flags entgegen. Die Scan-Operation überprüft, ob eine Telnet Verbindung zu dem Port \textit{12321} möglich ist, in dem die Operation eine Telnet Verbindung öffnet und prüft, ob die Verbindung erfolgreich war.
+Auf dem Gastsystem läuft ein selbst programmierter Bubble Server, welcher Flags unter Nutzung des Telnet Protokolls bereitstellt. Nachdem eine Flag abgeholt wurde, stellt der Dienst für eine bestimmte Zeit (Timeout) keine weitere Flag bereit. Der Bubble Server nimmt Anfragen über den Port \textit{12321} für unverschlüsselte Flags und Port \textit{12322} für verschlüsselte Flags entgegen. Die Scan-Operation überprüft, ob eine Telnet-Verbindung zum Port \textit{12321} möglich ist, in dem die Operation eine Telnet-Verbindung öffnet und prüft, ob die Verbindung erfolgreich war.
 
 \paragraph{ScanWebUp}\label{para:ScanWebUp}
-Jedes Gastsystem stellt unter Zuhilfenahme eines Apache Web Servers und php-Dateien Webseiten und Daten bereit, welche über einen Web Client abgerufen werden können. Dazu muss auf Port \textit{80} der HTTP- und auf Port \textit{443} der HTTPS-Dienst laufen und erreichbar sein. Dieses verifiziert die Scan-Operation indem sie eine Socket Verbindung zu den Ports \textit{80} und \textit{443} öffnet und das Ergebnis prüft.
+Jedes Gastsystem stellt unter Zuhilfenahme eines Apache-Webservers und php-Dateien Webseiten und Daten bereit, welche über einen Webclient abgerufen werden können. Dazu muss auf Port \textit{80} der HTTP- und auf Port \textit{443} der HTTPS-Dienst laufen und erreichbar sein. Dieses verifiziert die Scan-Operation indem sie eine Socket Verbindung zu den Ports \textit{80} und \textit{443} öffnet und das Ergebnis prüft.
 
 \paragraph{ScanSQLInjectUp}\label{para:ScanSQLInjectUp}
 Dieser Scan prüft, ob die Login-Seite des Teams, auf der die SQL-Injection Schwachstelle implementiert ist, erreichbar und benutzbar ist. Die Operation sendet hierzu eine valide Kombination aus Nutzername und Passwort an den Webserver. Das Ergebnis wird dann mit dem erwarteten Resultat verglichen.
@@ -27,13 +27,13 @@ Diese Scan-Operation prüft, ob die auf dem Gastsystem implementierte XSS-Schwac
 In der Rückgabe wird geprüft, ob dieser ungefiltert auf der Webseite zu finden ist. Sollte dies der Fall sein, ist die XSS-Schwachstelle nicht oder unzureichend von den Studierenden abgesichert worden.
 
 \paragraph{ScanSQLSave}\label{para:ScanSQLSave}
-Bei diesem Scan wird kontrolliert, ob der Login mit dem auf allen Systemen voreingestellten Passwort \textit{toor} für den SQL-Account \textit{root} möglich ist. Sollte dieser möglich sein, haben die Studierenden dieses unsichere Passwort nicht geändert. Des Weiteren wird geprüft, ob die Nutzerdaten in der htaccess-Datei, welches die phpMyAdmin Anwendung schützen soll, geändert worden sind.
+Bei diesem Scan wird kontrolliert, ob der Login mit dem auf allen Systemen voreingestellten Passwort \textit{toor} für den SQL-Account \textit{root} möglich ist. Ist dieser möglich, haben die Studierenden dieses unsichere Passwort nicht geändert. Des Weiteren wird geprüft, ob die Nutzerdaten in der htaccess-Datei, welches die phpMyAdmin Anwendung schützen soll, geändert worden sind.
 
 \paragraph{ScanFTPSave}\label{para:ScanFTPSave}
-Auf dem Client System läuft ein FTP-Server, welcher ohne Login (Nutzername \& Passwort) Daten bereitstellt. Der Scan prüft, ob ein sogenannter anonymer Login möglich ist, indem eine FTP Verbindung ohne Login aufgebaut wird. Sollte die Verbindung erfolgreich sein, ist der anonyme Login immer noch nicht deaktiviert worden.
+Auf dem Client System läuft ein FTP-Server, welcher ohne Login (Nutzername \& Passwort) Daten bereitstellt. Der Scan prüft, ob ein sogenannter anonymer Login möglich ist, indem eine FTP-Verbindung ohne Login aufgebaut wird. Sollte die Verbindung erfolgreich sein, ist der anonyme Login immer noch nicht deaktiviert worden.
 
 \paragraph{ScanTelnetSave}\label{para:ScanTelnetSave}
-Ein Telnet Server horcht auf Verbindungen auf Port \textit{23}. Da dieser Dienst nicht benötigt wird, soll er durch die Studierenden abgeschaltet oder deinstalliert werden. Die Scan-Operation prüft, ob eine Verbindung mithilfe des Telnet-Protokolls auf Port \textit{23} möglich ist. Dazu wird eine Verbindung zu Port \textit{23} aufgebaut und das Resultat geprüft.
+Ein Telnet-Server horcht auf Verbindungen auf Port \textit{23}. Da dieser Dienst nicht benötigt wird, soll er durch die Studierenden abgeschaltet oder deinstalliert werden. Die Scan-Operation prüft, ob eine Verbindung mithilfe des Telnet-Protokolls auf Port \textit{23} möglich ist. Dazu wird eine Verbindung zu Port \textit{23} aufgebaut und das Resultat geprüft.
 
 \subsubsection{Generierung von Flags}\label{subsubsec:Generierung_von_Flags}
 
@@ -41,7 +41,7 @@ Derzeitig erfolgt die Generierung der Flags sowohl auf den Gastsystemen als auch
 
 Dazu wird die Flag mithilfe der Streuwertfunktion (Hashfunktion) MD5 und der Eingabe, einem sogenannten Seed, berechnet. Eine Hashfunktion bildet aus einer Eingabe variabler Länge eine Ausgabe mit einer festen Länge. Bei identischer Eingabe wird immer der gleiche Ausgabewert berechnet. Des Weiteren ist es bei einer guten Hashfunktion nicht möglich, von der Ausgabe auf den Eingabewert zu schließen. \cite{menezesHandbookAppliedCryptography1996}
 
-Der in der Anwendung genutzte seed setzt sich aus der Verkettung von \textit{Salt}, \textit{IP-Adresse}, dem String \textquote{\textit{Aufgabe}} und einem \textit{Zähler} zusammen.
+Der in der Anwendung genutzte Seed setzt sich aus der Verkettung von \textit{Salt}, \textit{IP-Adresse}, dem String \textquote{\textit{Aufgabe}} und einem \textit{Zähler} zusammen.
 
 \begin{lstlisting}[, frame=single, caption={Beispiel eines Seed und seines Hashs}, captionpos=b, label={lst:analyse-hash-algo}]
 seed = "WS2019192.168.87.11Aufgabe1"
@@ -77,10 +77,10 @@ Ein \textit{Hidden-Input-Feld} wird in der Repräsentation eines HTML-Dokumentes
 Auf diese Weise ist es auch möglich, einen negativen Preis festzulegen und dem eigenen Team Punkte zuzuschreiben, da die derzeitige Implementierung nicht prüft, ob der von dem Nutzenden eingegebene Preis kleiner als 0 ist, sondern ob dieser gleich 0 ist. Bei richtiger Implementierung würde ein Preis kleiner 0 geprüft und korrigiert.
 
 \paragraph{Challenges} \label{para:Challenges}
-Derzeitig sind fünf Challenges implementiert, welche vom System in zufälliger Reihenfolge an interessierte Teams verteilt werden. Eine abgeschlossene oder abgebrochene Challenge, durch das Neuladen der Webseite oder durch das Betätigen der Zurück-Taste, kann nicht wiederholt werden. Eine Challenge kostet 10 Punkte. Nach erfolgreichem Abschließen einer Challenge gibt es 10 Punkte plus eine gewisse Anzahl an Punkten für das Absolvieren der Aufgabe. Die folgenden Challenges sind implementiert. \cite[S.19-20]{abtsUeberarbeitungUndErweiterung2016}
+Derzeitig sind fünf Challenges implementiert, welche vom System in zufälliger Reihenfolge an interessierte Teams verteilt werden. Eine abgeschlossene oder abgebrochene Challenge, durch das Neuladen der Webseite oder durch das Betätigen der Zurück-Taste, kann nicht wiederholt werden. Eine Challenge kostet 10 Punkte. Nach erfolgreichem Abschließen einer Challenge gibt es 10 Punkte plus eine gewisse Anzahl an Punkten für das Absolvieren der Aufgabe. Die folgenden Challenges sind implementiert. \cite[S.19]{abtsUeberarbeitungUndErweiterung2016}
 
 \subparagraph{Aufgabe 1: robots.txt}\label{subpara:Aufgabe_1_robots.txt}
-Die Studierenden sollen in dieser Challenge lernen, dass die \textit{robots.txt} Datei keinen Zugriffsschutz darstellt. Diese bittet nur Suchmaschinen, die angegeben Verzeichnisse und Dateien nicht zu indexieren. Aus der \textit{robots.txt} Datei können Informationen zu versteckten Dateien und Verzeichnissen erhalten werden. Die Studierenden sollen über die \textit{robots.txt} Datei einen vorhandenen Ordner finden. In diesem befindet sich die Lösung zur Challenge.
+Die Studierenden sollen in dieser Challenge lernen, dass die \textit{robots.txt} Datei keinen Zugriffsschutz darstellt. Diese bittet nur Suchmaschinen, die angegeben Verzeichnisse und Dateien nicht zu indexieren. Aus der \textit{robots.txt} Datei können Informationen zu versteckten Dateien und Verzeichnissen erhalten werden. Die Studierenden sollen über die \textit{robots.txt} Datei einen vorhandenen Ordner finden. In diesem befindet sich die Lösung zur Challenge. \cite[S.19-20]{abtsUeberarbeitungUndErweiterung2016}
 
 \subparagraph{Aufgabe 2: JavaScript-Login-Bypass}\label{subpara:Aufgabe_2_JavaScript-Login-Bypass}
 Bei dieser Challenge ist das benötigte Passwort zur Lösung der Challenge als Klartext im Quelltext versteckt. Das Verstecken wird derzeitig mit einer Meldung wie \textquote[\cite{abtsUeberarbeitungUndErweiterung2016}]{Seitenquelltext deaktiviert} und vielen Leerzeilen realisiert. Im Inspector von Firefox Version 78.0.1 und Chromium Version 83.0.4103.116 ist dies nicht möglich, da die Leerzeilen entfernt werden und das Passwort daher oben im Quelltext zu sehen ist. \cite[S.20]{abtsUeberarbeitungUndErweiterung2016}
@@ -88,16 +88,16 @@ Bei dieser Challenge ist das benötigte Passwort zur Lösung der Challenge als K
 \subparagraph{Aufgabe 3: Form-Modification}\label{subpara:Aufgabe_3_Form-Modification}
 In dieser Challenge sollen die Studierenden verstehen, dass auch die Werte von Drop-Down-Menüs, Checkboxen und Radio-Buttons durch Manipulation auf nicht vorgegebene Werte geändert werden können. Deshalb müssen Nutzereingaben stets auch serverseitig überprüft werden, da hier die Regeln der Überprüfung nicht durch den Nutzenden verändert werden können.
 
-Die Aufgabe besteht darin, einen bestimmten Login-Namen aus einem Drop-Down-Menü auszuwählen. Da der geforderte Name nicht in dieser Liste ist, müssen die Studierenden das HTML Formular so manipulieren, dass er auswählbar ist. \cite[S.20]{abtsUeberarbeitungUndErweiterung2016}
+Die Aufgabe besteht darin, einen bestimmten Login-Namen aus einem Drop-Down-Menü auszuwählen. Da der geforderte Name nicht in dieser Liste ist, müssen die Studierenden das HTML-Formular so manipulieren, dass er auswählbar ist. \cite[S.20]{abtsUeberarbeitungUndErweiterung2016}
 
 \subparagraph{Aufgabe 4: JavaScript-Substrings}\label{subpara:Aufgabe_4_JavaScript-Substrings}
-Das Passwort, welches die Studierenden eingeben müssen, wird clientseitig mithilfe einer JavaScript Funktion geprüft. Damit das Passwort nicht im Klartext im Quelltext steht, wird dieses verschleiert. So werden drei Strings Zeichen für Zeichen verglichen. Sollte ein Zeichen in mindestens zwei der drei Strings übereinstimmen, dann gehört dieses Zeichen zum Passwort. Im Anschluss wird geprüft, ob das generierte Passwort gleich dem ist, das die Studierenden als Passwort gegeben haben. \cite[S.20]{abtsUeberarbeitungUndErweiterung2016}
+Das Passwort, welches die Studierenden eingeben müssen, wird clientseitig mithilfe einer JavaScript Funktion geprüft. Damit das Passwort nicht im Klartext im Quelltext steht, wird dieses verschleiert. So werden drei Strings Zeichen für Zeichen verglichen. Sollte ein Zeichen in mindestens zwei der drei Strings übereinstimmen, dann gehört dieses Zeichen zum Passwort. Im Anschluss wird geprüft, ob das generierte Passwort gleich dem ist, das die Studierenden als Passwort genutzt haben. \cite[S.20]{abtsUeberarbeitungUndErweiterung2016}
 
 \subparagraph{Aufgabe 5: URL-Hex-Injection}\label{subpara:Aufgabe_5_URL-Hex-Injection}
-Die Studierenden sollen an geheime Informationen in einem Ordner gelangen, welcher nach einem Wert aus dem Hexadezimalsystem (Basis 16 statt Basis 10, wie beim Dezimalsystem) benannt ist. Die Aufgabe soll zeigen, dass Ordner, die nach einem Hexadezimalwert benannten sind, auf diese Art und Weise nicht vor Zugriffen geschützt werden können, da das Präfix Zeichen \textit{\%} für Hexadezimalzahlen selber durch einen Hexadezimalwert (\%25) dargestellt werden kann. \cite[S.20]{abtsUeberarbeitungUndErweiterung2016}
+Die Studierenden sollen an geheime Informationen in einem Ordner gelangen, welcher nach einem Wert aus dem Hexadezimalsystem -- Basis 16 statt Basis 10, wie beim Dezimalsystem -- benannt ist. Die Aufgabe soll zeigen, dass Ordner, die nach einem Hexadezimalwert benannten sind, auf diese Art und Weise nicht vor Zugriffen geschützt werden können, da das Präfix Zeichen \textit{\%} für Hexadezimalzahlen selber durch einen Hexadezimalwert (\%25) dargestellt werden kann. \cite[S.20]{abtsUeberarbeitungUndErweiterung2016}
 
 \subsubsection{Abgabe von Flags}\label{subsubsec:Abgabe_von_Flags}
-Um Flags abgeben zu können, müssen die Studierenden sich mit ihren Zugangsdaten, welche sie durch das Lösen des Hackits erhalten haben, in der Web-GUI anmelden. Dort ist es möglich, in einem Input-Feld eine Flag synchron abzugeben. Das bedeutet, dass nach jeder Abgabe die Webseite neu geladen wird. Des Weiteren ist es nicht möglich, mehrere Flags gleichzeitig abzugeben.
+Um Flags abgeben zu können, müssen die Studierenden sich mit ihren Zugangsdaten, welche sie durch das Lösen des Hackits erhalten haben, in der Web-GUI anmelden. Dort ist es möglich, in einem Input-Feld eine Flag synchron abzugeben. Das bedeutet, dass nach jeder Abgabe die Webseite neu geladen wird. Eine Abgabe mehrere Flags ist gleichzeitig nicht möglich.
 
 \subsection{Komponenten des Clients}\label{subsec:Komponente_des_Clients}
 Da sich die Bachelorarbeit mit der Modernisierung des Auswertungs- und Überwachungssystem beschäftigt, sind nur die für die Bachelorarbeit wichtigen Komponenten des Clients beschrieben.

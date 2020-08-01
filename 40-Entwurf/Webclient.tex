@@ -6,12 +6,12 @@ In diesem Abschnitt wird zuerst auf den Unterschied zwischen Multi Page Applicat
 \paragraph{Multi Page Applications} \label{para:Multi_Page_Applications}
 Multi Page Application, kurz MPA, ist die klassische Architektur für Webanwendungen. Bei dieser Architektur wird für jeden Request (Anfrage) an den Webserver eine neue Seite inklusive Ressourcen wie Cascading Style Sheets (CSS)\footnote{Beinhalten Regeln für die Darstellung von unter anderem HTML-Dokumenten}, JavaScript und Bildern geladen. Dieses kann an einem Beispiel verdeutlicht werden.
 
-Auf einer Shop-Seite befinden sich 10 Produkte inkl. Bild und Kurzbeschreibung. Wird ein Produkt ausgewählt, sendet der Client einen Request / eine Anfrage an den Webserver. Der Webserver antwortet mit allen Ressourcen (siehe oben), welche für das Produkt benötigt werden. Der Client stellt dann aus den Ressourcen die Ansicht dar und das Produkt inklusive der Details ist für den Nutzenden zu sehen.
+Auf einer Shop-Seite befinden sich 10 Produkte inkl. Bild und Kurzbeschreibung. Wird ein Produkt ausgewählt, sendet der Client eine Anfrage an den Webserver. Der Webserver antwortet mit allen Ressourcen (siehe oben), welche für das Produkt benötigt werden. Der Client stellt dann aus den Ressourcen die Ansicht dar und das Produkt inklusive der Details ist für den Nutzenden zu sehen.
 
-Der Vorteil von MPAs ist die einfacherer Optimierbarkeit für Suchmaschinen, das sogenannte SEO (Search Engine Optimization). Ein gutes SEO Rating sorgt dafür, dass die Webseite bei Suchmaschinen weit oben zu finden ist. Dies ist besonders für Webseiten wichtig, die um Kunden konkurrieren. Anzuführen sind hier diverse Online-Shops und Zeitungen.
+Der Vorteil von MPAs ist die einfacherer Optimierbarkeit für Suchmaschinen, das sogenannte SEO (Search Engine Optimization). Ein gutes SEO-Rating sorgt dafür, dass die Webseite bei Suchmaschinen weit oben zu finden ist. Dies ist besonders für Webseiten wichtig, die um Kunden konkurrieren. Anzuführen sind hier diverse Online-Shops und Zeitungen.
 
 \paragraph{Single Page Applications} \label{para:Single_Page_Applications}
-Die Single Page Application, kurz SPA, stellt das genaue Gegenteil von MPA dar. Bei SPAs besteht die Anwendung aus genau einem HTML-Dokument, dessen Inhalt bei Bedarf dynamisch nachgeladen wird. Dafür findet ein asynchroner Datenaustausch zwischen Client und Server statt, bei dem benötigte Ressourcen wie Bilder, JavaScript und CSS ausgetauscht werden. Durch dieses Verfahren wird sichergestellt, dass gleiche Elemente oder Ressourcen nicht erneut heruntergeladen werden müssen. Bei Änderungen werden nur Teile des DOMs\footnote{Das Document Object Model repräsentiert die Webseite als Baumstruktur} ersetzt und neu gerendert.
+Die Single Page Application, kurz SPA, stellt das genaue Gegenteil von MPAs dar. Bei SPAs besteht die Anwendung aus genau einem HTML-Dokument, dessen Inhalt bei Bedarf dynamisch nachgeladen wird. Dafür findet ein asynchroner Datenaustausch zwischen Client und Server statt, bei dem benötigte Ressourcen wie Bilder, JavaScript und CSS ausgetauscht werden. Durch dieses Verfahren wird sichergestellt, dass gleiche Elemente oder Ressourcen nicht erneut heruntergeladen werden müssen. Bei Änderungen werden nur Teile des DOMs\footnote{Das Document Object Model repräsentiert die Webseite als Baumstruktur} ersetzt und neu gerendert.
 
 Die Interaktion mit dem DOM oder auch Virtual DOM kann selbst entwickelt werden. Jedoch ist hierbei zu raten, auf bereits bestehende Frameworks wie Angular (Entwickelt unter der Leitung vom Angular Team bei Google), React (Entwickelt unter der Leitung von Facebook) oder Vue (Evan You und Core Team) zurückzugreifen. 
 
@@ -81,7 +81,7 @@ Damit die Icons zum Design der Seite passen und Einheitlich sind, werden Materia
 
 Das Grundlayout ist wie in \autoref{fig:mockup-base} abgebildet in drei Bereiche, Header (1), Navigation (2) und Content (3), eingeteilt. 
 
-Der Bereich des Headers ist im oberen Teil erkennbar. Dort ist ein Logo, derzeitig noch das Logo aus der alten Anwendung, eine Überschrift sowie ein Untertitel platziert. Über die Überschrift und den Untertitel können die verschieden Seiten (Admin-, Spieler-, Flagshop- und Challengeseite) unterscheidbar gemacht werden.
+Der Bereich des Headers ist im oberen Teil erkennbar. Dort ist ein Logo -- derzeitig noch das Logo aus der alten Anwendung -- eine Überschrift sowie ein Untertitel platziert. Über die Überschrift und den Untertitel können die verschieden Seiten (Admin-, Spieler-, Flagshop- und Challengeseite) unterscheidbar gemacht werden.
 
 Die Navigation ist auf der linken Seite erkennbar und als Sidebar mit Icons realisiert. Diese beinhaltet Verweise zu den Unterseiten. Sollte ein Eintrag der Navigation aktiv sein, wird dieser mithilfe der im Material Design vorgesehenen Farbe hervorgehoben.
 
@@ -108,11 +108,11 @@ Wenn das Ereignis wichtig ist, wird ein Banner verwendet. Dieser Banner besteht 
 Die andere Möglichkeit den Nutzenden zu informieren, ist die sogenannte Snackbar. Diese wird verwendet, wenn die Benutzererfahrung nicht unterbrochen werden soll und keine Benutzereingabe benötigt wird.
 Die Snackbar wird am  unteren rechten Rand platziert und verschwindet im Gegensatz zum Banner nach einer definierten Zeit automatisch. Wenn möglich wird auch hier maximal eine Snackbar gleichzeitig verwendet.
 
-\begin{center}
+\begin{minipage}{\textwidth}
 	\includegraphics[width=\linewidth]{entwurf/webclient/table}
 	\captionof{figure}{Ansicht des Spielstandes (Mockup)}
 	\label{fig:mockup-table}
-\end{center}
+\end{minipage}
 
 In \autoref{fig:mockup-table} ist ein Teil der Ansicht des Interaktiven Scoreboards inklusive der Strafen abgebildet. Die Ansicht ist in das Grundlayout der Anwendung (\autoref{fig:mockup-base}) eingebettet. Wie bereits oben erwähnt wird die Tabelle, um diese vom Hintergrund abzusetzen, unter Zuhilfenahme einer helleren Farbe dargestellt. Damit die Zeilen in der Tabelle besser erkennbar sind, ist jede zweite Zeile hervorgehoben. 
 

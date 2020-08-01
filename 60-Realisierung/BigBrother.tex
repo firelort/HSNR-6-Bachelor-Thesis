@@ -55,7 +55,7 @@ cursor.execute(f"INSERT INTO {SETTING_TABLE_NAME}(key, value) VALUES ('{default_
 \subsection{Implementierung der Scan-Operations}
 Die im alten System vorhandene Überwachung ist in der Programmiersprache PHP implementiert und wurde im Rahmen dieser Arbeit in das Python-Programm überführt.
 
-Die verschiedenen Aufgaben der Überwachung wurden, wie im Entwurf ausgearbeitet, in einzelne sogenannte Scan-Operationen getrennt. Dies soll das Verständnis fördern und den Aufwand einer Wartung reduzieren. Durch diesen Ansatz können einzelne Scan-Operationen leichter ersetzt oder verändert werden. Außerdem ist es so möglich, leichter neue Scan-Operationen zu integrieren.
+Die verschiedenen Aufgaben der Überwachung wurden, wie im Entwurf ausgearbeitet, in einzelne sogenannte Scan-Operationen getrennt. Dies soll das Verständnis fördern und den Aufwand einer Wartung reduzieren. Durch diesen Ansatz können einzelne Scan-Operationen leichter ersetzt oder verändert werden. Außerdem ist es so möglich, leichter neue \linebreak Scan-Operationen zu integrieren.
 
 \subsubsection{Basisklasse der Scan-Operationen}
 
@@ -82,7 +82,7 @@ Des Weiteren definiert die Basisklasse die abstrakte Funktion \textit{start}, we
 
 Die Ergebnisse der Scan-Operationen werden ebenfalls einheitlich im privaten Attribut \textit{\_result} abgespeichert. Das Ergebnis kann über das getter-Property \textit{result} abgerufen werden. Zum Abruf des Internen- und des Anzeigenamens werden ebenfalls getter-Properties eingesetzt. 
 
-Durch die Nutzung einer Art getter-Methode wird anderen Entwickelnden mitgeteilt, dass keine Änderungen an dem privaten Attribut durchgeführt werden sollen. Mithilfe des in Python vorhandenen Property Decoratores kann die getter Methode als Variable und nicht als Funktion verwendet werden.
+Durch die Nutzung einer Art getter-Methode wird anderen Entwickelnden mitgeteilt, dass keine Änderungen an dem privaten Attribut durchgeführt werden sollen. Mithilfe des in Python vorhandenen Property Decoratores kann die getter-Methode als Variable und nicht als Funktion verwendet werden.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother Ergebnis Getter-Property}, captionpos=b, label={lst:bigbrother-getter-result}]
 @property
@@ -107,9 +107,9 @@ else:
 Für das Versenden eines ICMP-Paketes hätte auch  die in Linux implementierte ping-Funktion per Syscall verwendet werden können. Diese Alternative wurde nicht gewählt, da das Programm unabhängig vom unterliegenden Betriebssystem sein soll.
  
 \subsubsection{Bubble und Bubble-Ng}
-Für die beiden Bubble Scan-Operationen wurde eine extra Klasse geschaffen, die eine Funktion bereitstellt, um die Erreichbarkeit des Bubble-Servers zu prüfen. Diese Klasse wurde geschaffen, da sich die beiden Scan-Operationen nur minimal voneinander unterscheiden.
+Für die beiden Bubble Scan-Operationen wurde eine extra Klasse geschaffen, die eine Methode bereitstellt, um die Erreichbarkeit des Bubble-Servers zu prüfen. Diese Klasse wurde geschaffen, da sich die beiden Scan-Operationen nur minimal voneinander unterscheiden.
 
-Die Funktion öffnet eine Telnet-Verbindung zum Bubble-Server und ruft eine Funktion des Bubble-Servers auf. Sollte die Antwort das erwartete Ergebnis nicht beinhalten oder sollte keine Verbindung aufgebaut werden, wird der Bubble-Server  als nicht erreichbar oder benutzbar angesehen.
+Die Methode öffnet eine Telnet-Verbindung zum Bubble-Server und führt einen Befehl des Bubble-Servers aus. Sollte die Antwort das erwartete Ergebnis nicht beinhalten oder sollte keine Verbindung aufgebaut werden, wird der Bubble-Server  als nicht erreichbar oder benutzbar angesehen.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother Buble Port Prüfung}, captionpos=b, label={lst:bigbrother-bubble-up}]
 def _is_bubble_port_up(self) -> bool:
@@ -142,10 +142,10 @@ def start(self) -> None:
 	self._result = result
 \end{lstlisting} 
 
-Die gegenwärtige Implementierung könnte ähnlich der Bubble Implementierung verändert werden, sodass für die HTTP-Dienste ebenfalls eine abstrakte Klasse definiert wird. Da im Gegensatz aber keine extra Funktion wie \textit{\_is\_bubble\_port\_up()} benötigt wird, ist von der Realisierung einer allgemeinen HTTP-Klasse abgesehen worden.
+Die gegenwärtige Implementierung könnte ähnlich der Bubble Realisierung verändert werden, sodass für die HTTP-Dienste ebenfalls eine abstrakte Klasse definiert wird. Da im Gegensatz aber keine zusätzliche Funktion wie \textit{\_is\_bubble\_port\_up()} benötigt wird, ist von der Realisierung einer allgemeinen HTTP-Klasse abgesehen worden.
 
 \subsubsection{FTP}
-In der FTP Scan-Operation soll gepürft werden, ob der FTP-Server nutzbar und nicht mit anoymen Login verwendbar ist. Dazu wird mit der Python Bibliothek \textit{ftplib} eine Verbindung zum FTP-Server ohne Angabe von Nutzerdaten aufgebaut. Ist die Verbindung erfolgreich, wurde der Dienst durch die Studierenden nicht abgesichert. Sollte die Verbindung fehlerhaft sein, wird angenommen, dass der Dienst nicht zur Verfügung steht. 
+In der FTP Scan-Operation soll gepürft werden, ob der FTP-Server nutzbar und ob der anoymen Login abgeschaltet ist. Dazu wird mit der Python Bibliothek \textit{ftplib} eine Verbindung zum FTP-Server ohne Angabe von Nutzerdaten aufgebaut. Ist die Verbindung erfolgreich, wurde der Dienst durch die Studierenden nicht abgesichert. Sollte die Verbindung fehlerhaft sein, wird angenommen, dass der Dienst nicht zur Verfügung steht. 
 
 Einzig eine Verbindung, die mit dem Fehler \textquote{anonymous access disabled} beendet wird, zählt als erfolgreich, da hier die Verbindung an fehlenden Nutzerdaten gescheitert ist.
  
@@ -217,7 +217,7 @@ def start(self) -> None:
 \subsubsection{XSS}
 Bei der XSS Scan-Operation wird geprüft, ob das Bewertungsformular auf den GameClients weiterhin für XSS-Angriffe offen ist.
 
-Hierzu werden anstatt einer realen Bewertung der Name und die Bewertung mit JavaScript ersetzt und an den Server gesendet. Sollte das gesendete JavaScript ungefiltert in das HTML-Dokument übernommen werden, wurde die XSS-Schwachstelle nicht behoben.
+Hierzu werden anstatt einer realen Bewertung der Name und die Bewertung mit JavaScript ersetzt und an den Server gesendet. Wird das gesendete JavaScript ungefiltert in das HTML-Dokument übernommen, wurde die XSS-Schwachstelle nicht behoben.
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother XSS Save}, captionpos=b, label={lst:bigbrother-xss-save}]
 def start(self) -> None:
   try:
@@ -237,7 +237,7 @@ def start(self) -> None:
 \end{lstlisting}
 
 \subsubsection{Telnet}
-Die Klasse der Telnet Scan-Operation implementiert eine Hilfsfunktion, welche prüft, ob der Telnetport (\textit{23}) erreichbar ist. Hierfür wird die von der Basisklasse implementierte Methode zum Prüfen offener Ports verwendet.
+Die Klasse der Telnet Scan-Operation implementiert eine Hilfsfunktion, welche prüft, ob der Telnetport (\textit{23}) erreichbar ist. Hierzu wird die von der Basisklasse implementierte Methode zum Prüfen offener Ports verwendet.
 
 \begin{lstlisting}[language=Python, frame=single, caption={Big Brother Telnet}, captionpos=b, label={lst:bigbrother-telnet}]
 def _is_telnet_up(self) -> bool:
@@ -271,7 +271,7 @@ def start(self) -> None:
 \subsubsection{SQL-Passwort}
 
 Im Gegensatz zum alten System wird das SQL-Passwort auf dem entfernten Rechner selbst geprüft.
-Dazu wird eine SSH Verbindung mit den Nutzerdaten, die in der \textit{settings}-Tabelle in der Datenbank hinterlegt sind, aufgebaut. Sollte die Verbindung fehlschlagen, wird angenommen, dass das SQL-Passwort nicht geändert worden ist.
+Dazu wird eine SSH-Verbindung mit den Nutzerdaten, die in der \textit{settings}-Tabelle in der Datenbank hinterlegt sind, aufgebaut. Sollte die Verbindung fehlschlagen, wird angenommen, dass das SQL-Passwort nicht geändert worden ist.
 
 Über die SSH Verbindung kann die lokale Datenbank angesprochen werden. Sollte die Authentifizierung mit der Standardkennung aufgrund falscher Nutzerdaten fehlschlagen, wurde das SQL-Passwort geändert.
 
@@ -321,7 +321,7 @@ Einstellungen, die sich meiner Meinung nach häufiger ändern, sind in der Daten
 
 \subsection{Implementierung der Scan-Funktion}
 
-Die eigentliche Scan-Funktion wird mithilfe der Klasse \textit{ScanGuard} implementiert, da für jede teilnehmende Gruppe ein Scanner gestartet wird. Bei der Erstellung eines Objektes dieser Klasse werden die Einstellungen, die teilnehmenden Gruppen und die aktiven Scan-Operationen übergeben.
+Die eigentliche Scan-Funktion wird mithilfe der Klasse \textit{ScanGuard} implementiert, da für jede teilnehmende Gruppe ein Scanner gestartet wird. Bei der Erstellung eines Objektes dieser Klasse werden die Einstellungen, die teilnehmenden Gruppen und die aktiven\linebreak Scan-Operationen übergeben.
 
 Der ScanGuard legt für jede Gruppe ein Objekt der Klasse \textit{Scanner} mit den benötigten Informationen wie IP, aktive Scan-Operationen und Einstellungen an.
 

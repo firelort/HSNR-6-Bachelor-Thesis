@@ -62,7 +62,7 @@ Durch die Konsistenz, die gegebenen Style-Guides und den wiederverwendbaren Code
 
 Die Wartbarkeit der geschrieben Anwendung profitiert von der Konsistenz und den Style Guides, da so jeder der involviert ist, den Code leichter nachvollziehen und verändern kann. Derzeitig ist durch das große Interesse der Community sowie der internen Nutzung bei Google, die Wartbarkeit des Frameworks gesichert. \cite{wahlinWesentlichenVorteileAngular2017}
 
-Bei Angular wird der Code in einzelne Module organisiert. Durch die Nutzung dieses modularen Systems können diverse Teams an ein und derselben Anwendung arbeiten, ohne sich gegenseitig zu behindern. \cite{wahlinWesentlichenVorteileAngular2017}
+Bei Angular wird der Code in einzelne Module organisiert. Durch die Nutzung des modularen Systems können diverse Teams derselben Anwendung arbeiten, ohne sich gegenseitig zu behindern. \cite{wahlinWesentlichenVorteileAngular2017}
 
 Die frühzeitige Fehlererkennung wird durch die Nutzung von TypeScript ermöglicht. TypeScript bietet im Gegensatz zu JavaScript Unterstützung für Typisierung. Die Nutzung der Typen ist in TypeScript nicht vorgeschrieben, aber zur Fehlererkennung empfohlen.
 Des Weiteren ermöglicht das Angular-CLI eine einfache Methode um Unittests und End-zu-End-Tests durchzuführen, so können Fehler entdeckt und behoben werden. \cite{wahlinWesentlichenVorteileAngular2017}
@@ -78,9 +78,9 @@ Anfänglich wurde React noch unter \textquote{BSD  + patents} lizenziert. Diese 
 
 React besteht aus Komponenten und nutzt eine Syntaxerweiterung von JavaScript namens JSX, um JavaScript und HTML zusammenzuführen. Die JSX-Dateien müssen vor der Auslieferung  an den Client in JavaScript transformiert werden. Reacts Komponenten sollten möglichst klein sein und nur eine Aufgabe erledigen. Diese führt zu einer besseren Test- und Wartbarkeit sowie einem besseren Verständnis der Anwendung. \cite{bezJavaScriptEinfuehrungReact2015}
 
-Auch nutzt React für seine React Views einen sogenannten Virtual DOM (Document Object Model). Die Nutzung der React Views ermöglichen es, die Anwendungen auf dem ausliefernden Server zu rendern. Neben diesem können Unterschiede zwischen DOM und vDOM erkannt werden. Dadurch muss nicht mehr die gesamte Seite sondern nur die veränderte Komponente neu gerendert werden. Dieses führt zu einer besseren Performance. \cite{bezJavaScriptEinfuehrungReact2015}
+Auch nutzt React für seine React Views einen sogenannten Virtual DOM (Document Object Model). Die Nutzung der React Views ermöglichen es, die Anwendungen auf dem ausliefernden Server zu rendern. Neben diesem können Unterschiede zwischen DOM und vDOM erkannt werden. Dadurch muss nicht mehr die gesamte Seite sondern nur die veränderte Komponente neu gerendert werden. Dieses resultiert in einer besseren Performance. \cite{bezJavaScriptEinfuehrungReact2015}
 
-Um Beispielsweise eine SPA in React zu entwickeln muss auf Drittanbieter Erweiterungen zurückgegriffen werden oder die entsprechenden Funktionen müssen selber programmiert werden, da diese nicht in React enthalten sind. Dieses stellt entweder Zeitaufwand oder Abhängigkeiten von weiteren Entwicklern dar.
+Um Beispielsweise eine SPA in React zu entwickeln muss auf Drittanbieter Erweiterungen zurückgegriffen werden oder die entsprechenden Funktionen müssen selber programmiert werden, da diese nicht in React enthalten sind. Dies stellt entweder Zeitaufwand oder Abhängigkeiten von weiteren Entwicklern dar.
 
 \subsection{Vue}
 Vue.js wurde durch einen damaligen Mitarbeiter von Google (Evan You) entworfen und entwickelt, nachdem er viel mit Angular gearbeitete hatte. Er wollte nur einen ganz kleinen Teil aus Angular nutzen. So begann er zunächst nur für sich, veröffentlichte aber im Februar 2014 die Version 1.0.0 auf GitHub. \cite{teufelVueJsTutorial2018}
@@ -90,11 +90,11 @@ Das Projekt gewann Beliebtheit auf GitHub und die Community beteiligte sich. Die
 Vue liefert im Gegensatz zu den anderen vorgestellten Frontend-Frameworks nur das Data Binding und die Möglichkeit Komponenten zu programmieren im Kern mit. Zusätzlich benötigte Funktionen können bei Bedarf als Module geladen werden. Dies macht Vue zu einem spezialisierten aber auch universell nutzbaren Framework. Es ist nicht so universell nutzbar wie Angular aber auch nicht so spezialisiert wie React. \cite{teufelVueJsTutorial2018}
 
 Die Dokumentation von Vue ist leicht verständlich und die Community hilft schnell bei Fragen. Anwendungen in Vue sind in eine hierarchische Struktur von kleinen Komponenten untergliedert. Dies soll ermöglichen, dass die Komponenten und so das gesamte System besser zu verstehen sind. Redundanz ist dort zulässig, wo diese benötigt wird.
-Komponenten erhalten neben dem reinen HTML auch CSS und JavaScript und sollen atomar sein. Das heißt, dass diese alleine und ohne Bindungen zu einer Komponente in einer höheren liegenden Ebenen (logisch gesehen) nutzbar sind. Durch diesen Ansatz ist die Software übersichtlicher, was zu einer besseren Test- und Wartbarkeit führt. \cite{teufelVueJsTutorial2018a}
+Komponenten erhalten neben dem reinen HTML auch CSS und JavaScript und sollen atomar sein. Das heißt, dass diese alleine und ohne Bindungen zu einer Komponente in einer höheren liegenden Ebenen -- logisch gesehen -- nutzbar sind. Durch diesen Ansatz ist die Software übersichtlicher, was zu einer besseren Test- und Wartbarkeit führt. \cite{teufelVueJsTutorial2018a}
 
 Damit diese Trennung nicht nur in der Software, sondern auch auf der Dateiebene passiert, nutzt Vue hierfür die sogenannten Single File Components. Diese Dateien enden mit der Dateiendung \textit{.vue} und sind erst nach einer \textquote{Kompilierung} nutzbar. Eine Single File Component trennt HTML, CSS und JavaScript auf, sodass dieses übersichtlich betrachtetet werden kann. \cite{teufelVueJsTutorial2018a}
 
-Ein Nachteil von Vue ist, dass es von keiner großen Firma entwickelt bzw. unterstützt wird, welche die Entwicklung vorantreibt und die Verbreitung erhöht. Des Weiteren werden Angular und React intern selber genutzt, sodass das Framework eine langfristige Nutzung hat. Aber seit circa 2016 nutzen immer mehr Unternehmen Vue. Hier sind beispielsweise GitLab (2016, \cite{schatzWhyWeChose2016}), Laravel und Nintendo zu nennen. \cite{techuzTopWebsitesBuilt2018}
+Ein Nachteil von Vue ist, dass es von keiner großen Firma entwickelt wird, welche die Entwicklung vorantreibt und die Verbreitung erhöht. Des Weiteren werden Angular und React intern selber genutzt, sodass das Framework eine langfristige Nutzung hat. Aber seit circa 2016 nutzen immer mehr Unternehmen Vue. Hier sind beispielsweise GitLab (2016, \cite{schatzWhyWeChose2016}), Laravel und Nintendo zu nennen. \cite{techuzTopWebsitesBuilt2018}
 
 \subsection{Wahl des Frontend-Frameworks}
 
@@ -102,6 +102,6 @@ Für das Frontend sollte entweder Vue oder React genutzt werden, da diese einste
 
 Vue ist schlanker und etwas leichter zu erlernen als React, da hier nur Kenntnisse in JavaScript, CSS und HTML benötigt werden. Bei React werden noch zusätzliche Kenntnisse in JSX benötigt.
 
-Für React spricht die Verbreitung und damit größere Community, welche bei Problemen konsultiert werden kann. Auch ist es wahrscheinlicher, dass Problemstellungen bereits auf Frage-Antwort Plattformen wie StackOverflow behandelt worden sind. 
+Für React spricht die Verbreitung und die damit größere Community, welche bei Problemen konsultiert werden kann. Auch ist es wahrscheinlicher, dass Problemstellungen bereits auf Frage-Antwort Plattformen wie StackOverflow behandelt worden sind. 
 
 Schlussfolgernd sollte für das Frontend React genutzt werden, da hier eine größere Community bei Fragen zur Verfügung steht.

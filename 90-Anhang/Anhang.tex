@@ -57,7 +57,7 @@
 		POST	& /associate						& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
 		DELETE	& /associate/<int:associate\_id>	& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
 		POST	& /auth/flagshop/login				& $\chi$ & $\chi$ & $\surd$ & $\chi$ \\
-		POST	& /auth/login						& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		POST	& /auth/login						& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
 		POST	& /auth/refresh						& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
 		DELETE	& /auth/revoke/access				& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
 		DELETE	& /auth/revoke/refresh				& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
@@ -72,7 +72,7 @@
 		POST	& /challenge/solve/<int:challenge\_id>& $\chi$ & $\chi$ & $\surd$ & $\chi$ \\
 		DELETE	& /challenge/solve/<int:challenge\_id>& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 		GET 	& /client							& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
-		POST	& /client							& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		POST	& /client							& $\surd$ & $\surd$ & $\surd$ & $\chi$ \\
 		GET 	& /client/<int:group\_id>			& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 		DELETE	& /client/<int:group\_id>			& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 		POST 	& /flag								& $\chi$ & $\chi$ & $\surd$ & $\chi$ \\
@@ -126,16 +126,16 @@
 		DELETE	& /service/<int:service\_id>		& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 		GET		& /setting							& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 		PUT		& /setting							& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
-		GET		& /user								& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
-		POST	& /user								& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
-		DELETE	& /user								& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\
+		GET		& /user								& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		POST	& /user								& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
+		DELETE	& /user								& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 		GET 	& /user/<int:user\_id>				& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 		PUT 	& /user/<int:user\_id>				& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 		DELETE	& /user/<int:user\_id>				& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 		GET		& /user/import						& $\surd$ & $\surd$ & $\chi$ & $\chi$ \\
 	\end{tabular}
 	\caption{Berechtigungsmatrix der Routen 2/2}
-	\label{table:gis-permission}
+	\label{table:gis-permission-2}
 \end{table}
 
 

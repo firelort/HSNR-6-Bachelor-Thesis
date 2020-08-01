@@ -2,7 +2,7 @@
 Im Rahmen des Versuches sollen die Studierenden ihre Systeme auf Schwachstellen untersuchen. Diese ausfindig gemachten Schwachstellen sollen im Anschluss beseitigt werden. Eine Überwachung wird benötigt, um zu prüfen, ob die Studierenden diese Schwachstellen behoben haben. Das Abschalten, beziehungsweise die Verhinderung der Verwendung eines Dienstes, stellt in den meisten Fällen keine Behebung der Schwachstelle dar und wird deshalb ebenfalls geprüft. Um diese Überprüfung zu ermöglichen, wird ein Scanner benötigt, der die Dienste auf alle teilnehmenden \textit{GameClients} abfragt und auswertet. Die bei der Überprüfung gesammelten Daten werden benötigt, um die Servicepunkte der Gruppen zu berechnen.
 
 \subsection{Verteilte Scanner}
-Eine Idee für die Lastverteilung des Scanners ist ein verteilter Scanner. Hierbei wird ein Worker Scanner auf jedem GameClient implementiert, welcher das eigene System überwacht. Ein Master Scanner sammelt die von den Worker Scannern erstellten Ergebnisse ein und speichert diese in einer Datenbank ab. 
+Eine Idee für die Lastverteilung des Scanners ist ein verteilter Scanner. Hierbei wird ein Worker-Scanner auf jedem GameClient implementiert, welcher das eigene System überwacht. Ein Main-Scanner sammelt die von den Worker Scannern erstellten Ergebnisse ein und speichert diese in einer Datenbank ab. 
 
 Der Vorteil des verteilten Scanners ist die Skalierbarkeit, da der Scanner auf dem Server nur von weiteren Scannern die Ergebnisse abholen, jedoch keine Überwachung durchführen muss.
 
@@ -11,7 +11,7 @@ Der verteilte Scanner bringt jedoch auch einige Nachteile mit sich. So muss sich
 Auf Grundlage der Nachteile, des Aufwandes der Implementierung und der ausreichenden Leistung des zentralen Scanners für den aktuellen Anwendungsfall wird ein verteilter Scanner nicht in Betracht gezogen. Die Idee des zentralen Scanners wird weiterverfolgt.
 
 \subsection{Zentraler Scanner}
-Die Herangehensweise des zentralen Scanners vermeidet die vorher beschriebenen Nachteile, da dem Ergebnis des Scanners vertraut werden kann und der Scanner zwangsläufig eine externe Sicht auf das System einnimmt. Dem Ergebnis kann vertraut werden, da es auf einem System ohne Einfluss der Mitspielenden berechnet wird.
+Die Herangehensweise des zentralen Scanners vermeidet die vorher beschriebenen Nachteile, da dem Ergebnis des Scanners vertraut werden kann und der Scanner zwangsläufig eine externe Sicht auf das System einnimmt. Das Ergebnis wird auf einem System ohne Einfluss der Mitspielenden berechnet.
 
 \begin{center}
 	\includegraphics[width=\linewidth]{entwurf/scanner/class_scanner}
@@ -33,9 +33,9 @@ Pro GameClient wird ein Objekt der Klasse Scanner für die Überwachung benötig
 
 Bei Starten des Scanners wird die zu bearbeitende Aufgabe spezifiziert.
 
-Bekommt der Scanner die Aufgabe \textquote{INIT}, soll dieser die Service Datenbank mit den implementierten Scan-Operationen füllen, sodass Administrierende diese an- oder ausschalten können. Um die Service Datenbank zu füllen, wird zunächst ein Dummy der Klasse Scanner angelegt. Aus diesem Dummy Objekt werden von allen Scan-Operationen der Anzeigename und der interne Name ausgelesen. Nach dem Auslesen alle Operationen werden die erhaltenen Daten gebündelt in die Datenbank geschrieben. Danach beendet der Scanner die Verbindung zur Datenbank und endet erfolgreich mit dem Statuscode 0.
+Bekommt der Scanner die Aufgabe \textquote{INIT}, soll dieser die Datenbank Service mit den implementierten Scan-Operationen füllen, sodass Administrierende diese an- oder ausschalten können. Um die Datenbank Service zu füllen, wird zunächst ein Dummy der Klasse Scanner angelegt. Aus diesem Objekt werden von allen Scan-Operationen der Anzeigename und der interne Name ausgelesen. Nach dem Auslesen alle Operationen werden die erhaltenen Daten gebündelt in die Datenbank geschrieben. Danach beendet der Scanner die Verbindung zur Datenbank und endet erfolgreich mit dem Statuscode 0.
 
-Falls die Aufgabe des Scanners \textquote{SCAN} ist, wird der Scan der GameClients gestartet. Hierzu werden die teilnehmenden Gruppen und das Intervall der Scandurchgänge aus der Datenbank ausgelesen. Neben diesem werden die aktiven Scanner aus der Datenbank abgefragt. Sind alle Informationen vorhanden, wird für jede Gruppe ein Scanner Objekt der Klasse Scanner erstellt. Bei der Erstellung werden die aktiven Scan-Operationen sowie die zu überwachende Gruppe übergeben. Das Scanner Objekt legt dann für die benötigten Scan-Operationen die jeweiligen Objekte an.
+Falls die Aufgabe des Scanners \textquote{SCAN} ist, wird der Scan der GameClients gestartet. Hierzu werden die teilnehmenden Gruppen und das Intervall der Scandurchgänge aus der Datenbank ausgelesen. Neben diesem werden die aktiven Scanner aus der Datenbank abgefragt. Sind alle Informationen vorhanden, wird für jede Gruppe ein Objekt der Klasse Scanner erstellt. Bei der Erstellung werden die aktiven Scan-Operationen sowie die zu überwachende Gruppe übergeben. Das Objekt legt dann für die benötigten Scan-Operationen die jeweiligen Objekte an.
 
 \begin{center}
 	\includegraphics{entwurf/scanner/state_scanner_create}
@@ -50,7 +50,7 @@ Nach dem Anlegen aller Scanner wird die Methode \textit{start()} parallel gestar
 	\captionof{figure}{Starten eines Scanners (Zustandsdiagramm)}
 \end{minipage}
 
-Beim Ausführen der Methode \textit{start()} des Scanners wird zunächst geprüft, ob das entfernte System erreichbar ist. Sollte dies nicht der Fall sein, werden alle nachfolgenden Scan-Operationen nicht durchgeführt, da diese fehlschlagen würden. Im Anschluss wird getestet, ob der HTTP Dienst des entfernten Systems erreichbar ist, da dieser für einige weitere Tests benötigt wird. Ist der HTTP Dienst erreichbar, werden die Scan-Operationen, welche auf dem HTTP Dienst basieren, mit in die Liste der abzuarbeitenden Scan-Operationen aufgenommen. Danach werden alle verbleibenden Scan-Operationen parallel gestartet. Nachdem die Scan-Operationen ihre Aufgabe abgeschlossen haben, sammelt der Scanner alle Ergebnisse ein. Falls die \textit{Host UP Scan-Operation} oder die \textit{HTTP UP Scan-Operation} deaktiviert ist, werden diese aus dem Ergebnis entfernt. Danach übermittelt der Scanner die gesammelten Ergebnisse an die Datenbank und beendet seine Scan-Runde.
+Beim Ausführen der Methode \textit{start()} des Scanners wird zunächst geprüft, ob das entfernte System erreichbar ist. Sollte dies nicht der Fall sein, werden alle nachfolgenden Scan-Operationen nicht durchgeführt, da diese fehlschlagen würden. Im Anschluss wird getestet, ob der HTTP-Dienst des entfernten Systems erreichbar ist, da dieser für einige weitere Tests benötigt wird. Ist der HTTP-Dienst erreichbar, werden die Scan-Operationen, welche auf dem HTTP-Dienst basieren, mit in die Liste der abzuarbeitenden Scan-Operationen aufgenommen. Danach werden alle verbleibenden Scan-Operationen parallel gestartet. Nachdem die Scan-Operationen ihre Aufgabe abgeschlossen haben, sammelt der Scanner alle Ergebnisse ein. Falls die \textit{Host UP Scan-Operation} oder die \textit{HTTP UP Scan-Operation} deaktiviert sind, werden diese aus dem Ergebnis entfernt. Danach übermittelt der Scanner die gesammelten Ergebnisse an die Datenbank und beendet seine Scan-Runde.
 
 \subsection{Scan-Operationen}
 
@@ -58,21 +58,21 @@ Die Scan-Operationen werden parallel abgearbeitet, um so die Dauer eines komplet
 
 \begin{itemize}
 	\item Host-Up \\
-	prüft, ob der entfernte Rechner mit Hilfe von ICMP Paketen erreichbar ist
+	prüft, ob der entfernte Rechner mithilfe von ICMP Paketen erreichbar ist
 	\item Bubble-Up \\
-	prüft, ob der Bubble Server erreichbar ist und ob die Telnet Steuerung funktioniert
+	prüft, ob der Bubble-Server erreichbar ist und ob die Telnet Steuerung funktioniert
 	\item BubbleNg-Up\\
-	prüft, ob der Bubble NG Server erreichbar ist und ob die Telnet Steuerung funktioniert
+	prüft, ob der Bubble-NG-Server erreichbar ist und ob die Telnet Steuerung funktioniert
 	\item FTP-Save\\
-	prüft, ob der FTP Server erreichbar und ob die Nutzung des anonymen Logins unterbunden worden ist
+	prüft, ob der FTP-Server erreichbar und ob die Nutzung des anonymen Logins unterbunden worden ist
 	\item Htaccess-Save\\
-	prüft, ob die Kombination aus Nutzername und Passwort des Htaccess Schutzes geändert wurde
+	prüft, ob die Kombination aus Nutzername und Passwort des Htaccess-Schutzes geändert wurde
 	\item SQL-Injection-Save\\
 	prüft, ob die SQL-Injection im Login zum Membersbereich verhindert wurde
 	\item SQL-Password-Save\\
 	prüft, ob das lokale Passwort des SQL-Nutzers root geändert wurde
 	\item Telnet-Save\\
-	prüft, ob der Telnet Server deaktiviert oder deinstalliert wurde
+	prüft, ob der Telnet Server deaktiviert bzw. deinstalliert wurde
 	\item HTTP-UP\\
 	prüft, ob der HTTP Dienst des entfernten Rechners nutzbar ist
 	\item HTTPS-UP\\
@@ -87,4 +87,4 @@ Die Scan-Operationen werden parallel abgearbeitet, um so die Dauer eines komplet
 	\label{fig:dfd-scanner}
 \end{center}
 
-Die im Datenflussdiagramm (\autoref{fig:dfd-scanner}) sichtbaren, aber bisher nicht beschriebenen Datenflüsse finden zwischen dem Webserver und dem Scanner oder einer Scan-Operation und dem GameClient statt. Administrierende können über den Webserver den Scanner an- und abschalten. Die Scan-Operationen fragen bei dem GameClient ihren überwachten Dienst beziehungsweise ihre überwachte Schwachstelle an und erhalten eine Antwort zurück. Anhand dieser wird das Ergebnis der Scan-Operationen bestimmt.
+Die im Datenflussdiagramm (\autoref{fig:dfd-scanner}) sichtbaren, aber bisher nicht beschriebenen Datenflüsse finden zwischen dem Webserver und dem Scanner oder einer Scan-Operation und dem GameClient statt. Administrierende und betreuende Personen können über den Webserver den Scanner an- und abschalten. Die Scan-Operationen fragen bei dem GameClient ihren überwachten Dienst beziehungsweise ihre überwachte Schwachstelle an und erhalten eine Antwort zurück. Anhand dieser wird das Ergebnis der Scan-Operationen bestimmt.

@@ -25,6 +25,6 @@ Die zweite Komponente \textit{Game Information System} stellt eine Schnittstelle
 \paragraph{Datenhaltung}
 Die Ebene \textit{Datenhaltung} beinhaltet die Komponenten \textit{Redis} und \textit{Database}. 
 
-Die Komponente \textit{Redis} ist nach der gleichnamigen Software Redis benannt. Bei Redis handelt es sich auch um eine Datenbank und könnte daher mit in die Komponente \textit{Database} aufgenommen werden; die Trennung erfolgt aber auf der Grundlage der Verwendung innerhalb der Software-Architektur. Die Redis-Datenbank wird als Cache verwendet und persistiert die Daten nicht auf der Festplatte sondern nur im Hauptspeicher.
+Die Komponente \textit{Redis} ist nach der gleichnamigen Software Redis benannt. Bei Redis handelt es sich auch um eine Datenbank und könnte daher mit in die Komponente \textit{Database} aufgenommen werden; die Trennung erfolgt aber auf der Grundlage der Verwendung innerhalb der Software-Architektur. Die Redis-Datenbank wird als Cache verwendet und persistiert die Daten nicht auf der Festplatte, sondern im Hauptspeicher.
 
 Anders als bei Redis werden in der Komponente \textit{Database} die Daten auf eine Festplatte geschrieben, um diese persistent nutzen zu können.

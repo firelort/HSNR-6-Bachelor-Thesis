@@ -33,10 +33,10 @@ Die einzelnen Scan-Operationen werden von einem Scanner parallel abgearbeitet. P
 Die Ergebnisse werden in der Datenbank für die Auswertung festgehalten und durch eine Reihe von Views als Punkte berechnet. Die Gewichtung der einzelnen Scan-Operationen kann durch die betreuenden Personen individuell eingestellt werden.
 
 Neben den Diensten sollen die Studierenden eigene Flags schützen und fremde abgreifen.
-Flags stellen geheime Informationen dar und sind eindeutige Strings, welche durch das Hashing eines Seeds mit einem Hash-Algorithmus entstehen. Sie werden bei der Registrierung eines GameClients am GIS erstellt.
-Derzeitig wird der \textit{md5}-Algorithmus verwendet und der Seed setzt sich aus Token + IP-Adresse der Gruppe + Geheimnis + Zähler zusammen.
+Flags stellen geheime Informationen dar und sind eindeutige Strings, welche durch das Hashen eines Seeds mit einem Hash-Algorithmus entstehen. Sie werden bei der Registrierung eines GameClients am GIS erstellt.
+Derzeitig wird der \textit{MD5}-Algorithmus verwendet und der Seed setzt sich aus Token + IP-Adresse der Gruppe + Geheimnis + Zähler zusammen.
 
-Eine Abgabe von Flags ist über die in der Komponente Game Information System implementierte REST-Schnittstelle für angemeldete Studierende möglich. Die Gültigkeit der abgegebenen Flags wird mithilfe der vorliegenden Flags validiert. Eine Abgabe wird nur innerhalb der vorgesehenen Zeiten akzeptiert. Eventuelle Regelverstöße werden mit Strafpunkten geahndet.
+Eine Abgabe von Flags ist über die in der Komponente Game Information System implementierte REST-Schnittstelle für angemeldete Studierende möglich. Die Gültigkeit der abgegebenen Flags wird mithilfe der im System vorliegenden Flags validiert. Eine Abgabe wird nur innerhalb der vorgesehenen Zeiten akzeptiert. Eventuelle Regelverstöße bei der Abgabe werden automatisch mit Strafpunkten geahndet.
 
 Neben der Abgabe ermöglicht die REST-Schnittstelle den betreuenden Personen das Spiel zu verwalten und zu steuern. Es unterstützt spielende und betreuende Personen, indem es den durch die Datenbank berechneten Spielstand inklusive der einfließenden Punkte anzeigt.
 

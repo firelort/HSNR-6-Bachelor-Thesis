@@ -172,6 +172,18 @@
 	\setcounter{biburllcpenalty}{100}
 	
 	% Tabellenverzeichnis Codeverzeichnis Abbildungsverzeichnis Quellenverzeichnis
-	{\listoffigures \let\cleardoublepage\newpage \lstlistoflistings \let\cleardoublepage\\\ \listoftables \let\cleardoublepage\newpage \printbibliography}
+	{
+		\listoffigures 
+		\let\cleardoublepage\newpage 
+		
+		\lstlistoflistings 
+		\let\cleardoublepage\
+		 
+		\listoftables 
+		\let\cleardoublepage\newpage 
+		
+		% Manueller Zeilenumbruch für die Bibliography
+		\hyphenation{}
+		\printbibliography}
 	
 \end{document}

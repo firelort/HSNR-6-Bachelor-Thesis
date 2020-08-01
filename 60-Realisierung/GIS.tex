@@ -1,7 +1,7 @@
 \textbf{}\section{Game Information System}
 Das Game Information System wurde als REST-Schnittstelle implementiert. Sie kann über einen REST-Client wie cURL, Insomnia oder einen eigenen Webclient angesprochen werden. Für die Realisierung wurde aufgrund der in \autoref{sec:Backend} angeführten Argumenten Flask als Framework gewählt.
 
-Zuerst wird die Flask Anwendung mithilfe der Konfigurationsdatei eingestellt. Danach werden alle verwendeten Erweiterungen mit der Flask Anwendung vertraut gemacht. Im Folgenden werden die Befehle des Command-line Interfaces angelegt. Zum Schluss werden die Routen registriert und nicht vorhandene Einstellungen mit Standardwerten in die \textit{settings}-Tabelle der Datenbank geschrieben.
+Zuerst wird die Flask-Anwendung mithilfe der Konfigurationsdatei eingestellt. Danach werden alle verwendeten Erweiterungen mit der Flask-Anwendung vertraut gemacht. Im Folgenden werden die Befehle des Command-line Interfaces angelegt. Zum Schluss werden die Routen registriert und nicht vorhandene Einstellungen mit Standardwerten in die \textit{settings}-Tabelle der Datenbank geschrieben.
 
 In der Produktionsumgebung wird zur Betreibung der Web Server Gateway Interface (WSGI) HTTP Server \textit{gunicorn} verwendet, da der von Flask mitgebrachte WSGI Server nur für Entwicklungszwecke genutzt werden sollte. Ein WSGI Server wird benötigt, um Anfragen an eine in Python geschriebene Webanwendung weiterzuleiten.
 
@@ -50,7 +50,7 @@ Mit dem Object-Relational Mapping (ORM) können Daten aus der Datenbank mithilfe
 
 Über die Manipulation des Objekts lassen sich Änderungen am Datenbestand in der Datenbank durchführen. 
 
-Für das ORM wird das Python-Toolkit \textit{SQLAlchemy} verwendet und durch die Flask Erweiterung \textit{Flask-SQLAlchemy} für die Nutzung innerhalb der Flask Anwendung konfiguriert. 
+Für das ORM wird das Python-Toolkit \textit{SQLAlchemy} verwendet und durch die Flask Erweiterung \textit{Flask-SQLAlchemy} für die Nutzung innerhalb der Flask-Anwendung konfiguriert. 
 
 Die Klassen werden von der durch SQLAlchemy bereitgestellten Klasse \textit{Model} abgeleitet. Für jede zu erzeugende Spalte in der Datenbank wird im ORM-Modell ein Attribut vom Typ \textit{Column}-Objekt erstellt. Das \textit{Column}-Objekt wird ebenfalls von \textit{SQLAlchemy} zur Verfügung gestellt und erhält Informationen wie den Datentyp und Constraints (Primary Key / Foreign Key).
 Das Vorgehen wird exemplarisch in \autoref{lst:gis-orm-model} dargestellt.
@@ -83,11 +83,11 @@ Das Accountmodell speichert das Passwort im privaten Attribute \textit{\_passwor
 
 Durch die Nutzung von \textit{getter}- und \textit{setter}-Methoden wird sichergestellt, dass alle Passwörter auf die gleiche Art und Weise gehasht werden und niemals im Klartext vorliegen.
 
-Für das Passworthashing wird der Algorithmus \textit{bcrypt} verwendet, da dieser sequentiell abgearbeitet wird und daher langsamer als beispielsweise  \textit{sha} berechnet werden kann. Für die Erstellung eines Hashwertes wird zwingend, was aus IT-Sicherheitssicht eine gute Eigenschaft ist, ein Salt benötigt. Außerdem ist \textit{bcrypt} zukunftssicher, da der Algorithmus durch die verwendeten Rounds langsamer gemacht werden kann. Je mehr Rounds verwendet werden, desto länger dauert die Erzeugung eines Passwort-Hash. Diese Eigenschaften sollen Brute-Force-Angriff verlangsamen beziehungsweise teurer machen. \cite{ariasHashingActionUnderstanding2018}
+Für das Passworthashing wird der Algorithmus \textit{bcrypt} verwendet, da dieser sequentiell abgearbeitet wird und daher langsamer als beispielsweise  \textit{sha} berechnet wird. Für die Erstellung eines Hashwertes wird zwingend, was aus IT-Sicherheitssicht eine gute Eigenschaft ist, ein Salt benötigt. Außerdem ist \textit{bcrypt} zukunftssicher, da der Algorithmus durch die Anzahl der verwendeten Rounds langsamer gemacht werden kann. Je mehr Rounds verwendet werden, desto länger dauert die Erzeugung eines Passwort-Hash. Diese Eigenschaften sollen Brute-Force-Angriff verlangsamen beziehungsweise teurer machen. \cite{ariasHashingActionUnderstanding2018}
 
-Die verwendeten Rounds bei der Erstellung des bcrypt-Passworthash mussten von 15 auf 10 gesetzt werden, da der Import einer bestehenden Hackit-Zugangsdaten-Datei mehr als 5 Minuten gedauert hat.
+Die bei der Erstellung verwendeten Rounds des bcrypt-Passworthash mussten von 15 auf 10 gesetzt werden, da der Import einer bestehenden Hackit-Zugangsdaten-Datei mehr als 5 Minuten gedauert hatte.
 
-\begin{lstlisting}[language=bash, frame=single, caption={GIS Nutzerpasswort}, captionpos=b, label={lst:gis-orm-user-pw-hash}]
+\begin{lstlisting}[language=bash, frame=single, caption={GIS Passwort des Accounts}, captionpos=b, label={lst:gis-orm-user-pw-hash}]
 class User(db.Model):
 ...
 _password = db.Column('password', db.String, nullable=False)
@@ -106,9 +106,9 @@ return bcrypt.verify(password, self.password)
 \end{lstlisting}
 
 \subsubsection{Flaggenerierung}\label{subsub:realisierung-gis-flag-hash}
-Für die Flaggenerierung muss derselbe Algorithmus und Seed wie auf dem GameClient verwendet werden, damit dieselben Flags auf dem Server und dem Client generiert werden. Dazu wird ein seed (näheres zum seed ist in der Flaggenerierung in \autoref{sub:realisierung-gis-routen} beschrieben) mithilfe des Hash-Algorithmus \textit{MD5} gehasht. Damit alle Flags als md5-Hash in der Datenbank abgelegt werden, wird auch hier eine \textit{getter}- und eine \textit{setter}-Methoden sowie ein privates Attribut genutzt. Die \textit{setter}-Methode erzeugt einen md5-Hash und speichert diesen im privaten Attribut ab. Sollte die Hashfunktion geändert werden, kann diese wie im Kommentar in \autoref{lst:gis-password-hashing} erkennbar geändert werden.
+Für die Flaggenerierung muss derselbe Algorithmus und Seed wie auf dem GameClient verwendet werden, damit dieselben Flags auf dem Server und dem Client generiert werden. Dazu wird ein Seed -- näheres zum Seed ist in der Flaggenerierung in \autoref{sub:realisierung-gis-routen} beschrieben -- mithilfe des Hash-Algorithmus \textit{MD5} gehasht. Damit alle Flags als MD5-Hash in der Datenbank abgelegt werden, wird auch hier eine \textit{getter}- und eine \textit{setter}-Methoden sowie ein privates Attribut genutzt. Die \textit{setter}-Methode erzeugt einen md5-Hash und speichert diesen im privaten Attribut ab. Sollte die Hashfunktion geändert werden, kann diese wie im Kommentar in \autoref{lst:gis-password-hashing} erkennbar geändert werden.
 
-\begin{lstlisting}[language=bash, frame=single, caption={GIS Nutzerpasswort}, captionpos=b, label={lst:gis-password-hashing}]
+\begin{lstlisting}[language=bash, frame=single, caption={GIS Hashen der Flags}, captionpos=b, label={lst:gis-password-hashing}]
 class Flag(db.Model):
   ...
   _value = db.Column('flag_value', db.String, primary_key=True)
@@ -125,7 +125,7 @@ class Flag(db.Model):
 
 \subsection{Migrationen}\label{sub:realisierung-migration}
 
-Die Datenbank Migrationen werden aus den vorhanden ORM Modellen automatisch mit dem Datenbank-Migrationswerkzeug \textit{Alembic} und der Erweiterung \textit{Flask-Migrate} erzeugt. Einzig für die in \autoref{sec:Realisierung-Datenbank} eingeführten Views mussten manuell eigene Migrationsskripts angelegt werden.
+Die Datenbankmigrationen werden aus den vorhanden ORM Modellen automatisch mit dem Datenbank-Migrationswerkzeug \textit{Alembic} und der Erweiterung \textit{Flask-Migrate} erzeugt. Einzig für die in \autoref{sec:Realisierung-Datenbank} eingeführten Views mussten manuell eigene Migrationsskripts angelegt werden. Das Vorgehen kann im Quellcode nachvollzogen werden.
 
 Ein solches Skript kann nach Änderungen an einem oder mehreren ORM Models durch den in \ref{lst:gis-create-migration} gezeigten Befehl erzeugt werden.
 
@@ -133,7 +133,7 @@ Ein solches Skript kann nach Änderungen an einem oder mehreren ORM Models durch
 flask db migrate
 \end{lstlisting}
 
-Mit den Skripts ist es möglich, die Datenbank auf ältere Iterationen zurückzusetzen, da bei Erstellung eines Iterationsschrittes auch der Weg zurück festgehalten wird.
+Mit den Skripts ist es möglich, die Datenbank auf ältere Iterationen zurückzusetzen, da bei Erstellung eines Iterationsschrittes auch der Rückweg festgehalten wird.
 
 Um die vorliegenden Migrationsskripts auf die Datenbank anzuwenden, werden die in \autoref{lst:gis-use-migration} gezeigten Befehle genutzt.
 
@@ -146,20 +146,20 @@ Die realisierten Tabellen und Views wurden in \autoref{sec:Realisierung-Datenban
 
 \subsection{Authentifizierung}\label{sub:realisierung-authentifizierung}
 
-Für die Authentifizierung werden, wie im Entwurf angedacht, Tokens, spezieller JSON Web Tokens, verwendet. Es werden ein Access- und ein Refresh-Token nach einem erfolgreichen Login für den Nutzenden erzeugt. Diese Tokens werden in der Redis-Datenbank für die Dauer ihrer Gültigkeit abgespeichert, um sie bei Bedarf invalidieren zu können. Bei der Authentifizierung wird zuerst geprüft, ob der vom Client gesendete Token mit dem richtigen Secret Key signiert ist. Danach wird geprüft, ob der Token als gültig in der Redis-Datenbank hinterlegt ist und innerhalb seiner Lebensspanne verwendet wird.
+Für die Authentifizierung werden, wie im Entwurf angedacht, Tokens, spezieller JSON Web Tokens (JWT), verwendet. Es werden ein Access- und ein Refresh-Token nach einem erfolgreichen Login für den Nutzenden erzeugt. Diese Tokens werden in der Redis-Datenbank für die Dauer ihrer Gültigkeit abgespeichert, um sie bei Bedarf invalidieren zu können. Bei der Authentifizierung wird zuerst geprüft, ob der vom Client gesendete Token mit dem richtigen Secret Key signiert ist. Danach wird geprüft, ob der Token als gültig in der Redis-Datenbank hinterlegt ist und innerhalb seiner Lebensspanne verwendet wird.
 
 Der Refresh-Token hat eine Gültigkeit von 8 Stunden und kann verwendet werden, um weitere Access-Tokens ohne Angabe der Nutzerdaten zu erstellen. Die Lebensdauer des Refresh-Tokens wurde auf 8 Stunden gesetzt, da es vorkommen kann, dass der Versuch zweimal hintereinander durchgeführt wird. Das betreuende Personal muss sich dann nicht erneut anmelden.
 
-Der Access-Token besitzt eine Gültigkeit von 15 Minuten und wird zur Authentifizierung und Autorisierung verwendet. Die Gültigkeit ist auf 15 Minuten begrenzt, damit bei einem Verlust des Tokens, einen Angreifer maximal 15 Minuten Schaden anrichten kann. Um Anfragen an die SQL-Datenbank zu minimieren, werden Informationen wie Rolle oder Gruppenzugehörigkeit eines Accounts mit in den Access-Token übernommen. Änderungen an der Berechtigung eines Accounts werden so aber erst nach einem erneuten Ausstellen des Access-Tokens gültig.
+Der Access-Token besitzt eine Gültigkeit von 15 Minuten und wird zur Authentifizierung und Autorisierung verwendet. Die Gültigkeit ist auf 15 Minuten begrenzt, damit bei einem Verlust des Tokens, einen Angreifer maximal 15 Minuten Schaden anrichten kann. Um Anfragen an die SQL-Datenbank zu minimieren, werden Informationen wie Rolle oder Gruppenzugehörigkeit eines Accounts mit in den Access-Token übernommen. Änderungen an der Rolle eines Accounts werden so aber erst nach einem erneuten Ausstellen des Access-Tokens gültig.
 
 \subsubsection{Decorator für Routen}
-Um die Routen mit Berechtigungen zu versehen und redundanten Code zu verhindern wird bei der Absicherung auf Decorator zurückgegriffen. Sollte eine Route mit einem Decorator abgesichert werden, wird vor dem Aufruf der implementierten Methode geprüft, ob der JWT die benötigten Berechtigungen besitzt.
+Um die Routen mit Berechtigungen zu versehen und redundanten Code zu verhindern wird bei der Absicherung auf Decorator zurückgegriffen. Sollte eine Route mit einem Decorator abgesichert werden, wird vor dem Aufruf der implementierten Funktionalität geprüft, ob der JWT die benötigten Berechtigungen besitzt.
 
 In \autoref{table:gis-permission} sind die Routen mit ihren benötigten Berechtigungen dargestellt.
 
 Es werden zwei Decorator zur Verfügung gestellt. Beide prüfen, ob der Token im Feld \textit{role} die benötigte Rolle gesetzt hat. Der Unterschied zwischen \textit{role\_required} und \textit{roles\_required} ist, dass bei \textit{roles\_required} eine Liste von erlaubten Rollen angegeben werden kann. Dies wird auch im Code deutlich, da anstatt eines Vergleiches von Variablen geprüft wird, ob die Rolle, die im JWT codiert ist, in der Liste der erlaubten Rollen vorhanden ist.
 
-\begin{lstlisting}[language=Python, frame=single, caption={GIS Berechtigungsprüfung}, captionpos=b, label={lst:gis-permission-wrapper}]
+\begin{lstlisting}[language=Python, frame=single, caption={GIS Prüfung der Rollen}, captionpos=b, label={lst:gis-permission-wrapper}]
 def roles_required(roles: list):
   def _roles_required(fn):
     @wraps(fn)
@@ -180,7 +180,7 @@ Im Folgenden werden die implementierten Routen aufgegriffen. Eine Übersicht mit
 
 Die Erweiterung \textit{Flask-RESTful} wird verwendet, um die verschiedenen Methoden eines Endpoints einer Klasse zuzuordnen. Die Klasse wird von der Klasse \textit{Resource} abgeleitet. Andernfalls wäre die API aus vielen verschiedenen Funktionen entstanden.
 
-\begin{lstlisting}[language=Python, frame=single, caption={GIS Endpoint}, captionpos=b, label={lst:gis-endpoint}]
+\begin{lstlisting}[language=Python, frame=single, caption={GIS Beispiel eines Endpoints}, captionpos=b, label={lst:gis-endpoint}]
 class EndpointName(Resource):
   def get(self):
     ...
@@ -204,7 +204,7 @@ Um die Gültigkeit von Access-Tokens zu prüfen, kann der Endpoint \textit{/secu
 \subsubsection{Login}
 Für die Authentifizierung werden mehrere Endpoints benötigt.
 
-Über den Endpoint \textit{/auth/login} werden mit einer validen Kombination aus Nutzernamen und Passwort der Access- und der Refresh-Token ausgestellt. Dazu müssen die Nutzerdaten mit der \textit{POST}-Methode an den Server übermittelt werden. Die Tokens werden dann im JSON-Format zurück gesendet.
+Der Endpoint \textit{/auth/login} stellt nach einem erfolgreichem Login, mit einer validen Kombination aus Nutzernamen und Passwort, den Access- und der Refresh-Token aus. Dazu müssen die Nutzerdaten mit der \textit{POST}-Methode an den Server übermittelt werden. Die Tokens werden dann im JSON-Format zurück gesendet.
 
 \begin{lstlisting}[frame=single, caption={GIS Access- und Refresh-Token}, captionpos=b, label={lst:gis-login-tokens}]
 {
@@ -220,14 +220,14 @@ Die Gültigkeit kann wie bereits in \autoref{sub:realisierung-authentifizierung}
 
 Da die Access- und Refresh-Tokens anderes validiert werden, müssen für das Zurückrufen der Tokens zwei Endpoints zur Verfügung stehen. Access-Tokens können an den Endpoint \textit{/auth/revoke/access} und Refresh-Tokens an den Endpoint \textit{/auth/revoke/refresh} gesendet werden. Sollten die angekommenen Tokens gültig sein, werden sie dann in der Redis-Datenbank als Zurückgerufen markiert.
 
-Da der Access-Token für den Flagshop anders als der normale Access-Token aufgebaut ist, wird der Enpoint \textit{/auth/flagshop} benötigt. Dieser ist nur mit einem gültigen \textquote{normalen} Access-Token nutzbar. Für den Flagshop wird nur ein Access-Token mit einer Gültigkeit von 15 Minuten ausgestellt.
+Da der Access-Token für den Flagshop anders als der normale Access-Token aufgebaut ist, wird der Enpoint \textit{/auth/flagshop} benötigt. Dieser ist nur mit einem gültigen normalen Access-Token nutzbar. Für den Flagshop wird nur ein Access-Token mit einer Gültigkeit von 15 Minuten ausgestellt.
 
 Ein Login ist für eine spielende Person nur dann möglich, wenn die eigene IP-Adresse in der Liste der Gruppen oder deren Mitglieder vorhanden ist. Andernfalls scheitert der Login mit einer entsprechenden Fehlermeldung. Dies ist notwendig, damit das System bestimmen kann, für welche Gruppe eine Aktion ausgeführt worden ist.
 
 \subsubsection{Account}
 Für die Verwaltung der Accounts werden zwei Endpoints bereitgestellt. 
 
-Der Endpoint (\textit{/user}) stellt über die Methode \textit{GET} für die betreuenden und administrierenden Personen eine Liste der im System vorliegen Log-In-Informationen bereit. Über die Methode \textit{POST} können besagte Personen neue Accounts anlegen. Accounts mit den Rollen \textit{supervisor} und \textit{admin} können nur durch administrierende Personen angelegt werden. Sollten alle Accounts mit der Rolle \textit{player} gelöscht werden, kann die Methode \textit{DELETE} genutzt werden. Theoretisch könnte mit dieser Methode auch Accounts anderer Rollen gelöscht werden. Die Methode wurde limitiert, um ein unabsichtliches Löschen der Accounts des Hochschulpersonals zu verhindern.
+Der Endpoint (\textit{/user}) stellt über die Methode \textit{GET} für die betreuenden und administrierenden Personen eine Liste der im System vorliegen Login-Informationen bereit. Über die Methode \textit{POST} können besagte Personen neue Accounts anlegen. Accounts mit den Rollen \textit{supervisor} und \textit{admin} können nur durch administrierende Personen angelegt werden. Die Methode \textit{DELETE} kann genutzt werden, um alle Accounts der Rolle \textit{player} gleichzeitig zu löschen. Theoretisch könnte mit dieser Methode auch Accounts anderer Rollen gelöscht werden. Die Methode wurde limitiert, um ein unabsichtliches Löschen der Accounts des Hochschulpersonals zu verhindern.
 
 \begin{lstlisting}[language=Python, frame=single, caption={GIS Löschen auf player-Accounts begrenzen}, captionpos=b, label={lst:gis-delete-all-players}]
 if args['role'] != 'player':
@@ -238,9 +238,9 @@ Die Funktion wurde geschaffen, um die Hackit-Zugangsdaten nach Ende des Semester
 
 Über die Methoden \textit{GET}, \textit{PUT} und \textit{DELETE} des Endpoints \textit{/user/<int:user\_id>} wird eine Verwaltung einzelner Accounts ermöglicht. Hierzu muss bei der Anfrage die Account-ID übergeben werden. Die Methode \textit{GET} zeigt alle Informationen zu dem bestimmten Account an. Über die Methode \textit{PUT} können einzelne Informationen verändert und über die Methode \textit{DELETE} kann der Account gelöscht werden.
 
-Die betreuenden Personen dürfen auch hier nur Accounts der Rolle \textit{player} sowie ihre eigenen verwalten. Die eigene Rolle kann nur auf die Rolle \textit{player} geändert werden. Dies soll unerlaubte Rechteausweitung verhindern. Des Weiteren ist es nicht möglich den aktuellen Account zu löschen. Sollte dieses benötigt werden, muss dafür ein weiterer Account genutzt werden.
+Die betreuenden Personen dürfen auch hier nur Accounts der Rolle \textit{player} sowie ihre eigenen verwalten. Die eigene Rolle kann nur auf die Rolle \textit{player} geändert werden. Dies soll unerlaubte Rechteausweitung verhindern. Des Weiteren ist es nicht möglich den aktuellen Account zu löschen. Sollte die Löschung eines Accounts benötigt werden, muss dafür ein weiterer Account genutzt werden.
 
-Außerdem ist ein dritter Endpoint, erreichbar unter \textit{/user/import}, implementiert, der das Importieren von Hackit-Zugangsdaten ermöglicht. Hierfür wird eine Datei per HTTP-Request \textit{POST} an den Server gesendet. Die Login-In-Informationen werden zeilenweise ausgelesen und mit der Rolle \textit{Player} angelegt. Ein Import von beispielsweise Accounts der Rolle \textit{admin} kann auf ähnliche Art realisiert werden, wurde jedoch nicht implementiert, da dies keine Anforderung an die Software war.
+Außerdem ist ein dritter Endpoint, erreichbar unter \textit{/user/import}, implementiert, der das Importieren von Hackit-Zugangsdaten ermöglicht. Hierfür wird eine Datei per \textit{POST}-Anfrage an den Server gesendet. Die Login-Informationen werden zeilenweise ausgelesen und mit der Rolle \textit{Player} angelegt. Ein Import von beispielsweise Accounts der Rolle \textit{admin} kann auf ähnliche Art realisiert werden, wurde jedoch nicht implementiert, da dies keine Anforderung an die Software war.
 
 \subsubsection{Gruppen}
 Für die Verwaltung der teilnehmenden Gruppen werden zwei Endpoints zur Verfügung gestellt.
@@ -281,7 +281,7 @@ Der Endpoint \textit{/associate} ermöglicht über die \textit{POST}-Methode das
 \subsubsection{Flag}
 Über den Endpoint \textit{/flag} können die Studierenden die gefundenen und erhaltenden Flags abgeben. Für die Punkteverrechnung wird die im Access-Token codierte Gruppe benötigt. Eine Abgabe von Flags wird verhindert, falls das Spiel nicht aktiv ist (noch nicht gestartet, beendet oder pausiert).
 
-Die Validierung der Flag wird mithilfe der \textit{flags}-Tabelle durchgeführt, indem geprüft wird ob die abgegebene Flag vorhanden ist.
+Die Validierung der Flag wird mithilfe der \textit{flags}-Tabelle durchgeführt, indem geprüft wird ob die abgegebene Flag in dieser Tabelle vorhanden ist.
 
 Im Anschluss wird geprüft, ob es sich bei der abgegebenen Flag um eine Flag handelt, die nicht auf den GameClients verteilt ist und durch eine andere Gruppe als der Besitzenden abgegeben wird. Dies verhindert die Abgabe von bspw. Flagshop-Flags durch andere Gruppen. 
 
@@ -299,7 +299,7 @@ if game_status_setting.value == "discover" and flag.group_id != group_id:
   raise Conflict("You submitted an alien flag during discovery. The flag is not accepted. You'll be punished.")
 \end{lstlisting}
 
-Sollten alle Überprüfungen ohne Probleme durchgeführt worden sein, wird die Flag inklusive der abgebenden Gruppe in der \textit{flags\_submitted}-Tabelle aufgenommen. Die Berechnung der Punkte erfolgt wie in \autoref{sec:Realisierung-Datenbank} beschrieben über die Views.
+Sollten alle Überprüfungen erfolgreich durchgeführt worden sein, wird die Flag inklusive der abgebenden Gruppe in die \textit{flags\_submitted}-Tabelle aufgenommen. Die Berechnung der Punkte erfolgt wie in \autoref{sec:Realisierung-Datenbank} beschrieben über die Views.
 
 Der Endpoint ist mit einem Rate Limiter versehen, welcher eine Brute-Force Abgabe von Flags verhindern soll. Dies soll die Abgabe von durch Studierende generierte Flags verhindern oder bestrafen. Pro Gruppe werden in der Minute nicht mehr als 60 Flags akzeptiert. Der Wert kann nach Bedarf verändert werden.
 
@@ -323,9 +323,9 @@ elif pause_start < attack_end:
   ...
 \end{lstlisting}
 
-Die neuen Endzeitpunkte der Phasen werden berechnet, indem der derzeitige Endzeitpunkt mit der Differenz von Start und Beendigung der Pause addiert wird. Sollte das Spiel in der Attack-Phase sein, bleibt das Ende der Discover-Zeit unberührt.
+Die neuen Endzeitpunkte der Phasen werden berechnet, indem der derzeitige Endzeitpunkt mit der Differenz von Start und Beendigung der Pause addiert wird. Wird das Spiel in der Attack-Phase fortgesetzt, bleibt das Ende der Discover-Zeit unberührt. \\
 
-\begin{lstlisting}[language=Python, frame=single, caption={GIS Spiel fortsezen}, captionpos=b, label={lst:gis-pause-add-time}]
+\begin{lstlisting}[language=Python, frame=single, caption={GIS Neues Ende berechnen}, captionpos=b, label={lst:gis-pause-add-time}]
 time_delta = datetime.now() - pause_start
 new_discover_end = discover_end + time_delta
 new_attack_end = attack_end + time_delta
@@ -333,7 +333,7 @@ new_attack_end = attack_end + time_delta
 
 Spiele die sich in im Status \textit{erstellt}, \textit{discover}, \textit{attack} oder \textit{pausiert} befinden, können beendet werden. Ist ein Spiel beendet, können die Studierenden keine weiteren Aktionen am GIS durchführen.
 
-Nach dem Beenden, kann das Spiel bereinigt werden. Hierbei werden alle nicht länger benötigten Daten aus der Datenbank gelöscht. Zu diesen Daten gehören beispielsweise die teilnehmenden GameClients inklusive der dazugehörigen Informationen wie etwa Gruppenmitglieder, Serviceinformationen und abgegebene Flags. Angelegte Notizen werden nicht gelöscht, da diese über mehrere Versuchstermine Relevanz haben könnten.
+Nach dem Beenden, kann das Spiel bereinigt werden. Hierbei werden alle nicht länger benötigten Daten aus der Datenbank gelöscht. Zu diesen Daten gehören beispielsweise die teilnehmenden GameClients inklusive der dazugehörigen Informationen wie etwa Gruppenmitglieder, Serviceinformationen und abgegebene Flags. Angelegte Notizen werden nicht gelöscht, da diese über mehrere Versuchstermine Relevanz haben könnten.\\
 
 \begin{lstlisting}[language=Python, frame=single, caption={GIS Scheduler Jobs}, captionpos=b, label={lst:gis-scheduler-jobs}]
 scheduler.add_job(id="change_game_status_attack", func=change_gamestatus, trigger='date', run_date=discover_end_datetime)
@@ -345,17 +345,17 @@ Die automatische Spielsteuerung sowie die Statusänderung des Spiels nach Ende d
 Der Scanner wird durch die Spielsteuerung gesteuert. Jedoch erhalten auch die administrienden und betreuenden Personen die Möglichkeit, diesen über den Endpoint \textit{/scanner} zu bedienen.
 Er kann über die \textit{POST}-Methode gestartet und über die \textit{DELETE}-Methode beendet werden. Die Methode \textit{GET} stellt die Logs des Containers bereit.
 
-Das GIS steuert den Big Brother Container über den Docker-Deamon an. Dies ist der Grund, warum der Scanner bei Starten des Stacks mit hochgefahren und im Anschluss direkt abgeschaltet wird. Die Steuerung wird unter Zuhilfenahme der Python Bibliothek \textit{docker} ermöglicht. Damit der Container gesteuert werden kann, wird der Container-Name benötigt. Der Name des Containers sowie der aktuelle Status des Containers werden in der \textit{settings}-Tabelle abgelegt.
+Das GIS steuert den Big Brother Container über den Docker-Deamon an. Deshalb muss der Scanner bei Starten des Stacks mit hochgefahren und im Anschluss direkt abgeschaltet werden. Die Steuerung wird unter Zuhilfenahme der Python Bibliothek \textit{docker} ermöglicht. Damit der Container gesteuert werden kann, wird der Container-Name benötigt. Dieser sowie der aktuelle Status des Containers werden in der \textit{settings}-Tabelle abgelegt.
 
 \subsubsection{Spielstände}
 Der aktuelle Spielstand kann über den Endpoint \textit{/match/score} abgerufen werden. Dazu werden die Informationen aus der Datenbank aufbereitet. Neben den Gruppenpunkten aus der \textit{total\_points}-View werden auch die aktiven Services inklusive ihrer respektiven Namen sowie die Überschriften für die Punktetabelle übermittelt.
 
-Über den Endpoint \textit{/match/info} können die aktuellen Spielinformationen abgerufen werden. Zu den Spielinformationen zählt der aktuelle Status des Spiels, des Scanners sowie der Endzeitpunkt der Discover- und Attack-Zeit.
+Über den Endpoint \textit{/match/info} können die aktuellen Spielinformationen abgerufen werden. Zu den Spielinformationen zählt der aktuelle Status des Spiels und des Scanners sowie der Endzeitpunkt der Discover- und Attack-Zeit.
 
 Alte Spielstände können über die Endpoints \textit{/backup} und \textit{/backup/<int:backup\_id>} abgerufen werden.
 Der Endpoint \textit{/backup} gibt nur eine Liste der vorhandenen Spielstände inklusive des Zeitpunktes der Speicherung zurück. Mithilfe der Liste kann eine Spielstand-ID ausgesucht werden und der Spielstand über den Endpoint \textit{/backup/<int:backup\_id>} abgerufen werden.
 
-Bei alten Spielständen werden die Daten im JSON-Format in der Variable \textit{data} abgelegt.
+Bei alten Spielständen werden die Daten im JSON-Format in der Variable \textit{data} übermittelt.
 
 \subsubsection{Strafe}
 Über den Endpoint \textit{/penalty} können alle ausgesprochenden Strafen über die \textit{GET}-Methode angesehen werden. Administrierende und betreuende Personen können über die \textit{POST}-Methode neue Strafen erstellen. Hierzu sind Angaben zu Grund, Anzahl der Strafpunkte sowie die zu bestrafende Gruppe notwendig.
@@ -363,17 +363,17 @@ Bei alten Spielständen werden die Daten im JSON-Format in der Variable \textit{
 Der Endpoint \textit{/penalty/<int:penalty\_id>} kann von den administrierenden und betreuenden Personen genutzt werden, um einzelne Strafen anzusehen (\textit{GET}), zu bearbeiten (\textit{PUT}) und zu löschen (\textit{DELETE}).
 
 \subsubsection{Flagshop}
-Der Flagshop setzt verschiedene Funktionen um und besteht deshalb aus drei getrennten Bereichen. Die Bereiche Accountverwaltung und Paketverwaltung implementieren jeweils 2 Endpoints. Zusätzlich gibt es noch einen Endpoint für die Transaktionsverwaltung. 
+Der Flagshop setzt verschiedene Funktionen um und besteht aus drei getrennten Bereichen. Die Bereiche Accountverwaltung und Paketverwaltung implementieren jeweils 2 Endpoints. Zusätzlich existiert noch einen Endpoint für die Transaktionsverwaltung. 
 
-Der Endpoint \textit{/flagshop/user} stellt die beiden Methoden \textit{GET} und \textit{POST} bereit. Über die \textit{POST}-Methode können administrierenden, betreuenden und spielende Personen neue Flagshop-User anlegen. Die \textit{GET}-Methode ist für Spielende nicht nutzbar und listet alle angelegten Flagshop-User inklusive der zugehörigen Gruppe auf.
+Der Endpoint \textit{/flagshop/user} stellt die Methoden \textit{GET} und \textit{POST} bereit. Über die \textit{POST}-Methode können administrierenden, betreuenden und spielende Personen neue Flagshop-User anlegen. Die \textit{GET}-Methode ist für Spielende nicht nutzbar und listet alle angelegten Flagshop-User inklusive der zugehörigen Gruppe auf.
 
 Die administrierenden und betreuenden Personen können über den Endpoint\linebreak \textit{/flagshop/user/<user\_name>} angelegte Flagshop-User verändern oder löschen.
 
-Damit Flagshop-User Pakete kaufen können, müssen diese zuerst durch betreuende oder administrierende Personen angelegt werden. Hierfür stellt der Endpoint \textit{/flagshop/package} eine \textit{POST}-Methode zur Verfügung. Auch kann die Liste der verfügbaren Pakete mittels einer \textit{GET}-Methode von angemeldeten Flagshop-Usern sowie den oben genannten Personengruppen abgerufen werden.
+Damit Flagshop-User Pakete kaufen können, müssen die Pakete zuerst durch betreuende oder administrierende Personen angelegt werden. Hierfür stellt der Endpoint \textit{/flagshop/package} eine \textit{POST}-Methode zur Verfügung. Auch kann die Liste der verfügbaren Pakete mittels einer \textit{GET}-Methode von angemeldeten Flagshop-Usern sowie den oben genannten Personengruppen abgerufen werden.
 
 Sollten Pakete geändert oder gelöscht werden, muss der Endpoint\linebreak \textit{/flagshop/package/<int:package\_id>} verwendet werden. Die Methode \textit{PUT} ermöglicht das Verändern und die Methode \textit{DELETE} das Löschen.
 
-Damit die Flagshop-User eine Transaktion durchführen können wird der Endpoint \textit{/flagshop/transaction} benötigt. Über die \textit{POST}-Methode kann eine Bestellung aufgeben werden. Der Preis der Bestellung wird aus den in \autoref{para:Flagshop} erwähnten Gründen in der Anfrage mit übermittelt und nicht auf dem Server anhand des Warenkorbs berechnet.
+Damit die Flagshop-User eine Transaktion durchführen können wird der Endpoint \linebreak\textit{/flagshop/transaction} benötigt. Über die \textit{POST}-Methode kann eine Bestellung aufgeben werden. Der Preis der Bestellung wird aus den in \autoref{para:Flagshop} erwähnten Gründen in der Anfrage mit übermittelt und nicht auf dem Server anhand des Warenkorbs berechnet.
 
 Über diesen Endpoint können sich administrierende und betreuende Personen außerdem alle Transaktionen anzeigen lassen und diese bei Bedarf löschen.
 
@@ -386,7 +386,7 @@ Eine Challenge kann über die \textit{PUT}-Methode verändert und über die \tex
 
 Für die Abgabe der Challenges werden weitere Endpoints benötigt. So stellt der Endpoint \textit{/challenge/solve/<int:challenge\_id>} über die \textit{POST}-Methode die Möglichkeit der Abgabe von Challenges für die Studierenden zur Verfügung.
 
-Administrierende und betreuende Personen können über die \textit{DELETE}-Methode einen Start oder eine Abgabe zurücknehmen. Außerdem können sie über den Endpoint \textit{/challenge/solve} alle gestarteten und beendeten Challenges nachvollziehen.
+Administrierende und betreuende Personen können über die \textit{DELETE}-Methode einen Start oder eine Abgabe einer Challenge zurücknehmen. Außerdem können sie über den Endpoint \textit{/challenge/solve} alle gestarteten und beendeten Challenges nachvollziehen.
 
 \subsubsection{Notizen}
 Über die \textit{POST}-Methode des Endpoints \textit{/note} sind administrierende oder betreuende Personen in der Lage neue Notizen zu erstellen. Notizen können über den Endpoint \textit{/note/<int:note\_id>} verändert (\textit{PUT}) oder gelöscht (\textit{DELETE}) werden.
@@ -405,7 +405,9 @@ Die Erweiterungen \textit{Flask-Migrate} und \textit{Flask-RESTful} stellen CLI-
 \textit{Flask-Migrate} stellt die in \autoref{sub:realisierung-migration} vorgestellten Befehle bereit. Über den Befehl \textit{flask routes} zeigt \textit{Flask-RESTful} alle registrierten Ressourcen mit den entsprechenden Methoden und Routen an.
 
 Außerdem ermöglicht es ein selbst programmierter Befehl, ohne Angabe von \linebreak
-Login-Informationen, Accounts zu verwalten. Dies wird zum Einen benötigt, um den ersten Benutzer anzulegen. Bei Verlust aller Adminkennungen kann eine bestehende Kennung geändert oder eine neue angelegt werden. Werden bei einem Befehl nicht alle benötigten Informationen angegeben, erfragt die Anwendung diese über die Befehlszeile.
+Login-Informationen, Accounts zu verwalten. Dies wird zum Einen benötigt, um den ersten Benutzer anzulegen. Zum Anderen kann bei einem Verlust aller Adminkennungen eine bestehende Kennung geändert oder eine neue angelegt werden. 
+
+Werden bei einem Befehl nicht alle benötigten Informationen angegeben, erfragt die Anwendung diese über die Befehlszeile.
 
 \begin{lstlisting}[language=bash, frame=single, caption={GIS CLI}, captionpos=b, label={lst:gis-cli}]
 flask user create username --role admin/supervisor/player --password secure_pw
