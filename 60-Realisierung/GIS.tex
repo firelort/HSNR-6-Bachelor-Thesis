@@ -106,7 +106,9 @@ return bcrypt.verify(password, self.password)
 \end{lstlisting}
 
 \subsubsection{Flaggenerierung}\label{subsub:realisierung-gis-flag-hash}
-Für die Flaggenerierung muss derselbe Algorithmus und Seed wie auf dem GameClient verwendet werden, damit dieselben Flags auf dem Server und dem Client generiert werden. Dazu wird ein Seed -- näheres zum Seed ist in der Flaggenerierung in \autoref{sub:realisierung-gis-routen} beschrieben -- mithilfe des Hash-Algorithmus \textit{MD5} gehasht. Damit alle Flags als MD5-Hash in der Datenbank abgelegt werden, wird auch hier eine \textit{getter}- und eine \textit{setter}-Methoden sowie ein privates Attribut genutzt. Die \textit{setter}-Methode erzeugt einen md5-Hash und speichert diesen im privaten Attribut ab. Sollte die Hashfunktion geändert werden, kann diese wie im Kommentar in \autoref{lst:gis-password-hashing} erkennbar geändert werden.
+Für die Flaggenerierung muss derselbe Algorithmus und Seed wie auf dem GameClient verwendet werden, damit dieselben Flags auf dem Server und dem Client generiert werden. Dazu wird ein Seed mithilfe des Hash-Algorithmus \textit{MD5} gehasht. Näheres zum Seed ist in der Flaggenerierung in \autoref{sub:realisierung-gis-routen} beschrieben. 
+
+Damit alle Flags als MD5-Hash in der Datenbank abgelegt werden, wird auch hier eine \textit{getter}- und eine \textit{setter}-Methoden sowie ein privates Attribut genutzt. Die \textit{setter}-Methode erzeugt einen md5-Hash und speichert diesen im privaten Attribut ab. Sollte die Hashfunktion geändert werden, kann diese wie im Kommentar in \autoref{lst:gis-password-hashing} erkennbar geändert werden.
 
 \begin{lstlisting}[language=bash, frame=single, caption={GIS Hashen der Flags}, captionpos=b, label={lst:gis-password-hashing}]
 class Flag(db.Model):
@@ -155,7 +157,7 @@ Der Access-Token besitzt eine Gültigkeit von 15 Minuten und wird zur Authentifi
 \subsubsection{Decorator für Routen}
 Um die Routen mit Berechtigungen zu versehen und redundanten Code zu verhindern wird bei der Absicherung auf Decorator zurückgegriffen. Sollte eine Route mit einem Decorator abgesichert werden, wird vor dem Aufruf der implementierten Funktionalität geprüft, ob der JWT die benötigten Berechtigungen besitzt.
 
-In \autoref{table:gis-permission} sind die Routen mit ihren benötigten Berechtigungen dargestellt.
+In \autoref{table:gis-permission-1}/\ref{table:gis-permission-2} sind die Routen mit ihren benötigten Berechtigungen dargestellt.
 
 Es werden zwei Decorator zur Verfügung gestellt. Beide prüfen, ob der Token im Feld \textit{role} die benötigte Rolle gesetzt hat. Der Unterschied zwischen \textit{role\_required} und \textit{roles\_required} ist, dass bei \textit{roles\_required} eine Liste von erlaubten Rollen angegeben werden kann. Dies wird auch im Code deutlich, da anstatt eines Vergleiches von Variablen geprüft wird, ob die Rolle, die im JWT codiert ist, in der Liste der erlaubten Rollen vorhanden ist.
 
