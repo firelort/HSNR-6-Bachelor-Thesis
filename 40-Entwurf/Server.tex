@@ -1,12 +1,12 @@
 \section{Webserver} \label{sec:Webserver}
-Der Webserver bietet die Möglichkeit der Verwaltung des Spiels, der Abgabe von Flags sowie der Durchführung von Käufen, im Flagshop, und Challenges. Auch können Informationen zum Spiel, wie Einstellungen, Spielstand, Strafen und Teilnehmer abgerufen werden.
+Der Webserver bietet die Möglichkeit der Verwaltung des Spiels, der Abgabe von Flags sowie der Durchführung von Käufen, im Flagshop, und Challenges. Auch können Informationen zum Spiel wie Einstellungen, Spielstand, Strafen und Teilnehmer abgerufen werden.
 
 \subsection{Verwendung mehrerer Microservices}
-Der Webserver kann nach dem Architekturmuster Microservices implementiert werden. Hierbei besteht die Anwendung aus mehreren unabhängig Komponenten, welche, sofern dies notwendig ist, untereinander kommunizieren. Die Komponenten sind so klein wie möglich und können jederzeit durch eine andere Implementierung ausgetauscht werden. \cite{wolffMicroservicesGrundlagenFlexibler2015} 
+Der Webserver kann nach dem Architekturmuster Microservices implementiert werden. Hierbei besteht die Anwendung aus mehreren unabhängigen Komponenten, die, sofern dies notwendig ist, untereinander kommunizieren. Die Komponenten sind so klein wie möglich und können jederzeit durch eine andere Implementierung ausgetauscht werden. \cite{wolffMicroservicesGrundlagenFlexibler2015} 
 
 So wären die verschiedenen Komponenten des Webservers (Flagabgabe, Nutzerverwaltung, Spielsteuerung, etc.) unabhängig voneinander und können leichter weiterentwickelt oder ersetzt werden.
 
-Die Verwendung dieses Architekturmusters wird bei der aktuellen Aufgabenstellung nicht angewendet, da durch die Entwicklung der vielen Einzelkomponenten ein zu hoher Aufwand für zu geringen Nutzen entstehen würde.
+Die Verwendung dieses Architekturmusters wird bei der aktuellen Aufgabenstellung nicht angewendet, da durch die Entwicklung der vielen Einzelkomponenten ein zu hoher Aufwand zu mit geringem Nutzen entstehen würde.
 
 \subsection{Fat Webserver}
 Der Webserver beinhaltet sowohl die Logik als auch die Darstellung. Bei einer Anfrage an den Webserver wird eine Antwort bestimmt und diese dann in eine Vorlage beziehungsweise ein HTML Dokument eingebettet. Danach wird die Antwort zurück an den Anfragenden gesendet.
@@ -17,11 +17,11 @@ Für die Nutzung des Flagshops ist ein Multi-Login notwendig, da nur am Webserve
 
 So ist für diesen Anwendungsfall ein Stateless-Login besser geeignet, da hier die benötigten Informationen vom Client, je nach Anliegen, gesendet werden können. 
 
-Die Nutzung des Stateless-Logins bietet die Perspektive der Verwendung eines Stateless-\linebreak Webservers sowie eines Thin-Webservers. Bei einem Thin-Webserver werden nur Daten und keine Repräsentation an dem Client zurückgesendet. So wird die Aufgabe der Darstellung der Daten an den Client übertragen.
+Die Nutzung des Stateless-Logins bietet die Perspektive der Verwendung eines Stateless-\linebreak Webservers sowie eines Thin-Webservers. Bei einem Thin-Webserver werden nur Daten und keine Repräsentation an den Client zurückgesendet. So wird die Aufgabe der Darstellung der Daten an den Client übertragen.
 
-Durch die Nutzung eines Thin Servers werden zwei Dinge ermöglicht. 
+Durch die Nutzung eines Thin-Servers werden zwei Dinge ermöglicht: 
 
-Zum Ersten ist es möglich, den Client und Server unabhängig voneinander zu entwickeln, zu verändern und zu verbessern. Damit kann in Zukunft eine Iteration der Software einfacher geschehen. Zum Anderen können die Studierenden eigene Clients programmieren, um mit der Anwendung zu interagieren.
+Zum einen ist es möglich, den Client und Server unabhängig voneinander zu entwickeln, zu verändern und zu verbessern. Damit kann in Zukunft eine Iteration der Software einfacher geschehen. Zum anderen können die Studierenden eigene Clients programmieren, um mit der Anwendung zu interagieren.
 
 \subsection{Thin Webserver}
 \begin{center}
@@ -29,11 +29,11 @@ Zum Ersten ist es möglich, den Client und Server unabhängig voneinander zu ent
 	\captionof{figure}{REST Interface im Überblick (Komponentendiagramm)}
 \end{center}
 
-Der Server besteht aus der Komponente \textit{Game Information System}, welche wiederum aus drei weiteren Komponenten besteht. 
+Der Server besteht aus der Komponente \textit{Game Information System}, die wiederum aus drei weiteren Komponenten besteht. 
 
 Die Komponente \textit{GIS} implementiert die gesamte Server Logik. In diesem Modul wird der eigentliche Thin Server, über den die teilnehmenden und betreuenden Personen mit der Anwendung interagieren können, implementiert.
 
-In der Komponente Datenbank Migrationen sind Migrationsskripts hinterlegt, die die Datenbank Iterationen festhalten. Diese Skripts sollen genutzt werden, um die verwendete Datenbanken einfach mit dem benötigten Schema zu initialisieren. 
+In der Komponente Datenbank Migrationen sind Migrationsskripts hinterlegt, die die Datenbank Iterationen festhalten. Diese Skripts sollen genutzt werden, um die verwendete Datenbank einfach mit dem benötigten Schema zu initialisieren. 
 
 Die letzte Komponente beinhaltet Unit-Tests. Mithilfe der implementierten Unit-Tests kann die Funktionalität der Anwendung bei späteren Änderungen überprüft werden.
 
@@ -42,7 +42,7 @@ Da der Thin Server nur eine Brücke zwischen Nutzenden und Scanner oder Datenban
 \subsubsection{API}
 Um bei der Implementierung der API einem Standard zu folgen, wird der de facto Standard für HTTP-APIs Representational State Transfer (REST) verwendet.
 
-Ein RESTful-Interface ermöglicht, dass Ressourcen auf dem Webserver eindeutig identifizierbar sind, damit diese als Ziel von Operationen ausgewählt werden können. Des Weiteren werden einheitliche Schnittstellen genutzt. Dazu müssen Standardmethoden und -repräsentationen verwendet werden. \cite{beimsWebApplikationenREST2014}
+Ein RESTful-Interface ermöglicht, dass Ressourcen auf dem Webserver eindeutig identifizierbar sind, damit diese als Ziel von Operationen ausgewählt werden können. Darüber hinaus werden einheitliche Schnittstellen genutzt. Dazu müssen Standardmethoden und -repräsentationen verwendet werden. \cite{beimsWebApplikationenREST2014}
 
 Durch diese Anforderungen bietet das REST-Interface die Möglichkeiten, alle zur Verfügung stehenden Ressourcen auf die gleiche Art und Weise zu verwalten. Außerdem wird mit dieser Herangehensweise die HTTP-Methode \textit{GET} nicht länger zur Veränderung oder Erschaffung von Ressourcen verwendet, sondern die dafür ausgelegten HTTP-Methoden. Die für die Verwendung benötigten Daten werden auch nicht länger als Parameter der Anfrage beigefügt, sondern im Body der Anfrage übertragen. \cite{beimsWebApplikationenREST2014}
 
@@ -50,19 +50,18 @@ Alle Routen werden mit dem Versionspräfix \textit{/v1} versehen. Diese Versioni
 
 Bei der Implementierung sollen die zur Verfügung stehenden HTTP-Methoden benutzt werden. Das REST-Interface soll auch mit entsprechenden HTTP-Codes antworten, um die Antwort und den Erfolg einer Anfrage auch ohne Antworttext interpretieren zu können. Bei der Datenübertragung zwischen Client und Server soll das JavaScript Object Notation (JSON) Format für die Formatierung der gesendeten Daten verwendet werden.
 
-\begin{table}
-	\centering
+\begin{center}
 	\begin{tabular}{c c}
 		GET & Auf Ressourcen zugreifen \\ 
 		POST & Neue Ressourcen erzeugen \\  
 		PUT & Bestehende Ressourcen verändern \\
 		DELETE & Vorhandene Ressourcen löschen \\
 	\end{tabular}
-	\caption{Übersicht über die verwendeten HTTP-Methoden}
+	\captionof{table}{Übersicht über die verwendeten HTTP-Methoden}
 	\label{table:http-methods}
-\end{table}
+\end{center}
 
-Neben den in \autoref{table:http-methods} aufgezeigten Methoden gibt es noch weitere HTTP-Methoden, welche keine Anwendung in dem zu implementierenden REST-Interface erhalten.
+Neben den in \autoref{table:http-methods} aufgezeigten Methoden gibt es noch weitere HTTP-Methoden, die keine Anwendung in dem zu implementierenden REST-Interface erhalten.
 
 \subsection{Funktionale Eigenschaften}
 \subsubsection{Login}\label{subsub:login}
@@ -71,7 +70,7 @@ Neben den in \autoref{table:http-methods} aufgezeigten Methoden gibt es noch wei
 	\captionof{figure}{Datenfluss während eines Logins (Datenflussdiagramm)}
 \end{center}
 
-Bei einem Login sendet der Nutzende die Kombination aus Nutzernamen und Passwort in seiner Anfrage an den Webserver. Sollte der Nutzername und das Passwort mit den in der Datenbank gespeicherten Informationen übereinstimmen, wird ein Access- und ein Refresh-Token ausgestellt. Wichtig hierbei ist, dass das Passwort in der Datenbank \textbf{nur} im gehashten Format vorliegt.
+Bei einem Login sendet der Nutzende die Kombination aus Nutzernamen und Passwort in seiner Anfrage an den Webserver. Sollten der Nutzername und das Passwort mit den in der Datenbank gespeicherten Informationen übereinstimmen, wird ein Access- und ein Refresh-Token ausgestellt. Wichtig hierbei ist, dass das Passwort in der Datenbank \textbf{nur} im gehashten Format vorliegt.
 
 Sollte kein Hackitzugang benötigt werden, muss für die Ausstellung der Tokens kein Nutzername und Passwort angegeben werden.
 
@@ -80,7 +79,7 @@ Sollte kein Hackitzugang benötigt werden, muss für die Ausstellung der Tokens 
 	\captionof{figure}{Datenfluss während eines Logins mit Refresh Token (Datenflussdiagramm)}
 \end{center}
 
-Ein Refresh-Token wird ausgestellt, da beide Token eine begrenzte Lebenszeit haben. Der Refresh-Token hat eine längere Lebenszeit und ermöglicht die erneute Ausstellung eines \linebreak Access-Tokens ohne Angabe eines Nutzernamens und Passwortes.
+Ein Refresh-Token wird ausgestellt, da beide Tokens eine begrenzte Lebenszeit haben. Der Refresh-Token hat eine längere Lebenszeit und ermöglicht die erneute Ausstellung eines \linebreak Access-Tokens ohne Angabe eines Nutzernamens und Passwortes.
 
 Des Weiteren werden alle ausgestellten Token für die Dauer der Gültigkeit in der Redis-Datenbank gespeichert, um diese bei späteren Anfragen zu validieren. 
 
@@ -102,8 +101,8 @@ Mit den im Token codierten Berechtigungen kann der Server die Autorisierung der 
 	\captionof{figure}{Datenfluss während der Tokenvalidierung (Datenflussdiagramm)}
 \end{center}
 
-Für die Authentifizierung und Autorisierung müssen die mitgesendeten Token validiert werden.
-Dazu erhalten diese einen Zeitstempel der Ausstellung und des Ablaufs und eine Signatur, die eine Manipulation verhindern soll. Führt der Nutzende einen Logout durch, wird der Token in der Datenbank als widerrufen markiert. 
+Für die Authentifizierung und Autorisierung müssen die mitgesendeten Tokens validiert werden.
+Dazu erhalten diese einen Zeitstempel der Ausstellung und der Verjährung sowie eine Signatur, die eine Manipulation verhindern soll. Führt der Nutzende einen Logout durch, wird der Token in der Datenbank als widerrufen markiert. 
 
 \subsubsection{Registierung von GameClients}
 \begin{center}
@@ -114,29 +113,29 @@ Dazu erhalten diese einen Zeitstempel der Ausstellung und des Ablaufs und eine S
 Die teilnehmenden GameClients sollen aufgrund der Anforderung nicht länger fest in der Anwendung vorliegen, sondern dynamisch hinterlegt werden. Deshalb müssen die GameClients sich vor Spielstart registrieren.
 
 \paragraph{Flaggenerierung}
-Durch die benötigte Registrierung ist es möglich, dass der Algorithmus zur Flaggenerierung verändert wird. Dies soll geschehen, damit die Flags nicht länger pro Semester, sondern im besten Fall für immer, einzigartig sind.
+Durch die benötigte Registrierung ist es möglich, dass der Algorithmus zur Flaggenerierung verändert wird. Dies soll geschehen, damit die Flags nicht länger pro Semester, sondern im besten Fall für immer einzigartig sind.
 
 Damit die Flags einzigartig sind, überträgt der GameClient einen Token bei der Registrierung. Dieser wird sowohl vom GameClient als auch vom Server genutzt, um die benötigten Flags zu generieren.
 
-Die Idee, dass die Flaggenerierung nur auf dem Server stattfindet, wurde verworfen, da die nutzende Person auf dem Client die Möglichkeit hat die Flags bei der Übertragung abzufangen und abzugeben. Eine Verschlüsselung oder andere Verfahren würden keinen Mehrwert in puncto Sicherheit liefern, da die nutzende Person Root-Rechte auf ihrem System hat. Eine Verschlüsselung der Flags mit dem PGP-Verfahren bringt keinen wirklichen Mehrwert, da auf den vorhandene PGP-Key zugreifen werden kann. 
+Die Idee, dass die Flaggenerierung nur auf dem Server stattfindet, wurde verworfen, da die nutzende Person auf dem Client die Möglichkeit hat, die Flags bei der Übertragung abzufangen und abzugeben. Eine Verschlüsselung oder andere Verfahren würden keinen Mehrwert in puncto Sicherheit liefern, da die nutzende Person Root-Rechte auf ihrem System hat. Eine Verschlüsselung der Flags mit dem PGP-Verfahren bringt keinen wirklichen Mehrwert, da auf den vorhandenen PGP-Key zugegriffen werden kann. 
 
 \subsubsection{Flagabgabe}
 
-Da die Flag Abgabe einen Hauptteil des Versuchs darstellt, müssen authentifizierte Spielende die auf dem eigenen oder gegnerischen System gefundene Flags abgeben können.
+Da die Abgabe der Flags einen Hauptteil des Versuchs darstellt, müssen authentifizierte Spielende die auf dem eigenen oder gegnerischen System gefundene Flags abgeben können.
 
 Das GIS muss die abgegebene Flag auf Gültigkeit prüfen und entweder Offensiv- und \linebreak
 Defensiv- oder Discoverpunkte verrechnen. Auch muss sichergestellt werden, dass eine Gruppe eine Flag nur einmal abgeben kann.
 
-Gruppen können alle eigenen Flags sowie gegnerische Flags, welche auf den GameClients verteilt sind, abgeben. Gegnerische Flagshop Flags können nicht abgegeben werden, da diese als nicht schützenswert betrachtet werden.
+Gruppen können alle eigenen Flags sowie gegnerische Flags, die auf den GameClients verteilt sind, abgeben. Gegnerische Flagshop-Flags können nicht abgegeben werden, da diese als nicht schützenswert betrachtet werden.
 
-Ob die Abgabe im Angriffszeitraum geschieht muss geprüft werden. Andernfalls soll die Abgabe nicht weiter verarbeitet werden und bei einer Abgabe während der Discoverzeit soll eine Strafe ausgesprochen werden.
+Ob die Abgabe im Angriffszeitraum geschieht, muss geprüft werden. Andernfalls soll die Abgabe nicht weiter verarbeitet werden und bei einer Abgabe während der Discoverzeit soll eine Strafe ausgesprochen werden.
 
 
 \subsubsection{Spielsteuerung}
 
 Die Betreuenden sollen über das GIS das Spiel steuern können. Dabei müssen sie in der Lage sein, ein Spiel zu starten, zu pausieren und zu beenden. Die Steuerung des Scanners soll an das Spiel gekoppelt werden, aber auch eigenständig funktionieren.
 
-Des Weiteren sollen die betreuenden Personen die Möglichkeit besitzen, Strafen an Gruppen, welche die Regeln gebrochen haben, verteilen zu können. Hier muss die Gruppe, der Grund der Bestrafung sowie die Anzahl der Strafpunkte übermittelt werden.
+Des Weiteren sollen die betreuenden Personen die Möglichkeit besitzen, Strafen an Gruppen, die die Regeln gebrochen haben, verteilen zu können. Hier müssen die Gruppe, der Grund der Bestrafung sowie die Anzahl der Strafpunkte übermittelt werden.
 
 \subsubsection{Accountverwaltung}
 
@@ -146,14 +145,14 @@ Außerdem ist ein Import der Studierendenzugänge zu realisieren, damit die gene
 
 \subsubsection{Spielstände}
 
-Die abgespeicherten Spielstände sollen über das GIS abrufbar sein. Hierzu soll zuerst eine Liste der verfügbaren Spielstände inklusive des Datums der Speicherung an den Anfragenden übermittelt werden. Mit dieser Liste kann der benötigte Spielstand ermittelt und im nächsten Schritt angefragt werden. 
+Die abgespeicherten Spielstände sollen über das GIS abrufbar sein. Hierzu soll zuerst eine Liste der verfügbaren Spielstände, inklusive des Datums der Speicherung, an den Anfragenden übermittelt werden. Mit dieser Liste kann der benötigte Spielstand ermittelt und im nächsten Schritt angefragt werden. 
 
 Dieser detaillierte Spielstand beinhaltet die Punkte aller teilnehmenden Gruppen, die überwachten Schwachstellen und Dienste sowie den Spielstatus.
 
 \subsubsection{Steuerung der Services}
 
-Die betreuenden Personen des Versuchs, sollen die Möglichkeit erhalten einzelne \linebreak
-Scan-Operationen zu (de-)aktivieren ohne, dass eine Änderung an der Software vorgenommen werden muss. Die Gewichtung der einzelnen Services soll jederzeit änderbar sein.
+Die betreuenden Personen des Versuchs sollen die Möglichkeit erhalten, einzelne \linebreak
+Scan-Operationen zu (de-)aktivieren, ohne dass eine Änderung an der Software vorgenommen werden muss. Die Gewichtung der einzelnen Services soll jederzeit änderbar sein.
 
 \subsubsection{Einstellungen}
 
@@ -161,7 +160,7 @@ Die betreuenden Personen sollen die Einstellungen des Spiels verändern können.
 
 \subsubsection{Notizen}
 
-Den betreuenden Personen soll es möglich gemacht werden permanente Hinweise zu geben. Des Weiteren sollen sie in der Lage sein, bestehende Hinweise zu bearbeiten oder zu löschen.
+Den betreuenden Personen soll es ermöglicht werden, permanente Hinweise zu geben. Außerdem sollen sie in der Lage sein, bestehende Hinweise zu bearbeiten oder zu löschen.
 
 Studierende können die verfassten Notizen einsehen, um Hinweise oder Anweisungen zum Versuch zu erhalten.
 
@@ -173,7 +172,7 @@ Studierende können die verfassten Notizen einsehen, um Hinweise oder Anweisunge
 
 Der Flagshop muss die Verwaltung von Flagshop-Usern und Flagshop-Paketen sowie einen Kauf der Flagshop-Pakete ermöglichen.
 
-Flagshop-User können durch die teilnehmenden Teams erstellt werden. Für die Erstellung werden Flags an die Gruppe verteilt. Betreuende Personen können ebenfalls für Gruppen Flagshop-User erstellen. Des Weiteren ist es ihnen möglich, bestehende Flagshop-User zu ändern und zu löschen.
+Flagshop-User können durch die teilnehmenden Teams erstellt werden. Für die Erstellung werden Flags an die Gruppe verteilt. Betreuende Personen können ebenfalls für Gruppen Flagshop-User erstellen. Es ist ihnen auch möglich, bestehende Flagshop-User zu ändern und zu löschen.
 
 Außerdem müssen Flagshop-Pakete durch die Betreuenden verwaltet werden. Die Erstellung von Flagshop-Paketen soll nur vor einem Spielstart möglich sein, damit die richtige Anzahl an Flags bei der Registrierung eines GameClients erzeugt werden kann. Die Flagshop-Pakete enthalten neben den Kosten und dem Namen auch die Anzahl der erwerbbaren Flags.
 
@@ -185,16 +184,16 @@ Studierende können Flagshop-Pakete erwerben. Die Besonderheit hierbei soll sein
 	\captionof{figure}{Datenfluss der Challenges (Datenflussdiagramm)}
 \end{center}
 
-Die Studierenden müssen Informationen zu Challenges sowie deren Ablageort abrufen können. Des Weiteren sollen sie in der Lage sein die Challenges abzuschließen. Hierfür teilen die Challenges am Ende ein Passwort mit, welches ebenfalls in der Datenbank vorhanden ist. Die Studierenden können dieses Passwort dann als Beweis der Lösung der Challenge an das GIS übermitteln.
+Die Studierenden müssen Informationen zu Challenges sowie deren Ablageort abrufen können. Darüber hinaus sollen sie in der Lage sein, die Challenges abzuschließen. Hierfür teilen die Challenges am Ende ein Passwort mit, welches ebenfalls in der Datenbank vorhanden ist. Die Studierenden können dieses Passwort dann als Beweis der Lösung der Challenge an das GIS übermitteln.
 
-Die Challenges werden von einem Webserver zur Verfügung gestellt werden. Sie werden nicht über das GIS verteilt, da dies als API nur Daten und keine Ressourcen an den Client übermittelt.
+Die Challenges werden von einem Webserver zur Verfügung gestellt. Sie werden nicht über das GIS verteilt, da dies als API nur Daten und keine Ressourcen an den Client übermittelt.
 
 \subsection{Reverse Proxy}
 Für das Betreiben wird auf den bereits im EZS-Labor verwendeten Apache HTTP-Server zurückgegriffen. Durch die Entscheidung bleibt dieser als einziger Einstiegspunkt für Anfragen zuständig. Die Protokollierung der Anfragen sowie die Verschlüsselung der Verbindung kann an die Webserver Software abgegeben werden.
 
-Der Reverse Proxy muss bei der Weiterleitung der Anfrage an das GIS sicherstellen, dass die eigentliche IP-Adresse der Anfrage dem GIS zugänglich ist. Dies wird benötigt, um die zugehörige Gruppe, bei der Registrierung und dem Login zu bestimmen. Die originale IP-Adresse der Anfrage soll in einen HTTP Header gespeichert werden.
+Der Reverse Proxy muss bei der Weiterleitung der Anfrage an das GIS sicherstellen, dass die eigentliche IP-Adresse der Anfrage dem GIS zugänglich ist. Diese wird benötigt, um die zugehörige Gruppe bei der Registrierung und dem Login zu bestimmen. Die originale IP-Adresse der Anfrage soll in einem HTTP-Header gespeichert werden.
 
-In einen HTTP Header können Server und Client zusätzliche Informationen zur Anfrage oder Antwort beifügen. \cite{mdncontributorsHTTPHeaders2020}
+Dem HTTP-Header können Server und Client zusätzliche Informationen zur Anfrage oder Antwort beifügen. \cite{mdncontributorsHTTPHeaders2020}
 
 Um einen Spoofing-Angriff zu erschweren und das Vertrauen in den Header mit der IP-Adresse zu erhöhen, soll ein weiterer Header mit einem Geheimnis gesetzt werden. Anhand dieses Geheimnisses kann das GIS entscheiden, ob die Anfrage über einen vertrauenswürdigen Proxy weitergeleitet oder ob ein Spoofing-Angriff durchgeführt worden ist. Die Erweiterung wird benötigt, da die Anwendung auch ohne einen Reverse Proxy betrieben werden kann. In diesem Anwendungsfall kann die angreifende Person sich als Proxy für eine andere Gruppe ausgeben.
 

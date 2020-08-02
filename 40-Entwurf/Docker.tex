@@ -1,20 +1,19 @@
 \section{Containerisierung} \label{sec:Containerisierung}
 Bei der Containerisierung wird jeder Container als eine eigene logische Maschine betrachtet. Es können mehrere Container gleichzeitig auf einer physischen Maschine betrieben werden. 
-Die verschiedenen Container laufen unabhängig voneinander und wissen nicht über die Existenz weitere Container Bescheid. Sollte eine Kommunikation zwischen zwei Container benötigt werden, erfolgt diese über die Netzwerkschnittstelle ähnlich der Kommunikation zwischen Anwendungen, die auf verschiedener physischer Geräte. \cite{boersmaContainerizationDefinitionBest2019} Damit die Container kommunizieren können, muss vorher ein Netzwerk konfiguriert werden, in dem sich die Container gemeinsam befinden.
+Die verschiedenen Container laufen unabhängig voneinander und wissen nichts von der Existenz weiterer Container. Sollte eine Kommunikation zwischen zwei Containern benötigt werden, erfolgt diese über die Netzwerkschnittstelle ähnlich der Kommunikation zwischen Anwendungen, die auf verschiedenen physischen Geräten verwendet werden. \cite{boersmaContainerizationDefinitionBest2019} Damit die Container kommunizieren können, muss vorher ein Netzwerk konfiguriert werden, in dem sich die Container gemeinsam befinden.
 
 Im Gegensatz zur Virtualisierung teilen sich die Container das zugrunde liegende Betriebssystem nicht. Dieses reduziert den Verbrauch von Ressourcen wie CPU und Arbeitsspeicher, da diese nur für die Anwendung und nicht das Betriebssystem benötigt werden.
 
-Containerisierung wird verwendet, um Anwendungen getrennt betreiben zu können. So können verschiedene Versionen einer Software gleichzeitig auf der gleichen physischen Maschine betrieben werden, ohne dass es zu Interferenzen kommt oder das veränderte Konfigurationen notwendig sind. Des Weiteren läuft ein Container auf die gleiche Art und Weise unabhängig von der darunter liegenden Hardwarearchitektur. So läuft ein Container auf dem Rechner des Entwickelnden genauso wie ein Container in einem Rechenzentrum. Durch diese Eigenschaft sind die Anwendungen in Containeren portabel. \cite{boersmaContainerizationDefinitionBest2019}
+Containerisierung wird verwendet, um Anwendungen getrennt betreiben zu können. So können verschiedene Versionen einer Software gleichzeitig auf der gleichen physischen Maschine betrieben werden, ohne dass es zu Interferenzen kommt oder das veränderte Konfigurationen notwendig sind. Darüber hinaus läuft ein Container auf die gleiche Art und Weise unabhängig von der darunter liegenden Hardwarearchitektur. So arbeitet ein Container auf dem Rechner des Entwickelnden genauso wie ein Container in einem Rechenzentrum. Durch diese Eigenschaft sind die Anwendungen in Containeren portabel. \cite{boersmaContainerizationDefinitionBest2019}
 
 Durch die Isolierungen können Anwendungen keinen negativen Einfluss auf weitere Container nehmen.
 
-Docker wurde erstmalig im Jahr 2013 als Open-Source-Software veröffentlicht und zählt derzeitig zu den am weit verbreitetste Anwendung für Containierisierung. Es ist der de facto Standard für Containierisierung. 
-\cite{boersmaContainerizationDefinitionBest2019}
+Docker wurde erstmalig im Jahr 2013 als Open-Source-Software veröffentlicht und zählt derzeitig zu der am weitesten verbreiteten Anwendung für Containierisierung. Es ist de facto der Standard für Containierisierung. \cite{boersmaContainerizationDefinitionBest2019}
 
-Heutzutage nutzen immer mehr Unternehmen Orchestierungstechnologien wie Kubernetes oder OpenStack um Container zentral über mehrere physische Maschinen zu verwalten und zu skalieren.
+Heutzutage nutzen immer mehr Unternehmen Orchestrierungstechnologien wie Kubernetes oder OpenStack, um Container zentral über mehrere physische Maschinen zu verwalten und zu skalieren.
 \cite{gaviganHistoryAngular2018}
 
 Eine Kubernetes-Installation ist im EZS-Labor bisher noch nicht vorhanden. Auch ist eine Installation für diese Bachelorarbeit aufgrund der Kosten-Nutzen-Differenz nicht empfehlenswert.
 
-Anstatt einer Orchestierungssoftware wird \textit{Docker Compose} genutzt werden.
+Anstatt einer Orchestrierungssoftware wird \textit{Docker Compose} genutzt.
 Mithilfe dieses Tools können mehrere Container zu einem Service zusammengefasst und verwaltet werden. \textit{Docker Compose} wird verwendet, um die beiden serverseitigen Anwendungen sowie die beiden Datenbanken zu einem Service zusammenzufassen. Auch sorgt es dafür, dass die Container in einem eigenen virtuellen Netzwerk laufen und nur untereinander kommunizieren können. \cite{dockerinc.OverviewDockerCompose2020} 

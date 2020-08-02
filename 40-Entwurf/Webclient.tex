@@ -6,9 +6,9 @@ In diesem Abschnitt wird zuerst auf den Unterschied zwischen Multi Page Applicat
 \paragraph{Multi Page Applications} \label{para:Multi_Page_Applications}
 Multi Page Application, kurz MPA, ist die klassische Architektur für Webanwendungen. Bei dieser Architektur wird für jeden Request (Anfrage) an den Webserver eine neue Seite inklusive Ressourcen wie Cascading Style Sheets (CSS)\footnote{Beinhalten Regeln für die Darstellung von unter anderem HTML-Dokumenten}, JavaScript und Bildern geladen. Dieses kann an einem Beispiel verdeutlicht werden.
 
-Auf einer Shop-Seite befinden sich 10 Produkte inkl. Bild und Kurzbeschreibung. Wird ein Produkt ausgewählt, sendet der Client eine Anfrage an den Webserver. Der Webserver antwortet mit allen Ressourcen (siehe oben), welche für das Produkt benötigt werden. Der Client stellt dann aus den Ressourcen die Ansicht dar und das Produkt inklusive der Details ist für den Nutzenden zu sehen.
+Auf einer Shop-Seite befinden sich 10 Produkte inkl. Bild und Kurzbeschreibung. Wird ein Produkt ausgewählt, sendet der Client eine Anfrage an den Webserver. Der Webserver antwortet mit allen Ressourcen (siehe oben), die für das Produkt benötigt werden. Der Client stellt dann aus den Ressourcen die Ansicht dar und das Produkt inklusive der Details ist für die Nutzenden zu sehen.
 
-Der Vorteil von MPAs ist die einfacherer Optimierbarkeit für Suchmaschinen, das sogenannte SEO (Search Engine Optimization). Ein gutes SEO-Rating sorgt dafür, dass die Webseite bei Suchmaschinen weit oben zu finden ist. Dies ist besonders für Webseiten wichtig, die um Kunden konkurrieren. Anzuführen sind hier diverse Online-Shops und Zeitungen.
+Der Vorteil von MPAs ist die einfachere Optimierbarkeit für Suchmaschinen, das sogenannte SEO (Search Engine Optimization). Ein gutes SEO-Rating sorgt dafür, dass die Webseite bei Suchmaschinen weit oben zu finden ist. Dies ist besonders für Webseiten wichtig, die um Kunden konkurrieren. Anzuführen sind hier diverse Online-Shops und Zeitungen.
 
 \paragraph{Single Page Applications} \label{para:Single_Page_Applications}
 Die Single Page Application, kurz SPA, stellt das genaue Gegenteil von MPAs dar. Bei SPAs besteht die Anwendung aus genau einem HTML-Dokument, dessen Inhalt bei Bedarf dynamisch nachgeladen wird. Dafür findet ein asynchroner Datenaustausch zwischen Client und Server statt, bei dem benötigte Ressourcen wie Bilder, JavaScript und CSS ausgetauscht werden. Durch dieses Verfahren wird sichergestellt, dass gleiche Elemente oder Ressourcen nicht erneut heruntergeladen werden müssen. Bei Änderungen werden nur Teile des DOMs\footnote{Das Document Object Model repräsentiert die Webseite als Baumstruktur} ersetzt und neu gerendert.
@@ -61,17 +61,17 @@ Die SEO-Optimierung gestaltet sich schwieriger, da es sich um eine dynamische An
 \label{tab:Vor-_und_Nachteile_SPA/MPA}
 \end{center}
 
-Für die Entwicklung der Anwendung entscheide ich mich für die Verwendung einer SPA. Dies geschieht unter den Gesichtspunkten der Entkopplung zwischen Front- und Backend, der Performance der Anwendung und der Zukunftssicherheit, die meiner Meinung nach für SPAs besteht. Die Nachteile vom SPAs betreffen meine Anwendung nur wenig. So ist auf den Rechnern im Labor ein moderner Webbrowser installiert und in diesem JavaScript aktiviert. Auch handelt es sich um eine interne Anwendung, bei der die SEO Optimierung keine Rolle spielt. \cite{melnikSinglePageApplication2020}
+Bei der Entwicklung der Anwendung entscheide ich mich für die Verwendung einer SPA. Dies geschieht unter den Gesichtspunkten der Entkopplung zwischen Front- und Backend, der Performance der Anwendung und der Zukunftssicherheit, die meiner Meinung nach für SPAs besteht. Die Nachteile vom SPAs betreffen meine Anwendung nur wenig. So ist auf den Rechnern im Labor ein moderner Webbrowser installiert und in diesem JavaScript aktiviert. Auch handelt es sich um eine interne Anwendung, bei der die SEO Optimierung keine Rolle spielt. \cite{melnikSinglePageApplication2020}
 
 \subsection{Mockups} \label{subsec:Mockup}
 
 Für das Layout der Oberfläche wird die Designsprache Material Design von Google verwendet, da dieses konkrete Gestaltungsregeln vorgibt und einen Styleguide zur Verfügung stellt. Material Design wurde im Jahr 2014 vorgestellt und in Apps von Google verwendet. Besonders die Optimierung der Benutzerfreundlichkeit steht im Vordergrund. Eine Besonderheit des Material Designs ist, dass physikalische Gesetze beachtet werden und die Inhalte für eine Priorisierung auf einer virtuellen Z-Ebene verschoben werden. \cite{kulturbanause-teamMaterialDesignDesignsprache2017}
 
-Den Prinzipien des Dark Theme von Material Design wird gefolgt, da die bestehende Anwendung bereits nur im Dark Mode vorhanden ist. Des Weiteren werden Anwendungen derzeitig häufig mit Dark Mode als Default Theme veröffentlicht und bestehende Anwendungen ohne Dark Mode erhalten diesen als zusätzliches Farbschema. \cite{colbyWindows10Dark2020}
+Den Prinzipien des Dark Theme von Material Design wird gefolgt, da die bestehende Anwendung bereits nur im Dark Mode vorhanden ist. Derzeit werden Anwendungen häufig mit Dark Mode als Default Theme veröffentlicht und bestehende Anwendungen ohne Dark Mode erhalten diesen als zusätzliches Farbschema. \cite{colbyWindows10Dark2020}
 
-Das Dark Themes trägt zur Verbesserung der visuellen Ergonomie bei, was zu einer Reduktion der Belastung der Augen führt. Des Weiteren wird bei OLED-Bildschirmen die Batterieleistung geschont. Die im Light Theme verwendete Verschiebung auf der Z-Ebene wird durch Schatten erreicht und ist deshalb im Dark Theme nicht nutzbar. Anstatt einer Verschiebung werden die Elemente unterschiedlich beleuchtet.\cite{googleDarkTheme}
+Das Dark Themes trägt zur Verbesserung der visuellen Ergonomie bei, was zu einer Reduktion der Belastung der Augen führt. Bei OLED-Bildschirmen wird die Batterieleistung geschont. Die im Light Theme verwendete Verschiebung auf der Z-Ebene wird durch Schatten erreicht und ist deshalb im Dark Theme nicht nutzbar. Anstatt eine Verschiebung vorzunehmen, werden die Elemente unterschiedlich beleuchtet.\cite{googleDarkTheme}
 
-Damit die Icons zum Design der Seite passen und Einheitlich sind, werden Material Design Icons\footnote{\url{https://materialdesignicons.com/}} verwendet. Hier sind die offiziellen Icons sowie Icons von der Community, die dem Material Design Ansatz folgen, vorhanden.
+Damit die Icons zum Design der Seite passen und einheitlich sind, werden Material Design Icons\footnote{\url{https://materialdesignicons.com/}} verwendet. Hier sind die offiziellen Icons sowie Icons von der Community, die dem Material Design Ansatz folgen, vorhanden.
 
 \begin{center}
 	\includegraphics[width=\linewidth]{entwurf/webclient/base}
@@ -79,9 +79,9 @@ Damit die Icons zum Design der Seite passen und Einheitlich sind, werden Materia
 	\label{fig:mockup-base}
 \end{center}
 
-Das Grundlayout ist wie in \autoref{fig:mockup-base} abgebildet in drei Bereiche, Header (1), Navigation (2) und Content (3), eingeteilt. 
+Das Grundlayout ist wie in \autoref{fig:mockup-base} dargestellt in drei Bereiche, Header (1), Navigation (2) und Content (3), eingeteilt. 
 
-Der Bereich des Headers ist im oberen Teil erkennbar. Dort ist ein Logo, derzeitig noch das Logo aus der alten Anwendung, eine Überschrift sowie ein Untertitel platziert. Über die Überschrift und den Untertitel können die verschieden Seiten (Admin-, Spieler-, Flagshop- und Challengeseite) unterscheidbar gemacht werden.
+Der Bereich des Headers ist im oberen Teil erkennbar. Dort sind ein Logo, derzeitig noch das Logo aus der alten Anwendung, eine Überschrift sowie ein Untertitel platziert. Über die Überschrift und den Untertitel können die verschieden Seiten (Admin-, Spieler-, Flagshop- und Challengeseite) unterscheidbar gemacht werden.
 
 Die Navigation ist auf der linken Seite erkennbar und als Sidebar mit Icons realisiert. Diese beinhaltet Verweise zu den Unterseiten. Sollte ein Eintrag der Navigation aktiv sein, wird dieser mithilfe der im Material Design vorgesehenen Farbe hervorgehoben.
 
