@@ -8,20 +8,20 @@ Um die Anwendung nutzen zu können, muss das Repository heruntergeladen werden.
 $ git clone https://gl.kr.hsnr.de/ezslabor/abschlussarbeiten/its2.git
 \end{lstlisting}
 
-Zur einfachen Nutzung der Anwendung ist im Repository neben einer \textit{docker-compose.yaml} Datei auch ein \textit{Makefile} angelegt. Die \textit{docker-compose.yaml} Datei sorgt sich um das Zusammenspiel sowie die Konfiguration der einzelnen Container. Falls die Dockerimages für Big Brother und GIS nicht vorhanden sein sollten, werden diese automatisch erzeugt. Dieses funktioniert nur, wenn die Ordner- und Dateistruktur unverändert bleibt.
+Zur einfachen Nutzung der Anwendung ist im Repository neben einer \textit{docker-compose.yaml} Datei auch ein \textit{Makefile} angelegt. Die \textit{docker-compose.yaml} Datei sorgt sich um das Zusammenspiel sowie die Konfiguration der einzelnen Container. Falls die Dockerimages für Big Brother und GIS nicht vorhanden sein sollten, werden diese automatisch erzeugt. Dies funktioniert nur, wenn die Ordner- und Dateistruktur unverändert bleibt.
 
 In der \textit{docker-compose.yaml} Datei ist darauf zu achten, dass Docker Socket in die Anwendung übergeben wird, da ansonsten die Steuerung des Scanners nicht möglich ist.
 
-Im Makefile sind drei Befehle (\textit{init, start, stop}) hinterlegt, welche zur einfachen Nutzung von \textit{docker-compose} beitragen sollen.
+Im Makefile sind drei Befehle (\textit{init, start, stop}) hinterlegt, die zur einfachen Nutzung von \textit{docker-compose} beitragen sollen.
 
 Der Befehl \texttt{init} führt eine Initialisierung der Anwendung aus. Dazu wird der bash Befehl (\autoref{lst:rest-init}) im GIS-Container ausgeführt wird. Dieser sorgt dafür, dass das Datenbankschema durch die hinterlegten Migrationen auf den benötigten Zustand gebracht wird. Danach wird ein Nutzer mit dem Namen \textit{admin}, der Rolle \textit{admin} und dem Passwort \textit{admin} angelegt. Über diesen Benutzer können weitere Accounts angelegt werden. Der Account kann nach der Erstellung eines weiteren Administratoren-Accounts gelöscht werden.
-\begin{lstlisting}[language=bash, caption={Initalisierung REST-Interface (bash)}, captionpos=b, label={lst:rest-init}]
+\begin{lstlisting}[language=bash, caption={Initialisierung REST-Interface (bash)}, captionpos=b, label={lst:rest-init}]
 $ pipenv run flask db downgrade base && 
   pipenv run flask db upgrade && 
   pipenv run flask user create admin --role admin --password admin
 \end{lstlisting}
 
-Danach wird der Scanner gestartet und die Initialisierung der Service-Datenbank wird ausgeführt. Nachdem alle Services eingetragen worden sind, beendet sich der Container und der letzte \textit{docker-compose} Befehl (\ref{lst:docker-compose-down}) wird ausgeführt. Dieser sorgt dafür, dass alle Container und Netzwerke, welche durch \textit{docker-compose} angelegt worden sind, entfernt werden.
+Danach wird der Scanner gestartet und die Initialisierung der Service-Datenbank wird ausgeführt. Nachdem alle Services eingetragen worden sind, beendet sich der Container selbst und der \textit{docker-compose} Befehl (\autoref{lst:docker-compose-down}) wird ausgeführt. Dieser sorgt dafür, dass alle Container und Netzwerke, die durch \textit{docker-compose} angelegt worden sind, entfernt werden.
 
 \begin{lstlisting}[language=bash, caption={Aufräumen mit docker-compose down (bash)}, captionpos=b, label={lst:docker-compose-down}]
 $ docker-compose down
@@ -29,8 +29,8 @@ $ docker-compose down
 
 Nach der Initialisierung ist die Anwendung einsatzbereit und kann über \texttt{make start} und \texttt{make stop} gestartet und beendet werden.
 
-Bei \texttt{start} werden alle Container angelegt und im Hintergrund gestartet. Danach wird der Scanner Container beendet. Dies ist notwendig, damit das GIS, den  Scan-Container starten, pausieren und stoppen kann.
+Bei \texttt{start} werden alle Container angelegt und im Hintergrund gestartet. Danach wird der Scanner Container beendet. Dies ist notwendig, damit das GIS den Scan-Container starten, pausieren und stoppen kann.
 
-Bei \texttt{stop} wird nur der Befehl \textit{docker-compose down} ausgeführt, welcher die bereits beschriebene Wirkung hat.
+Bei \texttt{stop} wird nur der Befehl \textit{docker-compose down} ausgeführt, der die bereits beschriebene Wirkung hat.
 
 Sollten die Anwendungen einzeln verwendet oder installiert werden, muss die Dokumentation der jeweiligen Anwendung konsultiert werden.
