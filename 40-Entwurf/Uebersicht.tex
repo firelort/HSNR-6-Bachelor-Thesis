@@ -23,7 +23,7 @@ Die Komponente \textit{Big Brother} implementiert einen Scanner, der für die Ü
 Die zweite Komponente \textit{Game Information System} stellt eine Schnittstelle zwischen der Datenbank und den Nutzern dar. Mithilfe dieser können Informationen unter Berücksichtigung von Berechtigungen auf einem einheitlichen Weg aus der Datenbank ausgelesen, verändert und hinzugefügt werden. 
 
 \paragraph{Datenhaltung}
-Die Ebene \textit{Datenhaltung} beinhaltet die Komponenten \textit{Redis} und \textit{Database}. 
+Die Ebene \textit{Datenhaltung} beinhaltet die Komponenten \textit{Redis} und \linebreak \textit{Database}. 
 
 Die Komponente \textit{Redis} ist nach der gleichnamigen Software Redis benannt. Bei Redis handelt es sich auch um eine Datenbank und könnte daher mit in die Komponente \textit{Database} aufgenommen werden; die Trennung erfolgt aber auf der Grundlage der Verwendung innerhalb der Software-Architektur. Die Redis-Datenbank wird als Cache verwendet und persistiert die Daten nicht auf der Festplatte, sondern im Hauptspeicher.
 

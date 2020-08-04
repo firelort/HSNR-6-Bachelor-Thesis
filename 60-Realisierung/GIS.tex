@@ -52,7 +52,7 @@ Mit dem Object-Relational Mapping (ORM) können Daten aus der Datenbank mithilfe
 
 Für das ORM wird das Python-Toolkit \textit{SQLAlchemy} verwendet und durch die Flask Erweiterung \textit{Flask-SQLAlchemy} für die Nutzung innerhalb der Flask-Anwendung konfiguriert. 
 
-Die Klassen werden von der durch \textit{SQLAlchemy} bereitgestellten Klasse \textit{Model} abgeleitet. Für jede zu erzeugende Spalte in der Datenbank wird im ORM-Modell ein Attribut vom Typ \textit{Column}-Objekt erstellt. Das \textit{Column}-Objekt wird ebenfalls von \textit{SQLAlchemy} zur Verfügung gestellt und erhält Informationen wie den Datentyp und Constraints (Primary Key / Foreign Key).
+Die Klassen werden von der durch \textit{SQLAlchemy} bereitgestellten Klasse \textit{Model} abgeleitet. Für jede zu erzeugende Spalte in der Datenbank wird im ORM-Modell ein Attribut vom Typ \linebreak \textit{Column}-Objekt erstellt. Das \textit{Column}-Objekt wird ebenfalls von \textit{SQLAlchemy} zur Verfügung gestellt und erhält Informationen wie den Datentyp und Constraints (Primary Key / Foreign Key).
 Das Vorgehen wird exemplarisch in \autoref{lst:gis-orm-model} dargestellt.
 
 \begin{lstlisting}[language=bash, frame=single, caption={GIS Beispiel eines ORM Models}, captionpos=b, label={lst:gis-orm-model}]
@@ -64,7 +64,7 @@ class Backup(db.Model):
   data = db.Column(db.JSON, nullable=False)
 \end{lstlisting}
 
-Auch implementieren die ORM-Modelle eine Klassenmethode, über die Objekte anhand von bestimmten Informationen aus der Datenbank abgerufen werden können. Alternativ könnte anstatt der Verwendung der \textit{get}-Methode auch die \textit{query}-Methode aus der Basis-Klasse \textit{Model} verwendet werden. Dies wurde aus Konsistenzgründen und der häufigen Nutzung im Quellcode nicht verwendet.
+Auch implementieren die ORM-Modelle eine Klassenmethode, über die Objekte anhand von bestimmten Informationen aus der Datenbank abgerufen werden können. Alternativ könnte anstatt der Verwendung der \textit{get}-Methode auch die \textit{query}-Methode aus der Basisklasse \textit{Model} verwendet werden. Dies wurde aus Konsistenzgründen und der häufigen Nutzung im Quellcode nicht verwendet.
 
 \begin{lstlisting}[language=bash, frame=single, caption={GIS Beispiel einer Get-Methode des ORM Models}, captionpos=b, label={lst:gis-orm-model-get}]
 class Backup(db.Model):
@@ -83,9 +83,9 @@ Das Accountmodell speichert das Passwort im privaten Attribute \textit{\_passwor
 
 Durch die Nutzung von \textit{getter}- und \textit{setter}-Methoden wird sichergestellt, dass alle Passwörter auf die gleiche Art und Weise gehasht werden und niemals im Klartext vorliegen.
 
-Für das Passworthashing wird der Algorithmus \textit{bcrypt} verwendet, da dieser sequentiell abgearbeitet wird und daher langsamer als beispielsweise  \textit{sha} berechnet wird. Für die Erstellung eines Hashwertes wird zwingend, was aus IT-Sicherheitsgründen eine gute Eigenschaft ist, ein Salt benötigt. Außerdem ist \textit{bcrypt} zukunftssicher, da der Algorithmus durch die Anzahl der verwendeten Rounds langsamer gemacht werden kann. Je mehr Rounds verwendet werden, desto länger dauert die Erzeugung eines Passwort-Hash. Diese Eigenschaften sollen einen Brute-Force-Angriff verlangsamen, beziehungsweise teurer machen. \cite{ariasHashingActionUnderstanding2018}
+Für das Passworthashing wird der Algorithmus \textit{bcrypt} verwendet, da dieser sequentiell abgearbeitet wird und daher langsamer als beispielsweise  \textit{sha} berechnet wird. Für die Erstellung eines Hashwertes wird zwingend ein Salt benötigt. Aus IT-Sicherheitsgründen ist ein Salt unverzichtbar und eine gute Methode Rainbow Tables vorzubeugen. Außerdem ist \textit{bcrypt} zukunftssicher, da der Algorithmus durch die Anzahl der verwendeten Rounds langsamer gemacht werden kann. Je mehr Rounds verwendet werden, desto länger dauert die Erzeugung eines Passwort-Hash. Diese Eigenschaften sollen einen Brute-Force-Angriff verlangsamen, beziehungsweise teurer machen. \cite{ariasHashingActionUnderstanding2018}
 
-Die bei der Erstellung verwendeten Rounds des bcrypt-Passworthash mussten von 15 auf 10 gesetzt werden, da der Import einer bestehenden Hackit-Zugangsdaten-Datei mehr als 5 Minuten gedauert hatte.
+Die bei der Erstellung verwendeten Rounds des Bcrypt-Passworthash mussten von 15 auf 10 gesetzt werden. Ein testweise durchgeführter Import einer bestehenden Hackit-Zugangsdaten-Datei hat gezeigt, dass bei einer Nutzung von 15 Rounds der Import mehr als 5 Minuten gedauert hat.
 
 \begin{lstlisting}[language=bash, frame=single, caption={GIS Passwort des Accounts}, captionpos=b, label={lst:gis-orm-user-pw-hash}]
 class User(db.Model):
@@ -220,7 +220,7 @@ Die Gültigkeit kann -- wie bereits in \autoref{sub:realisierung-authentifizieru
 
 Über den Endpoint \textit{/auth/refresh} kann ein valider Refresh-Token genutzt werden, um ohne Angabe der Nutzerdaten einen neuen Access-Token zu erhalten.
 
-Da die Access- und Refresh-Tokens anders validiert werden, müssen für das Zurückrufen der Tokens zwei Endpoints zur Verfügung stehen. Access-Tokens können an den Endpoint \textit{/auth/revoke/access} und Refresh-Tokens an den Endpoint \textit{/auth/revoke/refresh} gesendet werden. Sollten die angekommenen Tokens gültig sein, werden sie dann in der Redis-Datenbank als \textquote{zurückgerufen} markiert.
+Da die Access- und Refresh-Tokens anders validiert werden, müssen für das Zurückrufen der Tokens zwei Endpoints zur Verfügung stehen. Access-Tokens können an den Endpoint \linebreak \textit{/auth/revoke/access} und Refresh-Tokens an den Endpoint \textit{/auth/revoke/refresh} gesendet werden. Sollten die angekommenen Tokens gültig sein, werden sie dann in der Redis-Datenbank als \textquote{zurückgerufen} markiert.
 
 Da der Access-Token für den Flagshop anders als der normale Access-Token aufgebaut ist, wird der Enpoint \textit{/auth/flagshop} benötigt. Dieser ist nur mit einem gültigen normalen Access-Token nutzbar. Für den Flagshop wird nur ein Access-Token mit einer Gültigkeit von 15 Minuten ausgestellt.
 
@@ -229,7 +229,7 @@ Ein Login ist für eine spielende Person nur dann möglich, wenn die eigene IP-A
 \subsubsection{Account}
 Für die Verwaltung der Accounts werden zwei Endpoints bereitgestellt. 
 
-Der Endpoint (\textit{/user}) stellt über die Methode \textit{GET} für die betreuenden und administrierenden Personen eine Liste der im System vorliegenden Login-Informationen bereit. Über die Methode \textit{POST} können besagte Personen neue Accounts anlegen. Accounts mit den Rollen \textit{supervisor} und \textit{admin} können nur durch administrierende Personen angelegt werden. Die Methode \textit{DELETE} kann genutzt werden, um alle Accounts der Rolle \textit{player} gleichzeitig zu löschen. Theoretisch könnten mit dieser Methode auch Accounts anderer Rollen gelöscht werden. Die Methode wurde limitiert, um ein unabsichtliches Löschen der Accounts des Hochschulpersonals zu verhindern.
+Der Endpoint \textit{/user} stellt über die Methode \textit{GET} für die betreuenden und administrierenden Personen eine Liste der im System vorliegenden Login-Informationen bereit. Über die Methode \textit{POST} können besagte Personen neue Accounts anlegen. Accounts mit den Rollen \textit{supervisor} und \textit{admin} können nur durch administrierende Personen angelegt werden. Die Methode \textit{DELETE} kann genutzt werden, um alle Accounts der Rolle \textit{player} gleichzeitig zu löschen. Theoretisch könnten mit dieser Methode auch Accounts anderer Rollen gelöscht werden. Die Methode wurde limitiert, um ein unabsichtliches Löschen der Accounts des Hochschulpersonals zu verhindern.
 
 \begin{lstlisting}[language=Python, frame=single, caption={GIS Löschen auf player-Accounts begrenzen}, captionpos=b, label={lst:gis-delete-all-players}]
 if args['role'] != 'player':
@@ -240,7 +240,7 @@ Die Funktion wurde geschaffen, um die Hackit-Zugangsdaten nach Ende des Semester
 
 Über die Methoden \textit{GET}, \textit{PUT} und \textit{DELETE} des Endpoints \textit{/user/<int:user\_id>} wird eine Verwaltung einzelner Accounts ermöglicht. Hierzu muss bei der Anfrage die Account-ID übergeben werden. Die Methode \textit{GET} zeigt alle Informationen zu dem bestimmten Account an. Über die Methode \textit{PUT} können einzelne Informationen verändert und über die Methode \textit{DELETE} kann der Account gelöscht werden.
 
-Die betreuenden Personen dürfen auch hier nur Accounts der Rolle \textit{player} sowie ihre eigenen verwalten. Die eigene Rolle kann nur auf die Rolle \textit{player} geändert werden. Dies soll unerlaubte Rechteausweitung verhindern. Des Weiteren ist es nicht möglich, den aktuellen Account zu löschen. Sollte die Löschung eines Accounts nötigt sein, muss dafür ein anderer Account genutzt werden.
+Die betreuenden Personen dürfen auch hier nur Accounts der Rolle \textit{player} sowie ihre eigenen verwalten. Die eigene Rolle kann nur auf die Rolle \textit{player} geändert werden. Dies soll unerlaubte Rechteausweitung verhindern. Auch ist es nicht möglich, den aktuellen Account zu löschen. Sollte die Löschung eines Accounts nötigt sein, muss dafür ein anderer Account genutzt werden.
 
 Außerdem ist ein dritter Endpoint, erreichbar unter \textit{/user/import}, implementiert, der das Importieren von Hackit-Zugangsdaten ermöglicht. Hierfür wird eine Datei per \textit{POST}-Anfrage an den Server gesendet. Die Login-Informationen werden zeilenweise ausgelesen und mit der Rolle \textit{Player} angelegt. Ein Import von beispielsweise Accounts der Rolle \textit{admin} kann auf ähnliche Art realisiert werden, wurde jedoch nicht implementiert, da dies keine Anforderung an die Software war.
 

@@ -42,7 +42,7 @@ Da der Thin Server nur eine Brücke zwischen Nutzenden und Scanner oder Datenban
 \subsubsection{API}
 Um bei der Implementierung der API einem Standard zu folgen, wird der de facto Standard für HTTP-APIs Representational State Transfer (REST) verwendet.
 
-Ein RESTful-Interface ermöglicht, dass Ressourcen auf dem Webserver eindeutig identifizierbar sind, damit diese als Ziel von Operationen ausgewählt werden können. Darüber hinaus werden einheitliche Schnittstellen genutzt. Dazu müssen Standardmethoden und -repräsentationen verwendet werden. \cite{beimsWebApplikationenREST2014}
+Ein RESTful-Interface ermöglicht, dass Ressourcen auf dem Webserver eindeutig identifizierbar sind, damit diese als Ziel von Operationen ausgewählt werden können. Darüber hinaus werden einheitliche Schnittstellen genutzt. Dazu müssen Standardmethoden und \linebreak -repräsentationen verwendet werden. \cite{beimsWebApplikationenREST2014}
 
 Durch diese Anforderungen bietet das REST-Interface die Möglichkeiten, alle zur Verfügung stehenden Ressourcen auf die gleiche Art und Weise zu verwalten. Außerdem wird mit dieser Herangehensweise die HTTP-Methode \textit{GET} nicht länger zur Veränderung oder Erschaffung von Ressourcen verwendet, sondern die dafür ausgelegten HTTP-Methoden. Die für die Verwendung benötigten Daten werden auch nicht länger als Parameter der Anfrage beigefügt, sondern im Body der Anfrage übertragen. \cite{beimsWebApplikationenREST2014}
 
@@ -51,7 +51,7 @@ Alle Routen werden mit dem Versionspräfix \textit{/v1} versehen. Diese Versioni
 Bei der Implementierung sollen die zur Verfügung stehenden HTTP-Methoden benutzt werden. Das REST-Interface soll auch mit entsprechenden HTTP-Codes antworten, um die Antwort und den Erfolg einer Anfrage auch ohne Antworttext interpretieren zu können. Bei der Datenübertragung zwischen Client und Server soll das JavaScript Object Notation (JSON) Format für die Formatierung der gesendeten Daten verwendet werden.
 
 \begin{center}
-	\begin{tabular}{c c}
+	\begin{tabular}{l l}
 		GET & Auf Ressourcen zugreifen \\ 
 		POST & Neue Ressourcen erzeugen \\  
 		PUT & Bestehende Ressourcen verändern \\
@@ -93,7 +93,7 @@ Die Authentifizierung des Benutzers wird über die in \autoref{subsub:login} erw
 
 Dies reduziert die Anfragen an die Datenbank. Nachteil hierbei sind langsame Änderungen der Berechtigungen, da die neuen Berechtigungen erst mit dem Erstellen eines neuen Tokens übernommen werden. Da Änderungen an der Berechtigung selten vorkommen, kann dieser Nachteil relativiert werden.
 
-Mit den im Token codierten Berechtigungen kann der Server die Autorisierung der vom Nutzenden angefragten Aktion durchführen.
+Mit den im Token codierten Berechtigungen kann der Server die Autorisierung der angefragten Aktion durchführen.
 
 \paragraph{Tokenvalidierung}
 \begin{center}

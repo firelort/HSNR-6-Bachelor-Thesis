@@ -1,4 +1,4 @@
-\documentclass[a4paper, 12pt, parskip=half, listof=totoc, bibtotocnumbered]{scrbook} %oneside
+\documentclass[a4paper, 12pt, parskip=half, listof=totoc, bibliography=totoc]{scrbook} %oneside
 
 % Einfaches Copy and Paste ermöglichen
 \usepackage{cmap}
@@ -83,6 +83,8 @@
 \author{\thesisAuthor}
 \date{\today{}}
 
+\babelhyphenation[ngerman]{ord-nungs-ge-mäße}
+
 \begin{document}
 	% Vorspann einleiten:
 	\frontmatter
@@ -161,29 +163,29 @@
 	%	Layout: Seite  |  Kapitel
 	\lefoot[\textbf{\pagemark~~$\mid$}]{\textbf{\pagemark~~$\mid$}}
 	
-	\chapter{Anhang}
-	\input{90-Anhang/Installation}
-	\input{90-Anhang/Bedienung}
-	\input{90-Anhang/Anhang}
+	\begin{appendix}
+		\chapter{Anhang}
+		\input{90-Anhang/Installation}
+		\input{90-Anhang/Bedienung}
+		\input{90-Anhang/Anhang}
 	
-	% Zeilenumbrüche für Links erzwingen
-	\setcounter{biburlnumpenalty}{100}
-	\setcounter{biburlucpenalty}{100}
-	\setcounter{biburllcpenalty}{100}
+		% Zeilenumbrüche für Links erzwingen
+		\setcounter{biburlnumpenalty}{100}
+		\setcounter{biburlucpenalty}{100}
+		\setcounter{biburllcpenalty}{100}
 	
-	% Tabellenverzeichnis Codeverzeichnis Abbildungsverzeichnis Quellenverzeichnis
-	{
-		\listoffigures 
-		\let\cleardoublepage\newpage 
+		% Tabellenverzeichnis Codeverzeichnis Abbildungsverzeichnis Quellenverzeichnis
+		{
+			\listoffigures 
+			\let\cleardoublepage\newpage 
 		
-		\lstlistoflistings 
-		\let\cleardoublepage\
+			\lstlistoflistings 
+			\let\cleardoublepage\
 		 
-		\listoftables 
-		\let\cleardoublepage\newpage 
-		
-		% Manueller Zeilenumbruch für die Bibliography
-		\hyphenation{}
-		\printbibliography}
-	
+			\listoftables 
+			\let\cleardoublepage\newpage 
+			
+			\printbibliography
+		}
+	\end{appendix}
 \end{document}

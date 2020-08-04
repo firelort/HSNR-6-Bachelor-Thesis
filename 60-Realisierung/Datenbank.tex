@@ -1,6 +1,6 @@
 \section{Datenbank}\label{sec:Realisierung-Datenbank}
 
-Die Realisierung des Datenbankschemas wird über Migrationen in der Komponente des Game Information Systems durchgeführt. Sie wird jedoch aus Verständnisgründen in diesem Kapitel erläutert.
+Die Realisierung des Datenbankschemas wird über Migrationen in der Komponente des Game Information Systems durchgeführt. Sie wird aus Verständnisgründen in diesem Kapitel erläutert.
 
 Die im Entwurf (\autoref{sec:Entwurf-Datenbank}) vorgestellten Tabellen wurden ohne Anpassungen realisiert. Da die Punkteberechnung nicht im Game Information System durchgeführt werden soll, werden Views in der Datenbank genutzt, die die benötigten Punkte aus den verschieden Tabellen zusammenrechnen.
 
@@ -26,8 +26,7 @@ GROUP BY flags_submitted.group_id;
 \end{lstlisting}
 
 \subsubsection{Defensivpunkte}
-Ähnlich den Angriffspunkten (\ref{subsubsec:Angriffspunkte}) werden die Defensivpunkte (Strafe für verlorene Flags) berechnet.
-Anders als bei den Angriffspunkten werden alle vorhandenen Flags mit den abgegebenen Flags für jede Gruppe verbunden, wenn die besitzende Gruppe ungleich der abgebenden Gruppe ist. In dieser Liste treten Flags mehrfach auf, wenn mehrere Gruppen einer Gruppe die selbe Flag gestohlen haben. Da im alten System ein Verlust einer Flag an mehrere Gruppen nur einmal mit Strafpunkten geahndet worden ist, werden in der Liste der Flags mit der SQL Klausel \textit{DISTINCT} Duplikate entfernt. Im Anschluss werden dann die verlorenen Flags pro Gruppe gezählt und so die Defensivpunkte bestimmt.
+Ähnlich den Angriffspunkten (\ref{subsubsec:Angriffspunkte}) werden die Defensivpunkte (Strafe für verlorene Flags) berechnet. Anders als bei den Angriffspunkten werden alle vorhandenen Flags mit den abgegebenen Flags für jede Gruppe verbunden, wenn die besitzende Gruppe ungleich der abgebenden Gruppe ist. In dieser Liste treten Flags mehrfach auf, wenn mehrere Gruppen einer Gruppe dieselbe Flag gestohlen haben. Da im alten System ein Verlust einer Flag an mehrere Gruppen nur einmal mit Strafpunkten geahndet worden ist, werden in der Liste der Flags mit der SQL Klausel \textit{DISTINCT} Duplikate entfernt. Im Anschluss werden dann die verlorenen Flags pro Gruppe gezählt und so die Defensivpunkte bestimmt.
 
 \begin{lstlisting}[frame=single, language=sql, caption={SQL View Denfensivpunkte}, captionpos=b, label={lst:database-defence-points}]
 SELECT flags.group_id, count(DISTINCT flags.flag_value) AS points

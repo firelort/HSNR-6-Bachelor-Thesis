@@ -2,7 +2,7 @@
 
 Im Folgenden wird die Implementierung des Scanners namens Big Brother beschrieben.
 
-Für die Realisierung wurde die Programmiersprache Python gewählt, da diese bereits im Game Information System eingesetzt wird und zum anderen in der Lehre der Hochschule Niederrhein vorkommt. Eine Programmierung in beispielsweise C oder C++ wäre auch denkbar gewesen, wurde aber aufgrund der unterschiedlichen Syntaxen zwischen C und Python nicht gewählt.
+Für die Realisierung wurde die Programmiersprache Python gewählt, da diese bereits im \linebreak Game Information System eingesetzt wird und zum anderen in der Lehre der Hochschule Niederrhein vorkommt. Eine Programmierung in beispielsweise C oder C++ wäre auch denkbar gewesen, wurde aber aufgrund der unterschiedlichen Syntaxen zwischen C und Python nicht gewählt.
 
 Big Brother baut zu Beginn eine Verbindung mithilfe der in der Konfiguration (\autoref{lst:anhang-bigbrother-config-example}) hinterlegten Informationen zur Datenbank auf. In der Datenbank befinden sich die Daten, die von Big Brother und dem GIS gemeinsam genutzt werden. Diese sind beispielsweise für Big Brother die auszuführende Aufgabe und die zu überwachenden GameClients und für das GIS die Ergebnisse der Scans.
 
@@ -28,8 +28,7 @@ else:
 
 \subsection{Implementierung der Initialisierung}
 
-Bei der Initialisierung wird zuerst die bestehende Datenbanktabelle mit den vorhanden Services zurückgesetzt.
-Im Anschluss werden alle im Big Brother implementierten Services in die Datenbanktabelle geschrieben. Dazu wird ein Dummy-Scanner angelegt und die Scan-Operationen ausgelesen.
+Bei der Initialisierung wird zuerst die bestehende Datenbanktabelle mit den vorhanden \linebreak Services zurückgesetzt. Im Anschluss werden alle im Big Brother implementierten Services in die Datenbanktabelle geschrieben. Dazu wird ein Dummy-Scanner angelegt und die Scan-Operationen ausgelesen.
 
 Durch diese Vorgehensweise können alte Datenbestände keine Fehler verursachen.
 
@@ -55,7 +54,7 @@ cursor.execute(f"INSERT INTO {SETTING_TABLE_NAME}(key, value) VALUES ('{default_
 \subsection{Implementierung der Scan-Operations}
 Die im alten System vorhandene Überwachung ist in der Programmiersprache PHP implementiert und wurde im Rahmen dieser Arbeit in das Python-Programm überführt.
 
-Die verschiedenen Aufgaben der Überwachung wurden, wie im Entwurf ausgearbeitet, in einzelne sogenannte Scan-Operationen getrennt. Dies soll das Verständnis fördern und den Aufwand einer Wartung reduzieren. Durch diesen Ansatz können einzelne Scan-Operationen leichter ersetzt oder verändert werden. Außerdem ist es so möglich, leichter neue \linebreak Scan-Operationen zu integrieren.
+Die verschiedenen Aufgaben der Überwachung wurden, wie im Entwurf ausgearbeitet, in einzelne sogenannte Scan-Operationen getrennt. Dies soll das Verständnis fördern und den Aufwand einer Wartung reduzieren. Durch diesen Ansatz können einzelne Scan-Operationen einfacher ersetzt oder verändert werden. Außerdem ist es so möglich, leichter neue Scan-Operationen zu integrieren.
 
 \subsubsection{Basisklasse der Scan-Operationen}
 
