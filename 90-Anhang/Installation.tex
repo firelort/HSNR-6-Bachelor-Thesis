@@ -8,13 +8,13 @@ Um die Anwendung nutzen zu können, muss das Repository heruntergeladen werden.
 $ git clone https://gl.kr.hsnr.de/ezslabor/abschlussarbeiten/its2.git
 \end{lstlisting}
 
-Zur einfachen Nutzung der Anwendung ist im Repository neben einer \textit{docker-compose.yaml} Datei auch ein \textit{Makefile} angelegt. Die \textit{docker-compose.yaml} Datei sorgt sich um das Zusammenspiel sowie die Konfiguration der einzelnen Container. Falls die Dockerimages für Big Brother und GIS nicht vorhanden sein sollten, werden diese automatisch erzeugt. Dies funktioniert nur, wenn die Ordner- und Dateistruktur unverändert bleibt.
+Zur einfachen Nutzung der Anwendung ist im Repository neben einer \textit{docker-compose.yaml} Datei auch ein \textit{Makefile} angelegt. Die \textit{docker-compose.yaml} Datei sorgt sich um das Zusammenspiel sowie die Konfiguration der einzelnen Container. Falls die Dockerimages für Big Brother und GIS nicht vorhanden sein sollten, werden diese automatisch erzeugt. \linebreak Dies funktioniert nur, wenn die Ordner- und Dateistruktur unverändert bleibt.
 
 In der \textit{docker-compose.yaml} Datei ist darauf zu achten, dass Docker Socket in die Anwendung übergeben wird, da ansonsten die Steuerung des Scanners nicht möglich ist.
 
 Im Makefile sind drei Befehle (\textit{init, start, stop}) hinterlegt, die zur einfachen Nutzung von \textit{docker-compose} beitragen sollen.
 
-Der Befehl \texttt{init} führt eine Initialisierung der Anwendung aus. Dazu wird der bash Befehl (\autoref{lst:rest-init}) im GIS-Container ausgeführt wird. Dieser sorgt dafür, dass das Datenbankschema durch die hinterlegten Migrationen auf den benötigten Zustand gebracht wird. Danach wird ein Nutzer mit dem Namen \textit{admin}, der Rolle \textit{admin} und dem Passwort \textit{admin} angelegt. Über diesen Benutzer können weitere Accounts angelegt werden. Der Account kann nach der Erstellung eines weiteren Administratoren-Accounts gelöscht werden.
+Der Befehl \texttt{init} führt eine Initialisierung der Anwendung aus. Dazu wird der bash Befehl (\autoref{lst:rest-init}) im GIS-Container ausgeführt wird. Dieser sorgt dafür, dass das Datenbankschema durch die hinterlegten Migrationen auf den benötigten Zustand gebracht wird. Danach wird ein Nutzer mit dem Namen \textit{admin}, der Rolle \textit{admin} und dem Passwort \textit{admin} angelegt. Über diesen Benutzer können weitere Accounts angelegt werden. Der Account kann nach der \linebreak Erstellung eines weiteren Administratoren-Accounts gelöscht werden.
 \begin{lstlisting}[language=bash, caption={Initialisierung REST-Interface (bash)}, captionpos=b, label={lst:rest-init}]
 $ pipenv run flask db downgrade base && 
   pipenv run flask db upgrade && 

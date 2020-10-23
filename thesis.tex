@@ -1,4 +1,5 @@
 \documentclass[a4paper, 12pt, parskip=half, listof=totoc, bibliography=totoc]{scrbook} %oneside
+\usepackage[left=3.5cm, right=1.75cm, top=2.5cm, bottom=4.8cm]{geometry}
 
 % Einfaches Copy and Paste ermöglichen
 \usepackage{cmap}
@@ -89,8 +90,11 @@
 	% Vorspann einleiten:
 	\frontmatter
 	
+	\newgeometry{left=2.75cm, right=2.5cm, top=2.5cm, bottom=4.8cm}
 	\input{10-Praeambel/Titlepage}
+	\restoregeometry
 	\cleardoublepage
+	%\cleardoublepage
 	\pagestyle{scrheadings}
 	\input{10-Praeambel/Jurat}
 	\tableofcontents	

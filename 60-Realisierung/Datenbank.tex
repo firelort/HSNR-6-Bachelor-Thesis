@@ -75,12 +75,12 @@ COALESCE(((100 / group_service_status.scan_count) * group_service_status.online_
 \subsubsection{Flagshoppunkte}
 Bei den Flagshoppunkten handelt es sich um die für Käufe ausgegebenen Punkte einer Gruppe.
 Für die Berechnung wird die Summe der Kosten aller gekauften Pakete pro Gruppe gebildet.
-Wenn eine Gruppe keine Ausgaben getätigt hat, wird diese auch nicht in die View aufgenommen.
+Wenn eine Gruppe keine Ausgaben getätigt hat, wird diese auch nicht in die \linebreak View aufgenommen.
 
 \subsubsection{Challengepunkte}
 Im Gegensatz zum alten Überwachungs- und Auswertungssystem wird der Start einer Challenge nicht länger mit Minuspunkten bestraft. Diese Minuspunkte besitzen meiner Meinung nach eine abschreckende Wirkung auf die Studierenden, sodass diese die Challenges nicht versuchen. Im Rahmen einer Lehrveranstaltung sollten die Studierenden ermutigt werden, verschiedene themenbezogene Aufgaben zu lösen.
 
-Die Challengepunkte werden mithilfe der Tabellen \textit{challenges} und \textit{group\_has\_challenges} in der View \textit{challenge\_points} bestimmt. Für jede Gruppe werden die Punkte der gelösten Challenges summiert.
+Die Challengepunkte werden mithilfe der Tabellen \textit{challenges} und \textit{group\_has\_challenges} in der View \textit{challenge\_points} bestimmt. Für jede Gruppe werden die Punkte der gelösten \linebreak Challenges summiert.
 
 Sollten Negativpunkte für gestartete Challenges verteilt werden, muss der SQL Code der View angepasst werden, damit für jede gestartete Challenge Negativpunkte verrechnet werden. 
 
@@ -93,19 +93,19 @@ Sollten Negativpunkte für gestartete Challenges verteilt werden, muss der SQL C
 
 In der View \textit{total\_points} werden pro Gruppe alle vorher genannten Punkte inklusive einer Gesamtpunkteanzahl dargestellt. 
 
-Die Gesamtpunkte setzen sich aus den genannten Punkten zusammen. Die Gesamtpunkte werden anhand der folgenden Formel berechnet:
+Die Gesamtpunkte setzen sich aus den genannten Punkten zusammen. Die Gesamtpunkte \linebreak werden anhand der folgenden Formel berechnet:
 
 \begin{multline*}
 Challengepunkte + Erkundungspunkte + Offensivpunkte - Deffensivpunkte - \\ Servicepunkte - Flagshoppunkte - Strafpunkte = Gesamtpunkte
 \end{multline*}
 
-Die Punkte werden aus den vorher dargestellten Views bezogen. Sollten Punkte nicht vorhanden sein, da beispielsweise eine Gruppe keine Challenges gelöst hat, werden diese Punkte durch die Nutzung von \textit{COALESCE} auf 0 gesetzt.
+Die Punkte werden aus den vorher dargestellten Views bezogen. Sollten Punkte nicht \linebreak vorhanden sein, da beispielsweise eine Gruppe keine Challenges gelöst hat, werden diese Punkte durch die Nutzung von \textit{COALESCE} auf 0 gesetzt.
 
 \begin{lstlisting}[frame=single, language=sql, caption={SQL Ersetzen nicht vorhandener Punkte}, captionpos=b, label={lst:database-total-points-0}]
 COALESCE(challenge.points, ((0)::smallint)) 
 \end{lstlisting}
 
 \subsection{Servicestatus}
-Der aktuelle Servicestatus wird auch innerhalb einer View (\textit{group\_service\_online\_status}) ermöglicht. Diese View blendet nur Informationen der Tabelle \textit{group\_service\_status} aus, deshalb hätte auch die Tabelle selbst genutzt werden können.
+Der aktuelle Servicestatus wird auch innerhalb einer View (\textit{group\_service\_online\_status}) \linebreak ermöglicht. Diese View blendet nur Informationen der Tabelle \textit{group\_service\_status} aus, \linebreak deshalb hätte auch die Tabelle selbst genutzt werden können.
 
 Die View stellt pro Gruppe und pro Service die Informationen zur Verfügung, inwieweit der Scan im letzten Versuch erfolgreich war.
